@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - spotme_events # module name
+name: 'Event tags'
+vid: event_tags
+description: ''
+weight: 0

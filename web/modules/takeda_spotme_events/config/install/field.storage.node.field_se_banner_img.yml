@@ -1,0 +1,26 @@
+langcode: en
+dependencies:
+  enforced:
+    module:
+    - spotme_events
+  module:
+  - node
+  - spotme_events
+id: node.single_event.field_se_banner_img
+field_name: field_se_banner_img
+entity_type: node
+type: image
+settings:
+  target_type: file
+  display_field: false
+  display_default: false
+  uri_scheme: public
+  default_image:
+    uuid: null
+    alt: ''
+    title: ''
+    width: null
+    height: null
+module: core
+locked: false
+cardinality: 1

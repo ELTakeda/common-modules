@@ -1,0 +1,4 @@
+site_global_fields.configure_form:
+  route_name: site_global_fields.configure_form
+  title: Settings
+  base_route: site_global_fields.configure_form

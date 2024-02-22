@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_leaflet_url
+    - node.type.vpriv_calculator
+third_party_settings:
+  tmgmt_content:
+    excluded: false
+id: node.vpriv_calculator.field_leaflet_url
+field_name: field_leaflet_url
+entity_type: node
+bundle: vpriv_calculator
+label: 'Leaflet url'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

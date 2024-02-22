@@ -1,0 +1,27 @@
+<?php
+use Drupal\node\Entity\Node;
+use Drupal\file\Entity\File;
+
+function sfmc_install(){
+$node = Node::create([
+    'type' => 'sfmc_connector',
+    'title' => 'SFMC Connector', 
+]);
+$node->save();
+}
+
+function sfmc_uninstall() {
+    $sfmc = \Drupal::entityQuery('node')->accessCheck(FALSE)->condition('type','sfmc_connector')->execute();
+    //delete nodes if exists
+    sfmc_delete_nodes($sfmc);
+  }
+   //delete node function
+   function sfmc_delete_nodes($data) {
+    if($data) {
+      $storage_handler = \Drupal::entityTypeManager()->getStorage("node");
+      foreach ($data as $key => $value) {
+        $node = $storage_handler->load($value);
+        $node->delete($node);    
+      }
+    }
+  }

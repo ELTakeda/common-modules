@@ -1,0 +1,660 @@
+<section class="adcetris-calculator">
+
+    <div class="container">
+
+        <div class="row forms-div">
+            <h1 class="adcetris-calculator__title">{{ "Adcetris Dose Calculator"|t }}</h1>
+            <p class="text-left p-0 pb-4">{{ "The objective of this tool is to help healthcare professionals to
+                practically visualize Adcetris on-label information for the treatment of their patients in each
+                indication, with guidance on dosage, dosage, cycles, administration and dose adjustment in case of
+                peripheral neuropathy or neutropenia. For additional information, see the medicine leaflet at the end of
+                this page."|t }}</p>
+
+
+            <div class="table">
+                <table>
+
+                    <th class="adcetris-calculator__protocol-title">{{ "protocol"|t }}</th>
+
+                    <tr>
+                        <td>
+                            <form class="table-form">
+                                <label class="container-radio">{{ "Treatment of adult patients with previously untreated
+                                    CD30+ stage IV Hodgkin Lymphoma (HL)"|t }}<br><strong>{{ "(ECHELON 1)"|t
+                                        }}</strong>
+                                    <input type="radio" id="echelon1" name="protocolo">
+                                    <span class="checkmark"></span>
+                                </label>
+
+                                <label class="container-radio">{{ "Treatment of adult patients with relapsed or
+                                    refractory CD30+ H"|t }}<br><strong>{{ "(PIVOTAL LH)"|t }}</strong>
+                                    <input type="radio" id="pivotal-lh" class="overdose-opt" name="protocolo">
+                                    <span class="checkmark"></span>
+                                </label>
+
+                                <label class="container-radio">{{ "Treatment of adult HL patients at increased risk of
+                                    relapse or progression after ASCT"|t }}<br><strong>{{ "(AETHERA)"|t
+                                        }}</strong>
+                                    <input type="radio" id="aethera" class="overdose-opt" name="protocolo">
+                                    <span class="checkmark"></span>
+                                </label>
+
+                                <label class="container-radio">{{ "Treatment of adult patients with previously untreated
+                                    systemic Anaplastic Large Cell Lymphoma (SCLA) or other CD30+ Peripheral T-cell
+                                    Lymphomas (PTCL)"|t }}<br><strong>{{ "(ECHELON
+                                        2)"|t }}</strong>
+                                    <input type="radio" id="echelon2" name="protocolo">
+                                    <span class="checkmark"></span>
+                                </label>
+
+                                <label class="container-radio">{{ "Treatment of adult patients with relapsed or
+                                    refractory systemic Anaplastic Large Cell Lymphoma"|t }}<br><strong>{{
+                                        "(SCLA)"|t }}</strong>
+                                    <input type="radio" id="pivotal-lagcs" class="overdose-opt" name="protocolo">
+                                    <span class="checkmark"></span>
+                                </label>
+
+                                <label class="container-radio">{{ "Treatment of adult patients with primary cutaneous
+                                    Anaplastic Large Cell Lymphoma or Mycosis Fungoides Expressing CD30+"|t
+                                    }}<br><strong>{{ "(ALCANZA)"|t }}</strong>
+                                    <input type="radio" id="alcanza" class="overdose-opt" name="protocolo">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </div>
+
+            <div class="go-back" onclick="redo()"><span>
+                    &lbarr; </span>{{ "Change the protocol"|t }}</div>
+
+            <div class="info-box bordered text-align-left">
+                <div class="adcetris-calculator__title-img">
+                    <img src="{{dc_echelon1}}" alt="frasco remédio">
+                    <h3 id="dosage">{{ "DOSAGE"|t }}
+                    </h3>
+                    <h3 id="dosage2">{{ "DOSAGE"|t }}
+                    </h3>
+                    <h3 id="dosage3">{{ "DOSAGE"|t }}
+                    </h3>
+                </div>
+
+                <div>
+                    <div class="p-info-box dosage">
+                        <p> {{ "The recommended dose in combination with chemotherapy (doxorubicin [a], vinblastine [v]
+                            and
+                            dacarbazine [d] [avd]) is 1.2 mg/kg administered by intravenous infusion over 30 minutes on
+                            days
+                            1 and 15 of each cycle of 28 days for 6 cycles. primary prophylaxis with granulocyte
+                            colony-stimulating factor (g-csf) is recommended for all patients starting with the first
+                            dose."|t }}
+                        </p>
+                        <p>{{ "consult the package inserts for chemotherapy medications administered in combination with
+                            adcetris® for more information on these medications."|t }}</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="info-box3">
+                <div>
+                    <p class="p-info-box3">
+                        {{ "Check the need for dose adjustment for special populations (liver and kidney)."|t }}
+                    </p>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <p class="insert">
+            {{ "Enter the data below"|t }}
+        </p>
+
+        <div class="row fields">
+
+
+            <div class="col-md-4 col-sm-4  col-xs-12   field1">
+                <div class="row">
+
+                    <div class="col-md-4 col-sm-4  col-xs-4">
+                        <img src="{{dc_porta}}" alt="">
+                    </div>
+
+                    <div class="col-md-6 col-sm-6  col-xs-6">
+                        <input type="number" id="input1" placeholder="0" oninput="limiter()">
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 col-xs-2 medida">
+                        <p>kg</p>
+                    </div>
+
+                </div>
+
+                <div class="row label-inputs">
+                    <p>{{ "Weight"|t }} (kg)</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-4  col-xs-12 field2">
+                <div class="row">
+
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                        <img src="{{dc_regua}}" alt="">
+                    </div>
+
+                    <div class="col-md-6 col-sm-6  col-xs-6">
+                        <input type="number" id="input2" placeholder="0" oninput="limiter()">
+                    </div>
+
+                    <div class="col-md-2 col-sm-2  col-xs-2 medida">
+                        <p>cm</p>
+                    </div>
+
+                </div>
+
+                <div class="row label-inputs">
+                    <p>{{ "Height"|t }} (cm)</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-4  col-xs-12 field3">
+
+                <div class="row">
+
+                    <div class="col-md-4 col-sm-4  col-xs-4">
+                        <img src="{{dc_pessoa}}" alt="">
+                    </div>
+
+                    <div class="col-md-6 col-sm-6  col-xs-6">
+                        <input type="number" id="input3" placeholder="0" oninput="limiter()">
+                    </div>
+
+                    <div class="col-md-2 col-sm-2  col-xs-2 medida">
+                        <p>cm</p>
+                    </div>
+
+                </div>
+                <div class="row label-inputs">
+                    <p>{{ "Dubois body surface (m2)"|t }} (m²)²</p>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="info-box">
+            <p class="p-info-box2">
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <path d="M8.9974 17.3333C7.34922 17.3333 5.73806 16.8446 4.36765 15.9289C2.99724 15.0132 1.92913 13.7117 1.2984 12.189C0.667673 10.6663 0.502645 8.99072 0.824189 7.37421C1.14573 5.7577 1.9394 4.27284 3.10484 3.10741C4.27028 1.94197 5.75514 1.1483 7.37164 0.826752C8.98815 0.505209 10.6637 0.670237 12.1864 1.30097C13.7091 1.9317 15.0106 2.9998 15.9263 4.37021C16.842 5.74062 17.3307 7.35178 17.3307 8.99996C17.3287 11.2095 16.45 13.3279 14.8877 14.8902C13.3253 16.4526 11.2069 17.3312 8.9974 17.3333ZM8.9974 1.82942C7.5792 1.82942 6.19285 2.24996 5.01366 3.03787C3.83447 3.82578 2.9154 4.94567 2.37268 6.25591C1.82996 7.56616 1.68796 9.00791 1.96464 10.3989C2.24131 11.7898 2.92424 13.0675 3.92706 14.0703C4.92988 15.0731 6.20755 15.756 7.59849 16.0327C8.98944 16.3094 10.4312 16.1674 11.7414 15.6247C13.0517 15.082 14.1716 14.1629 14.9595 12.9837C15.7474 11.8045 16.1679 10.4182 16.1679 8.99996C16.1659 7.09884 15.4098 5.27618 14.0655 3.93189C12.7212 2.5876 10.8985 1.83147 8.9974 1.82942Z" fill="#34373F"/>
+                        <path d="M9.77241 13.4573H8.22202C8.06782 13.4573 7.91994 13.396 7.81091 13.287C7.70188 13.178 7.64062 13.0301 7.64062 12.8759C7.64062 12.7217 7.70188 12.5738 7.81091 12.4648C7.91994 12.3557 8.06782 12.2945 8.22202 12.2945H9.77241C9.9266 12.2945 10.0745 12.3557 10.1835 12.4648C10.2925 12.5738 10.3538 12.7217 10.3538 12.8759C10.3538 13.0301 10.2925 13.178 10.1835 13.287C10.0745 13.396 9.9266 13.4573 9.77241 13.4573Z" fill="#34373F"/>
+                        <path d="M8.999 13.4573C8.84543 13.4553 8.69872 13.3934 8.59012 13.2848C8.48152 13.1762 8.41962 13.0295 8.41761 12.876V7.99998C8.28667 7.95544 8.17589 7.86568 8.10517 7.74681C8.03446 7.62795 8.00844 7.48776 8.03178 7.35143C8.05512 7.21511 8.1263 7.09157 8.23254 7.003C8.33877 6.91443 8.4731 6.86664 8.61141 6.8682H8.999C9.15258 6.87021 9.29929 6.93211 9.40789 7.04071C9.51649 7.14931 9.57839 7.29603 9.5804 7.4496V12.876C9.57839 13.0295 9.51649 13.1762 9.40789 13.2848C9.29929 13.3934 9.15258 13.4553 8.999 13.4573Z" fill="#34373F"/>
+                        <path d="M8.99785 5.89914C9.42598 5.89914 9.77304 5.55208 9.77304 5.12395C9.77304 4.69582 9.42598 4.34875 8.99785 4.34875C8.56972 4.34875 8.22266 4.69582 8.22266 5.12395C8.22266 5.55208 8.56972 5.89914 8.99785 5.89914Z" fill="currentColor"/>
+                      </svg>
+                </span>
+                {{ "If the patient's weight is greater than 100 kg, the dose calculation must use 100 kg."|t }}
+            </p>
+
+        </div>
+
+
+        <div class="data-echelon1">
+
+            <div class="row data">
+                <div class="col-md-4 col-sm-4  col-xs-6">
+                    <input type="number" class="blue" id="data1" value="0" disabled>
+                    <p>{{ "Dosage (mg/kg)"|t }}</p>
+                </div>
+                <div class="col-md-4 col-sm-4  col-xs-6">
+                    <input type="number" class="blue" id="data2" value="0" disabled>
+                    <p>{{ "Cycles"|t }}</p>
+                </div>
+                <div class="col-md-4 col-sm-4  col-xs-6">
+                    <input type="number" class="blue" id="data3" value="0" disabled>
+                    <p>{{ "Infusions per cycle"|t }}</p>
+                </div>
+                <div class="col-md-4 col-sm-4  col-xs-6">
+
+                </div>
+
+                <div class="col-md-4 col-sm-4  col-xs-6 ">
+                    <input type="number" name="" id="data5" class="input-secondary-bg"  value="0" disabled>
+                    <p>{{ "Vials per cycle"|t }}</p>
+                </div>
+                <div class="col-md-4 col-sm-4  col-xs-6">
+                    <input type="number" name="" id="data6" class="input-secondary-bg"  value="0" disabled>
+                    <p>{{ "Infusion vials"|t }}</p>
+                </div>
+            </div>
+
+            <p class="mt-4 margin-top-bot-15">
+                {{ "*Maximum recommended cycles according to the Adcetris® leaflet."|t }}
+            </p>
+
+            <div class="info-box">
+                <p class="p-info-box2">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                            <path d="M8.9974 17.3333C7.34922 17.3333 5.73806 16.8446 4.36765 15.9289C2.99724 15.0132 1.92913 13.7117 1.2984 12.189C0.667673 10.6663 0.502645 8.99072 0.824189 7.37421C1.14573 5.7577 1.9394 4.27284 3.10484 3.10741C4.27028 1.94197 5.75514 1.1483 7.37164 0.826752C8.98815 0.505209 10.6637 0.670237 12.1864 1.30097C13.7091 1.9317 15.0106 2.9998 15.9263 4.37021C16.842 5.74062 17.3307 7.35178 17.3307 8.99996C17.3287 11.2095 16.45 13.3279 14.8877 14.8902C13.3253 16.4526 11.2069 17.3312 8.9974 17.3333ZM8.9974 1.82942C7.5792 1.82942 6.19285 2.24996 5.01366 3.03787C3.83447 3.82578 2.9154 4.94567 2.37268 6.25591C1.82996 7.56616 1.68796 9.00791 1.96464 10.3989C2.24131 11.7898 2.92424 13.0675 3.92706 14.0703C4.92988 15.0731 6.20755 15.756 7.59849 16.0327C8.98944 16.3094 10.4312 16.1674 11.7414 15.6247C13.0517 15.082 14.1716 14.1629 14.9595 12.9837C15.7474 11.8045 16.1679 10.4182 16.1679 8.99996C16.1659 7.09884 15.4098 5.27618 14.0655 3.93189C12.7212 2.5876 10.8985 1.83147 8.9974 1.82942Z" fill="#34373F"/>
+                            <path d="M9.77241 13.4573H8.22202C8.06782 13.4573 7.91994 13.396 7.81091 13.287C7.70188 13.178 7.64062 13.0301 7.64062 12.8759C7.64062 12.7217 7.70188 12.5738 7.81091 12.4648C7.91994 12.3557 8.06782 12.2945 8.22202 12.2945H9.77241C9.9266 12.2945 10.0745 12.3557 10.1835 12.4648C10.2925 12.5738 10.3538 12.7217 10.3538 12.8759C10.3538 13.0301 10.2925 13.178 10.1835 13.287C10.0745 13.396 9.9266 13.4573 9.77241 13.4573Z" fill="#34373F"/>
+                            <path d="M8.999 13.4573C8.84543 13.4553 8.69872 13.3934 8.59012 13.2848C8.48152 13.1762 8.41962 13.0295 8.41761 12.876V7.99998C8.28667 7.95544 8.17589 7.86568 8.10517 7.74681C8.03446 7.62795 8.00844 7.48776 8.03178 7.35143C8.05512 7.21511 8.1263 7.09157 8.23254 7.003C8.33877 6.91443 8.4731 6.86664 8.61141 6.8682H8.999C9.15258 6.87021 9.29929 6.93211 9.40789 7.04071C9.51649 7.14931 9.57839 7.29603 9.5804 7.4496V12.876C9.57839 13.0295 9.51649 13.1762 9.40789 13.2848C9.29929 13.3934 9.15258 13.4553 8.999 13.4573Z" fill="#34373F"/>
+                            <path d="M8.99785 5.89914C9.42598 5.89914 9.77304 5.55208 9.77304 5.12395C9.77304 4.69582 9.42598 4.34875 8.99785 4.34875C8.56972 4.34875 8.22266 4.69582 8.22266 5.12395C8.22266 5.55208 8.56972 5.89914 8.99785 5.89914Z" fill="currentColor"/>
+                          </svg>
+                    </span>
+                    {{ "Оn day 1 and 15 of each 28-day cycle for 6 cycles."|t }}
+                </p>
+
+            </div>
+
+            <div class="result-div">
+
+                <div class="row result">
+                    <h2>{{ "Combination Therapy"|t }} (ADCETRIS<sup>®</sup> + AVD)</h2>
+
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4  col-xs-4 column1">
+                            <p>{{ "A (doxorubicin1)"|t }}</p>
+                        </div>
+                        <div class="col-md-4 col-sm-4  col-xs-4">
+                            <input type="number" name="" value="0" id="result1" disabled>
+                        </div>
+                        <div class="col-md-4 col-sm-4  col-xs-4">
+                            <p>
+                                {{ "mg IV/cycle"|t }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4  col-xs-4 column2">
+                            <p>{{ "V (vinblastina)"|t }}<sup>4</sup></p>
+                        </div>
+                        <div class="col-md-4 col-sm-4  col-xs-4">
+                            <input type="number" name="" value="0" id="result2" disabled>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <p>
+                                {{ "mg IV/cycle"|t }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4  col-xs-4 column3">
+                            <p>{{ "D (dacarbazine)"|t }}<sup>5</sup></p>
+                        </div>
+                        <div class="col-md-4 col-sm-4  col-xs-4">
+                            <input type="number" name="" value="0" id="result3" disabled>
+                        </div>
+                        <div class="col-md-4 col-sm-4  col-xs-4">
+                            <p>
+                                {{ "mg IV/cycle"|t }}
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div>
+
+                <button type="button" class="dose-adjustment">
+                    <span><img src="{{dc_ajuste_dose}}" alt=""></span> {{ "Dose adjustment"|t }}
+                </button>
+            </div>
+        </div>
+
+        <div class="data-demais">
+
+            <div class="row data">
+                <div class="col-md-3 col-sm-3  col-xs-6">
+                    <input type="number" id="data1" value="0" disabled>
+                    <p>{{ "Dosage (mg/kg)"|t }}</p>
+                </div>
+                <div class="col-md-3 col-sm-3  col-xs-6">
+                    <input type="number" id="data2" value="0" disabled>
+                    <p>{{ "Max Cycles*"|t }}</p>
+                </div>
+                <div class="col-md-3 col-sm-3  col-xs-6">
+                    <input type="number" id="data3" value="0" disabled>
+                    <p>{{ "Infusion per cycle"|t }}</p>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-6">
+
+                </div>
+
+                <div class="col-md-3 col-sm-3 col-xs-6">
+                    <input type="number" name="" id="data5" value="0" disabled>
+                    <p>{{ "Vials per cycle"|t }}</p>
+                </div>
+
+            </div>
+
+
+            <p class="box-text margin-top-bot-15">
+                {{ "*Maximum recommended cycles according to the Adcetris leaflet"|t }}<sup>1</sup>
+            </p>
+
+
+            <div class="result-div">
+
+
+
+                <div class="row result2">
+                    <h2>{{ "Combined Therapy"|t }} (ADCETRIS<sup>®</sup> + CHP)</h2>
+
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4  col-xs-4 column1">
+                            <p>{{ "cyclophosphamide (C)"|t }}<sup>6</sup></p>
+                        </div>
+                        <div class="col-md-4 col-sm-4  col-xs-4">
+                            <input type="number" name="" value="0" id="result1-1" disabled>
+                        </div>
+                        <div class="col-md-4 col-sm-4  col-xs-4">
+                            <p>
+                                {{ "mg IV/cycle"|t }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4  col-xs-4 column2">
+                            <p>{{ "doxorubicin (H)"|t }}</p>
+                        </div>
+                        <div class="col-md-4 col-sm-4  col-xs-4">
+                            <input type="number" name="" value="0" id="result2-1" disabled>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <p>
+                                {{ "mg IV/cycle"|t }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4  col-xs-4 column3">
+                            <p>{{ "prednisone (P)"|t }}</p>
+                        </div>
+                        <div class="col-md-4 col-sm-4  col-xs-4">
+                            <input type="number" name="" value="0" id="result3-1" disabled>
+                        </div>
+                        <div class="col-md-4 col-sm-4  col-xs-4">
+                            <p>
+                                {{ "mg IV/cycle"|t }}
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div>
+
+                <button type="button" class="dose-adjustment">
+                    <span><img src="{{dc_ajuste_dose}}" alt=""></span> {{ "Dose adjustment"|t }}
+                </button>
+            </div>
+        </div>
+
+        <div class="neuros ">
+            <div class="neuro-head row">
+                <div class="col-md-6 col-sm-6  col-xs-12">
+                    <div class=" neuro-head-content neuropatia color-third">
+                        <p>{{ "Peripheral neuropathy" }}</p>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="color-third neuro-head-content neutropenia ">
+                        <p>{{ "Neutropenia"|t }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="neuro-content row">
+
+                <div class="col-md-3 col-sm-3  col-xs-12">
+                    <div class="color-third neuro-content-content grade grade1 " id="grade1">
+                        <p><span>{{ "Degree 1"|t }}</span><br />{{ "Paresthesia and/or loss of reflexes, without loss of
+                            function"|t }}</p>
+                    </div>
+                </div>
+
+
+                <div class="col-md-3 col-sm-3  col-xs-12">
+                    <div class="color-third neuro-content-content grade grade2 " id="grade2">
+                        <p><span>{{ "Degree 2"|t }}</span><br />{{ "Interfering with function but not activities
+                            daily"|t }}</p>
+                    </div>
+                </div>
+
+
+                <div class="col-md-3 col-sm-3  col-xs-12">
+                    <div class="color-third neuro-content-content grade grade3 " id="grade3">
+                        <p><span>{{ "Degree 3"|t }}</span><br /> {{ "Interfering with daily activities"|t }}</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-3  col-xs-12">
+                    <div class="active-bg neuro-content-content grade grade4 " id="grade4">
+                        <p><span>{{ "Degree 4"|t }}</span><br />{{ "Sensory neuropathy that is disabling or neuropathy
+                            engine that is life-threatening or leads to paralysis"|t }}</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="neuro-content2 row">
+                <div class="col-md-3 col-sm-3  col-xs-12">
+                    <div class="color-third neuro-content-content grade grade1">
+                        <p><span>{{ "Degree 1"|t }}</span><br /><span>
+                            </span>LIN - 1.500/mm<sup>3</sup> <span>
+                            </span>LIN -1,5 x 10<sup>9</sup>/L</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-3  col-xs-12">
+                    <div class="color-third neuro-content-content grade grade2">
+                        <p><span>{{ "Degree 2"|t }}</span><br /><span>
+                            </span>1.500 – 1000/mm<sup>3</sup> <span>
+                            </span> 1,5 – 1,0 x 10<sup>9</sup>/L</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-3  col-xs-12">
+                    <div class="color-third neuro-content-content grade grade3">
+                        <p><span>{{ "Degree 3"|t }}</span><br /><span>
+                            </span>1000 – 500/mm<sup>3</sup> <span>
+                            </span> 1,0 – 0,5 x 10<sup>9</sup>/L</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-3  col-xs-12">
+                    <div class="active-bg neuro-content-content grade grade4">
+                        <p><span>{{ "Degree 4"|t }}</span><br /><span>
+                            </span>500/mm<sup>3</sup> <span>
+                            </span> 0,5 x 10<sup>9</sup>/L</p>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+        </div>
+
+        <div class="box-alert box-alert1">
+            <div>
+                <p class="p-box-alert p-box-alert-dose ">{{ "Discontinue treatment."|t }}</p>
+            </div>
+        </div>
+
+        <div class="box-alert box-alert2">
+            <div>
+                <p class="p-box-alert">{{ "Suspend the dose until toxicity returns to Grade
+                    ≤ 2 or initial level, then restart treatment with the same dose and scheduleᵇ. Consider support
+                    with granulocyte colony-stimulating factor (G-CSF or GM-CSF) in subsequent cycles to
+                    patients who develop Grade 3 or 4 neutropenia."|t }}</p>
+            </div>
+        </div>
+
+        <div class="data-echelon1-adjustment data2">
+            <div class="row data ">
+                <div class="col-md-4 col-sm-4  col-xs-6">
+                    <input class="blue" type="number" name="" id="data1-2" value="0" disabled>
+                    <p>{{ "Dosage (mg/m²)"|t }}</p>
+                </div>
+                <div class="col-md-4 col-sm-4  col-xs-6">
+                    <input class="blue" type="number" name="" id="data2-2" value="0" disabled>
+                    <p>Cycles</p>
+                </div>
+                <div class="col-md-4 col-sm-4  col-xs-6">
+                    <input class="blue" type="number" name="" id="data3-2" value="0" disabled>
+                    <p>{{ "Infusions"|t }}</p>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-6">
+
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-6">
+                    <input type="number" name="" id="data5-2" value="0" class="input-secondary-bg" disabled>
+                    <p>{{ "Vials per cycle"|t }}</p>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-6">
+                    <input type="number" name="" id="data6-2" value="0"  class="input-secondary-bg" disabled>
+                    <p>{{ "Vials Treatment"|t }}</p>
+                </div>
+
+            </div>
+
+            <p class="mt-4 margin-top-bot-15 font-italic">
+                {{ "*Maximum recommended cycles according to the Adcetris leaflet"|t }}
+            </p>
+        </div>
+
+        <div class="data-demais-adjustment data2">
+            <div class="row data">
+                <div class="col-md-3 col-sm-3  col-xs-6">
+                    <input type="number" class="blue" id="data1" value="0" disabled>
+                    <p>{{ "Dosage (mg/kg)"|t }}</p>
+                </div>
+                <div class="col-md-3 col-sm-3  col-xs-6">
+                    <input type="number" class="blue" id="data2" value="0" disabled>
+                    <p>{{ "Max Cycles*"|t }}</p>
+                </div>
+                <div class="col-md-3 col-sm-3  col-xs-6">
+                    <input type="number" class="blue" id="data3" value="0" disabled>
+                    <p>{{ "Infusion per cycle"|t }}</p>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-6">
+
+                </div>
+
+                <div class="col-md-3 col-sm-3 col-xs-6">
+                    <input type="number" class="blue" name="" id="data5" value="0" disabled>
+                    <p>{{ "Vials per cycle"|t }}</p>
+                </div>
+
+            </div>
+            <p class="mt-4 margin-top-bot-15">
+                {{ "*Maximum recommended cycles according to the Adcetris leaflet"|t }}<sup>1</sup>
+            </p>
+        </div>
+
+
+        <div class="box-alert box-alert-motora  ">
+            <div>
+                <p class="">{{ "Motor neuropathy: Reduce dose to 1.2 mg/kg up to a maximum
+                    120 mg every 3 weeks."|t }}</p>
+            </div>
+        </div>
+
+        <div class="data-motora data2">
+            <div class="row data">
+                <div class="col-md-3 col-sm-3  col-xs-6">
+                    <input type="number" class="blue" id="data1" value="0" disabled>
+                    <p>{{ "Dosage (mg/kg)"|t }}</p>
+                </div>
+                <div class="col-md-3 col-sm-3  col-xs-6">
+                    <input type="number" class="blue" id="data2" value="0" disabled>
+                    <p>{{ "Max Cycles*"|t }}</p>
+                </div>
+                <div class="col-md-3 col-sm-3  col-xs-6">
+                    <input type="number" class="blue" id="data3" value="0" disabled>
+                    <p>{{ "Infusion per cycle"|t }}</p>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-6">
+
+                </div>
+
+                <div class="col-md-3 col-sm-3 col-xs-6">
+                    <input type="number" class="blue" name="" id="data5" value="0" disabled>
+                    <p>{{ "Vials per cycle"|t }}</p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="info-box-bottom1">
+            <p class="p-info-box2">
+                {{ "ON DAYS 1 AND 15 OF EACH CYCLE OF 28 DAYS FOR 6 CYCLES"|t }}
+            </p>
+
+        </div>
+
+        <div class="info-box-bottom2">
+            <p class="p-info-box2">
+                {{ "Consult the leaflets of chemotherapy drugs administered in combination with ADCETRIS® for
+                more
+                dose adjustment information"|t }}
+            </p>
+
+        </div>
+
+        <div>
+            <button type="button" class="redo adcetris-calculator__reset-button">
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="17" viewBox="0 0 14 19" fill="none">
+                        <g clip-path="url(#clip0_129_1758)">
+                            <path
+                                d="M7 4.25V0.75L2.625 5.125L7 9.5V6C8.03835 6 9.05339 6.30791 9.91674 6.88478C10.7801 7.46166 11.453 8.2816 11.8504 9.24091C12.2477 10.2002 12.3517 11.2558 12.1491 12.2742C11.9466 13.2926 11.4465 14.2281 10.7123 14.9623C9.97808 15.6965 9.04263 16.1965 8.02422 16.3991C7.00582 16.6017 5.95022 16.4977 4.99091 16.1004C4.0316 15.703 3.21166 15.0301 2.63478 14.1667C2.05791 13.3034 1.75 12.2884 1.75 11.25H0C0 12.6345 0.410543 13.9878 1.17971 15.139C1.94888 16.2901 3.04213 17.1873 4.32122 17.7172C5.6003 18.247 7.00777 18.3856 8.36563 18.1155C9.7235 17.8454 10.9708 17.1787 11.9497 16.1997C12.9287 15.2208 13.5954 13.9735 13.8655 12.6156C14.1356 11.2578 13.997 9.8503 13.4672 8.57122C12.9373 7.29213 12.0401 6.19888 10.889 5.42971C9.73785 4.66054 8.38447 4.25 7 4.25Z"
+                                fill="currentColor" />
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_129_1758">
+                                <rect width="14" height="17.5" fill="white" transform="translate(0 0.75)" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+                    {{ "Reset Calculation"|t }}
+            </button>
+        </div>
+
+    </div>
+</section>
+<div class="hidden">
+    <p id="calculatorOneContent">{{calculator_one_content[0]}}</p>
+    <p id="calculatorTwoContent">{{calculator_two_content[0]}}</p>
+    <p id="calculatorTreeContent">{{calculator_three_content[0]}}</p>
+    <p id="calculatorFourContent">{{calculator_four_content[0]}}</p>
+    <p id="calculatorFiveContent">{{calculator_five_content[0]}}</p>
+    <p id="calculatorSixContent">{{calculator_six_content[0]}}</p>
+    <p id="suspendDoseGrade1">{{suspend_dose_grade_1[0]}}</p>
+    <p id="suspendDoseGrade2">{{suspend_dose_grade_2[0]}}</p>
+    <p id="nauropatiaSensoryContinueDose">{{nauropatia_sensory_continue_dose[0]}}</p>
+    <p id="neuropatiaSensoryReduceDose">{{nauropatia_sensory_reduce_dose[0]}}</p>
+    <p id="continueDoseAndScheme">{{continue_dose_and_scheme[0]}}</p>
+    <p id="reduceDoseEveryTwoWeeks">{{reduce_dose_every_2_weeks[0]}}</p>
+    <p id="adcetrisSuspendDoseGrade2">{{adcetris_suspend_dose_grade_2[0]}}</p>
+    <p id="discontinueTreatment">{{discontinue_treatment[0]}}</p>
+    <p id="recomendedProphylaxis">{{recommended_prophylaxis[0]}}</p>
+    <p id="cycleInfo">{{cycle_info[0]}}</p>
+    <p id="referToLeaflets">{{refer_to_leaflets[0]}}</p>
+</div>

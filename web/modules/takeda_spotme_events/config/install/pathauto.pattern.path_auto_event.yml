@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - spotme_events
+id: path_auto_event
+label: 'Path Auto Event'
+type: 'canonical_entities:node'
+pattern: '/event/[node:source:original:title]'
+selection_criteria:
+  aab4d5a1-7429-4a38-b7d0-510acf7a7345:
+    id: entity_bundle:node
+    negate: false
+    uuid: aab4d5a1-7429-4a38-b7d0-510acf7a7345
+    context_mapping:
+      node: node
+    bundles:
+      event: event
+selection_logic: and
+weight: -5
+relationships: {  }

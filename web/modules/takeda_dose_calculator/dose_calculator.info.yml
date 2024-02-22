@@ -1,0 +1,9 @@
+name: Dose Calculator
+description: Dose Calculator for Takeda
+type: module
+core_version_requirement: ^8 || ^9 || ^10
+dependencies:
+  - paragraphs:paragraphs
+  - language:language
+  - content_translation:content_translation
+  - locale:locale

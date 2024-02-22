@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_crm_country
+  module:
+    - takeda_id
+    - user
+  enforced:
+    module:
+      - takeda_id
+id: user.user.field_crm_country
+field_name: field_crm_country
+entity_type: user
+bundle: user
+label: 'CRM Country'
+description: 'Country associated with this user in Takeda ID'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

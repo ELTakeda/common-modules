@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+  enforced:
+    module:
+      - menu_ui
+      - sfmc
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+_core:
+  default_config_hash: RUAi9d4vM3wM-des8i4h1SBWLqg56uVLQvC6m_8agjM
+name: 'SFMC Connector'
+type: sfmc_connector
+description: ''
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true

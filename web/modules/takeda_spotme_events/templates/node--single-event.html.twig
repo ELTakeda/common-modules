@@ -1,0 +1,11 @@
+{% set module_path = _self|split('/templates') %}
+
+{% if view_mode == 'teaser' %}
+
+    {% include module_path[0] ~ '/templates/node--single-event--teaser.html.twig' %}
+
+{% else %}
+
+    {% include module_path[0] ~ '/templates/node--single-event--full.html.twig' %}
+
+{% endif %}

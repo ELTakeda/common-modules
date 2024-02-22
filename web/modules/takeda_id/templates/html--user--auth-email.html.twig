@@ -1,0 +1,14 @@
+<form action="{{ url('<front>') }}user/{{children.user_data.uid}}/auth_email" method="post">
+<label for="fname">First name:</label>
+  <input type="text" id="fname" name="fname" value="{{children.user_data.first_name}}" readonly><br><br>
+  <label for="lname">Last name:</label>
+  <input type="text" id="lname" name="lname" value="{{children.user_data.last_name}}" readonly><br><br>
+  <label for="lname">Takeda Authentication URL:</label>
+  <input type="text" id="verificationURL" name="verificationURL" value="{{children.user_data.verify}}" readonly><br><br>
+  <input
+  type="submit"
+  id="send-email"
+  name="sendEmail"
+  value="Send Email"
+/>
+</form>

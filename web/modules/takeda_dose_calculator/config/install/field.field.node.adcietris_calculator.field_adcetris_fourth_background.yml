@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_adcetris_fourth_background
+    - node.type.adcietris_calculator
+id: node.adcietris_calculator.field_adcetris_fourth_background
+field_name: field_adcetris_fourth_background
+entity_type: node
+bundle: adcietris_calculator
+label: 'Adcetris fourth background color'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: '#53585a'
+default_value_callback: ''
+settings: {  }
+field_type: string

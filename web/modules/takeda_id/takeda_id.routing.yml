@@ -1,0 +1,59 @@
+takeda_id.lead_callback:
+  path: '/lead-callback'
+  defaults:
+    _controller: '\Drupal\takeda_id\Controller\TakedaIdController::leadCallback'
+    _title: 'Lead Callback'
+  requirements:
+    _access: 'TRUE'
+  options:
+    _maintenance_access: TRUE
+    no_cache: TRUE
+
+takeda_id.post_login:
+  path: '/takeda-id/logged-in'
+  defaults:
+    _controller: '\Drupal\takeda_id\Controller\TakedaIdController::postLogin'
+    _title: 'Post Login'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE
+
+takeda_id.verify:
+  path: '/takeda-id/verify/{user}/{timestamp}/{hash}/{code}'
+  defaults:
+    _controller: '\Drupal\takeda_id\Controller\TakedaIdController::verifyUser'
+    _title: 'Verify User'
+  requirements:
+    _access: 'TRUE'
+  options:
+    _maintenance_access: TRUE
+    no_cache: TRUE
+
+takeda_id.configure_form:
+  path: '/admin/config/people/takeda_id'
+  defaults:
+    _form: '\Drupal\takeda_id\Form\TakedaIdConfigureForm'
+    _title: 'Takeda ID'
+  requirements:
+    _permission: 'administer site configuration'
+
+takeda_id.reset_password:
+  path: '/reset-password'
+  defaults:
+    _form: '\Drupal\takeda_id\Form\PasswordResetForm'
+    _title: 'Reset Password'
+  requirements:
+    _permission: 'access content'
+
+takeda_id.auth_email:
+  path: '/user/{user}/auth_email'
+  defaults:
+    _controller: '\Drupal\takeda_id\Controller\TakedaAuthenticationEmail::userData'
+    _title: 'Authentication Email'
+  requirements:
+    _access: 'TRUE'
+  options:
+    parameters:
+      user:
+        type: entity:user

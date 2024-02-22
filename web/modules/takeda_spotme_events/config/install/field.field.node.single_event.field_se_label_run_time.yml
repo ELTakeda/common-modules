@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+    config:
+        - field.storage.node.field_se_label_run_time
+        - node.type.single_event
+    module:
+        - text
+id: node.single_event.field_se_label_run_time
+field_name: field_se_label_run_time
+entity_type: node
+bundle: single_event
+label: Label - Run time
+description: 'Text label for the "Run time" of the event'
+required: true
+translatable: true
+default_value: Run time
+default_value_callback: ''
+settings:
+    display_summary: false
+field_type: string

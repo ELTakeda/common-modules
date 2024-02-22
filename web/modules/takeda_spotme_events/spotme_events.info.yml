@@ -1,0 +1,11 @@
+name: Spotme events
+description: 'Spotme switcher between spotme express and spotme anywheres'
+core_version_requirement: ^9 || ^10
+type: module
+dependencies:
+  - views_data_export:views_data_export
+  - reference_value_pair:reference_value_pair
+  - takeda_id:takeda_id
+  - svg_image:svg_image
+  - media:media
+  - pathauto:pathauto

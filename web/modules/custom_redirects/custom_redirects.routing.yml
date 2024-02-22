@@ -1,0 +1,7 @@
+custom_redirects.configure_form:
+  path: '/admin/config/system/custom_redirects'
+  defaults:
+    _form: '\Drupal\custom_redirects\Form\CustomRedirectsConfigureForm'
+    _title: 'Custom Default Link Redirects Configuration Form'
+  requirements:
+    _permission: 'administer site configuration'

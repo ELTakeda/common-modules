@@ -1,0 +1,189 @@
+.feiba-dose-calculator {
+  width: 80%;
+  margin: 0 auto;
+  font-size: inherit;
+  font-family: inherit;
+}
+.feiba-dose-calculator *,
+.feiba-dose-calculator *:before,
+.feiba-dose-calculator *:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.feiba-dose-calculator .calculator__title {
+  text-align: center;
+  font-size: 2em;
+  margin: 20px auto;
+}
+.feiba-dose-calculator .calculator__title h1{
+  color: inherit;
+}
+.feiba-dose-calculator .calculator__table th {
+  font-weight: 700;
+  font-size: 23px;
+  height: 60px;
+  border-radius: 15px 15px 0 0;
+  position: relative;
+  top: 10px;
+}
+.feiba-dose-calculator .calculator__table tr:last-child td:last-child {
+  border-bottom-right-radius: 10px !important;
+}
+.feiba-dose-calculator .calculator__table td {
+  padding: 37px 22px 27px 22px;
+}
+.feiba-dose-calculator .calculator__table td:nth-child(2n+2) {
+  width: 22%;
+  text-align: center !important;
+}
+.feiba-dose-calculator .calculator__alerts .alert {
+  background-color: #d81d1d;
+  width: 500px;
+  margin: auto;
+  margin-top: 20px;
+  padding: 10px 20px 10px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-family: inherit;
+  color: #ffffff;
+  display: none;
+}
+.feiba-dose-calculator .calculator__alerts .alert .alert-close-btn {
+  float: right;
+}
+.feiba-dose-calculator .calculator__alerts .alert .alert-close-btn:hover {
+  cursor: pointer;
+}
+.feiba-dose-calculator .calculator__inputs {
+  display: flex;
+  justify-content: center;
+}
+.feiba-dose-calculator .calculator__inputs .input-number-div {
+  width: 160px;
+  height: 100px;
+  padding: 0;
+  border: none;
+  font-family: inherit;
+  font-size: 22px;
+  margin: 27px;
+  margin-bottom: 5px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.feiba-dose-calculator .calculator__inputs .input-number {
+  width: 60px;
+  height: 50px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  font-family: inherit;
+  font-size: 35px;
+  font-weight: 700;
+  outline: none;
+  text-align: right;
+}
+.feiba-dose-calculator .calculator__inputs .input-number-div.feiba-input-disabled,
+.feiba-dose-calculator .calculator__inputs .input-number-div.feiba-input-disabled input {
+  background-color: #dddddd !important;
+  color: #898989 !important;
+}
+.feiba-dose-calculator .calculator__inputs .label {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 30px;
+  font-family: inherit;
+  font-size: 14px;
+}
+.feiba-dose-calculator .calculator__inputs .calculate-button {
+  width: 180px;
+  height: 100px;
+  margin: 27px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 25px;
+  font-family: inherit;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 20px 30px;
+}
+.feiba-dose-calculator .calculator__inputs #result,
+.feiba-dose-calculator .calculator__inputs .input-number#input1,
+.feiba-dose-calculator .calculator__inputs .input-number#input2 {
+  width: 95px;
+  text-align: center;
+}
+.feiba-dose-calculator .calculator__inputs .input-number#result {
+  width: 115px;
+}
+.feiba-dose-calculator .calculator__inputs input[type=number] {
+  -moz-appearance: textfield;
+}
+.feiba-dose-calculator .calculator__inputs input::-webkit-outer-spin-button,
+.feiba-dose-calculator .calculator__inputs input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.feiba-dose-calculator .calculator__inputs .result-div {
+  display: none;
+}
+.feiba-dose-calculator .calculator__reset {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.feiba-dose-calculator .calculator__reset .reset-button {
+  width: 90%;
+  height: 65px;
+  border: none;
+  outline: 0;
+  font-family: inherit;
+  font-size: 24px;
+  font-weight: 700;
+  border-radius: 15px;
+  cursor: pointer;
+  margin-top: 30px;
+  margin-left: 0;
+}
+@media only screen and (max-width: 730px) {
+  .feiba-dose-calculator {
+    width: 100%;
+  }
+  .feiba-dose-calculator .calculator {
+    width: 95%;
+    margin: 0 auto;
+  }
+  .feiba-dose-calculator .calculator__table {
+    width: 100%;
+  }
+  .feiba-dose-calculator .calculator__table td {
+    padding: 10px 0;
+  }
+  .feiba-dose-calculator .calculator__table td p {
+    padding: 5px;
+  }
+  .feiba-dose-calculator .calculator__alerts {
+    width: 100%;
+  }
+  .feiba-dose-calculator .calculator__alerts .alert {
+    width: 100%;
+  }
+  .feiba-dose-calculator .calculator__inputs {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .feiba-dose-calculator .calculator__inputs .input-number-div {
+    width: 250px;
+    margin-top: 5px;
+  }
+  .feiba-dose-calculator .calculator__inputs .calculate-button {
+    width: 250px;
+  }
+  .feiba-dose-calculator .calculator__inputs .label {
+    margin-bottom: 10px;
+  }
+}

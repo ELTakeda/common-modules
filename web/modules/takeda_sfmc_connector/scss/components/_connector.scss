@@ -1,0 +1,182 @@
+.sfmc-connector {
+    padding: 25px 0 65px 0;
+    position: relative;
+    overflow: hidden;
+    width: 95%;
+    max-width: $max-module-width;
+    margin: 0 auto;
+
+    &__title {
+        font-family: $font-semi-bold;
+        font-weight: 600;
+        font-size: 26px;
+        color: $color-secondary;
+    }
+
+    &__description {
+        font-family: $font-medium;
+        font-weight: 500;
+        font-size: 14px;
+        color: $color-primary;
+        margin-top: 20px;
+    }
+}
+
+.sfmc-form {
+    width: 100%;
+
+    &__inputs-container {
+        width: 100%;
+    }
+
+    &__input-pair {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-top: 25px;
+
+        input {
+            font-family: $font-regular;
+            font-weight: 400;
+            font-size: 14px;
+            color: $color-primary;
+            outline: none;
+            padding: 10px;
+            border: none;
+            border-bottom: 1px solid $color-border;
+
+            &::placeholder {
+                font-family: $font-regular;
+                font-weight: 400;
+                font-size: 14px;
+                color: $color-primary;
+            }
+
+            &[type="number"] {
+                -moz-appearance: textfield;
+
+                &::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
+
+                &::-webkit-outer-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
+            }
+        }
+    }
+
+    &__select {
+        width: 100%;
+        font-family: $font-regular;
+        font-weight: 400;
+        font-size: 14px;
+        color: $color-primary;
+        outline: none;
+        padding: 10px;
+        border: none;
+        border-bottom: 1px solid $color-border;
+    }
+
+    &__checkbox-input-container {
+        width: 100%;
+        margin-top: 25px;
+        padding-left: 30px;
+        line-height: 26px;
+
+        label,
+        a {
+            font-family: $font-regular;
+            font-weight: 400;
+            font-size: 14px;
+            color: $color-primary;
+        }
+
+        a {
+            text-decoration: underline;
+            display: inline;
+
+            color: $color-secondary;
+
+            &:hover {
+                color: $color-secondary--hover;
+            }
+        }
+    }
+
+    &__checkbox-input-container.invalid label {
+        color: $color-secondary;
+    }
+
+    &__checkbox-input {
+        display: none;
+    }
+
+    &__checkbox-input:checked+label:before {
+        background-image: url("../assets/icons/check-small-icon.svg");
+        background-color: $color-secondary;
+    }
+
+    &__checkbox-label {
+        position: relative;
+        cursor: pointer;
+
+        &::before {
+            content: "";
+            display: block;
+            width: 20px;
+            height: 20px;
+            border: 1px solid $color-border;
+            position: absolute;
+            left: -30px;
+            top: 0;
+            border-radius: 3px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    }
+
+    &__input-pair.invalid input {
+        border-bottom: 1px solid $color-secondary;
+    }
+
+    &__input-pair.invalid &__validation-error {
+        display: block;
+    }
+
+    &__validation-error {
+        font-family: $font-regular;
+        font-weight: 400;
+        font-size: 12px;
+        color: $color-secondary;
+        margin-top: 10px;
+        display: none;
+    }
+
+    &__submit-btn {
+        font-family: $font-medium;
+        font-weight: 500;
+        font-size: 15px;
+        padding: 10px 40px;
+        color: $color-white;
+        background-color: $color-secondary;
+        border: none;
+        border-radius: 50px;
+        width: fit-content;
+        margin-top: 25px;
+
+        &:hover {
+            cursor: pointer;
+            background-color: $color-secondary--hover;
+        }
+    }
+}
+
+@media screen and (max-width: $breakpoint-phone) {
+    .sfmc-connector {
+        padding: 20px;
+    }
+}

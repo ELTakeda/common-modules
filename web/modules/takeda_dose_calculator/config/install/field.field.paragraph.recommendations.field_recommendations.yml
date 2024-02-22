@@ -1,0 +1,18 @@
+langcode: bg
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_recommendations
+    - paragraphs.paragraphs_type.recommendations
+id: paragraph.recommendations.field_recommendations
+field_name: field_recommendations
+entity_type: paragraph
+bundle: recommendations
+label: Recommendations
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

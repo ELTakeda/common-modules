@@ -1,0 +1,58 @@
+spotme_events.mulesoft_config_spotme_api:
+  path: '/admin/config/mulesoft-spotme-config-api'
+  defaults:
+    _form: '\Drupal\spotme_events\Form\MuleSoftSpotMeApiConfigForm'
+    _title: 'Mulesoft Spotme API Configuration'
+  requirements:
+    _permission: 'administer site configuration'
+
+spotme_events.register_event:
+  path: '/spotme/register-event/{event_nid}/{webinar_id}'
+  defaults:
+    _controller: '\Drupal\spotme_events\Controller\SpotMeCustomController::registerEvent'
+    _title: 'Register Event'
+  requirements:
+    _permission: 'access content'
+
+spotme_events.view_live_event:
+  path: '/spotme/view-event/{event_nid}/{webinar_id}'
+  defaults:
+    _controller: '\Drupal\spotme_events\Controller\SpotMeCustomController::viewLiveEvent'
+    _title: 'Register Event'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+
+spotme_events.config_color:
+  path: '/admin/config/spotme_color'
+  defaults:
+    _form: '\Drupal\spotme_events\Form\SpotMeConfigColor'
+    _title: 'Spotme config color'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+spotme_events.register_user_callback:
+  path: '/register-user-for-event-callback'
+  defaults:
+    _controller: '\Drupal\spotme_events\EventRegistrationController::registerUserForEventCallback'
+    _title: 'Register User For Event Callback'
+  requirements:
+    _access: 'TRUE'
+  methods: [ POST ]
+  options:
+    _maintenance_access: TRUE
+    no_cache: TRUE
+spotme_events.export_to_ics:
+   path: '/export-to-ics'
+   defaults:
+    _controller: '\Drupal\spotme_events\ExportToIcs::export'
+   requirements:
+    _access: 'TRUE'
+   options:
+    _maintenance_access: TRUE
+    no_cache: TRUE
+spotme_events.configure_form:
+  path: '/admin/config/system/event_registration'
+  defaults:
+    _form: '\Drupal\spotme_events\Form\EventRegistrationConfigureForm'
+    _title: 'Event Registration'
+  requirements:
+    _permission: 'administer site configuration'

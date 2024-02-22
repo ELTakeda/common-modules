@@ -1,0 +1,20 @@
+configure_form:
+  version: 1.x
+  css:
+    component:
+      css/takeda_id_form.css: {}
+  dependencies:
+    - core/drupal
+
+reset-form-styling:
+  version: 1.x
+  css:
+    theme:
+      css/takeda_id_reset_password_form.css: {}
+
+password-validation:
+  version: 1.x
+  js:
+    js/password-validation.js: {}
+  dependencies:
+    - core/jquery

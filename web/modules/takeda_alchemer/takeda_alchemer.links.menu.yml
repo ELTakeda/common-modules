@@ -1,0 +1,6 @@
+takeda_alchemer.configure_form:
+  title: 'Alchemer'
+  parent: system.admin_config_system
+  description: 'Alchemer settings'
+  route_name: takeda_alchemer.configure_form
+  weight: -20

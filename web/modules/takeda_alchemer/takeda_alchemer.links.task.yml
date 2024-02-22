@@ -1,0 +1,14 @@
+takeda_alchemer.configure_form:
+  route_name: takeda_alchemer.configure_form
+  title: Alchemer basic settings
+  base_route: takeda_alchemer.configure_form
+
+takeda_alchemer.configure_form_popup:
+  route_name: takeda_alchemer.configure_form_popup
+  title: Alchemer popup tags settings
+  base_route: takeda_alchemer.configure_form
+
+takeda_alchemer.configure_form_microfeedback:
+  route_name: takeda_alchemer.configure_form_microfeedback
+  title:  Alchemer microfeedback settings
+  base_route: takeda_alchemer.configure_form

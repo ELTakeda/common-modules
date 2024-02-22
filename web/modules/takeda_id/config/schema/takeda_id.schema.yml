@@ -1,0 +1,62 @@
+takeda_id.settings:
+  type: config_object
+  label: 'Takeda ID Settings'
+  mapping:
+    api_url:
+      type: text
+      label: 'API URL'
+    lead_api_url:
+      type: text
+      label: 'Lead Experience URL'
+    api_key:
+      type: text
+      label: 'API Key'
+    api_secret:
+      type: text
+      label: 'API Secret'
+    okta_url:
+      type: text
+      label: 'Okta URL'
+    okta_client_id:
+      type: text
+      label: 'Okta Client ID'
+    first_login_redirect:
+      type: url
+      label: 'First Login'
+    subsequent_login_redirect:
+      type: url
+      label: 'Subsequent Login'
+    registration:
+      type: string
+      label: 'User registration method'
+    default_country:
+      type: text
+      label: 'Default Country'
+    prefill_fields:
+      type: sequence
+      label: 'Pre-fillable Fields'
+      sequence:
+        type: string
+    require_hcp_match_to_activate:
+      type: boolean
+      label: 'Require valid HCP match before user is activated'
+    hide_password_policy_table:
+      type: boolean
+      label: 'Hide the password policy table'
+
+takeda_id.mail:
+  type: config_object
+  label: 'Takeda ID email settings'
+  mapping:
+    register_confirmation:
+      type: mail
+      label: 'Takeda ID Registration Email'
+    forgot_password:
+      type: mail
+      label: 'Takeda ID Password Reset Email'
+    accepted:
+      type: mail
+      label: 'Lead Accepted Email'
+    rejected:
+      type: mail
+      label: 'Lead Rejected Email'

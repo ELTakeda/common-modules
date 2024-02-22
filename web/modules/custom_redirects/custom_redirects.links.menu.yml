@@ -1,0 +1,6 @@
+custom_redirects.configure_form:
+  title: Custom Redirects
+  description: Provides custom default link redirects and deep link functionality.
+  parent: user.admin_index
+  route_name: custom_redirects.configure_form
+  weight: 100

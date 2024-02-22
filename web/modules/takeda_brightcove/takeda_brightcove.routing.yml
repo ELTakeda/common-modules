@@ -1,0 +1,7 @@
+takeda_brightcove.configure_form:
+  path: '/admin/config/media/takeda_brightcove'
+  defaults:
+    _form: \Drupal\takeda_brightcove\Form\BrightcoveConfigureForm
+    _title: 'Takeda Brightcove Player Settings'
+  requirements:
+    _permission: 'administer site configuration'

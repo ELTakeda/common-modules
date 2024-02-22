@@ -1,0 +1,22 @@
+{
+  "name": "project template",
+  "version": "1.0.0",
+  "description": "```\r {\r     \"liveServer.settings.donotVerifyTags\": true,\r     \"liveSassCompile.settings.excludeList\": [\r         \"**/node_modules/**\",\r         \"**/module/contrib/**\"\r     ],\r     \"liveSassCompile.settings.formats\": [\r         {\r             \"format\": \"compressed\",\r             \"extensionName\": \".css\",\r             \"savePath\": \"/styles\"\r         }\r     ],\r     \"liveSassCompile.settings.autoprefix\": [",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "gulp": "^4.0.2",
+    "gulp-sass": "^5.1.0",
+    "sass": "^1.56.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://sqlsrv01:8080/tfs/TFS/Takeda_Entyvio/_git/Von%20Willebrand%20FE"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

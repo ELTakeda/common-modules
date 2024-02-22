@@ -1,0 +1,32 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - spotme_events
+  module:
+    - node
+    - options
+id: node.field_se_date_time_formats
+field_name: field_se_date_time_formats
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: dmy_hm
+      label: 'Day/Month/Year Hour:Minute'
+    -
+      value: mdy_hm
+      label: 'Month/Day/Year Hour:Minute'
+    -
+      value: ymd_hm
+      label: 'Year/Month/Day Hour:Minute'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,9 @@
+name: Takeda Alchemer
+description: Provides integration for Alchemer survey software
+
+type: module
+package: 'Custom'
+
+core_version_requirement: ^8 || ^9 || ^10
+
+configure: takeda_alchemer.configure_form

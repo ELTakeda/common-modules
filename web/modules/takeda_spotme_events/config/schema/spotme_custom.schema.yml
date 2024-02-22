@@ -1,0 +1,3 @@
+views.filter.spot_me_filter_event_custom:
+  type: views.filter.in_operator
+  label: 'Custom filter events'

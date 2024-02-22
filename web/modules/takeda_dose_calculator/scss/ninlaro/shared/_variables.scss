@@ -1,0 +1,31 @@
+// --- Colors ---
+$color-white: white;
+$color-black: black;
+$color-primary: #34373F;
+$color-secondary: #BD120A;
+$color-secondary--hover: #891515;
+$color-result-bg: #4C9BCF;
+$color-input-background:rgba(237, 242, 244, 0.50);
+$color-locked-btn-bg: rgba(225, 36, 42, 0.10);
+$color-ready-btn-bg: rgba(171, 180, 54, 0.75);
+$color-locked-btn: rgba(52, 55, 63, 0.60);
+$color-result-bg: rgba(76, 155, 207, 0.15);
+$color-input-placeholder: #A1A4AC;
+$color-result-border-top: #EDF2F4;
+
+// --- Fonts ---
+$font-light: "Open Sans Light", sans-serif;
+$font-regular: "Open Sans Regular", sans-serif;
+$font-medium: "Open Sans Medium", sans-serif;
+$font-regular-italic: "Open Sans Regular Italic", sans-serif;
+$font-semi-bold: "Open Sans SemiBold", sans-serif;
+$font-bold: "Open Sans Bold", sans-serif;
+$font-extra-bold: "Open Sans Extra Bold", sans-serif;
+
+//  --- Breakpoints
+$breakpoint-tablet--big: 1024px;
+$breakpoint-tablet--small: 769px;
+$breakpoint-phone: 480px;
+
+// --- Other ---
+$max-module-width: 440px;

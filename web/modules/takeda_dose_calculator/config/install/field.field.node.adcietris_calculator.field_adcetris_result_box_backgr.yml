@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_adcetris_result_box_backgr
+    - node.type.adcietris_calculator
+id: node.adcietris_calculator.field_adcetris_result_box_backgr
+field_name: field_adcetris_result_box_backgr
+entity_type: node
+bundle: adcietris_calculator
+label: 'Adcetris result box background color'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: '#ffe4eb'
+default_value_callback: ''
+settings: {  }
+field_type: string

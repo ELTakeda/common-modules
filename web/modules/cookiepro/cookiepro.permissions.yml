@@ -1,0 +1,4 @@
+cookiepro_settings:
+  title: 'CookiePro by OneTrust'
+  description: 'Simplify Compliance with GDPR & ePrivacy Cookie Laws'
+  restrict access: TRUE

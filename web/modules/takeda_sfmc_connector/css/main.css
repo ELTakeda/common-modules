@@ -1,0 +1,243 @@
+.sfmc-connector {
+    position: relative;
+    overflow: hidden;
+    margin: 30px auto;
+  }
+  .sfmc-connector *,
+  .sfmc-connector *:before,
+  .sfmc-connector *:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .sfmc-connector__title h2 {
+    margin: 25px;
+    text-align: center;
+    font-size: 3em;
+  }
+  .sfmc-connector .form {
+    width: 60%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .sfmc-connector .form__inputs-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+  .sfmc-connector .form__inputs-container .input-pair {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+    margin-right: 15px;
+  }
+  .sfmc-connector .form__inputs-container .input-pair label {
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    margin-bottom: 5px;
+  }
+  .sfmc-connector .form__inputs-container .input-pair input {
+    outline: none;
+    padding: 10px;
+    text-align: center;
+  }
+  .sfmc-connector .form__inputs-container .input-pair input::placeholder {
+    text-align: center;
+  }
+  .sfmc-connector .form__inputs-container .input-pair input[type=number] {
+    -moz-appearance: textfield;
+  }
+  .sfmc-connector .form__inputs-container .input-pair input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .sfmc-connector .form__inputs-container .input-pair input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .sfmc-connector .form__inputs-container .input-pair.small {
+    width: 30%;
+  }
+  .sfmc-connector .form__inputs-container .input-pair.medium {
+    width: 47%;
+  }
+  .sfmc-connector .form__inputs-container .select-pair.small {
+    width: 30%;
+  }
+  .sfmc-connector .form__inputs-container .input-pair--radio {
+    margin-top: 15px;
+    font-size: 1.3em;
+    display: flex;
+    align-items: center;
+  }
+  .sfmc-connector .form__inputs-container .radio-container {
+    margin-top: 25px;
+    width: 100%;
+  }
+  .sfmc-connector .form__inputs-container .radio-container label {
+      display: inline-block;
+  }
+  .sfmc-connector .form__inputs-container .radio-container input {
+      display: inline-block;
+      margin-right: 5px;
+  }
+  .sfmc-connector .form__inputs-container .radio-container .question {
+    font-size: 1.6em;
+    font-weight: 500;
+    text-align: left;
+  }
+  .sfmc-connector .form__inputs-container .checkbox-input {
+    width: 100%;
+    margin-top: 25px;
+    font-size: 1.3em;
+  }
+  .sfmc-connector .form__inputs-container .checkbox-input__label-text {
+    display: inline;
+    text-align: center;
+  }
+  .sfmc-connector .form__inputs-container .select-pair {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 25px;
+    position: relative;
+    width: 67%;
+    margin-right: 15px;
+  }
+  .sfmc-connector .form__inputs-container .select-pair label {
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    margin-bottom: 5px;
+    align-self: self-start;
+  }
+  .sfmc-connector .form__inputs-container .select-pair select {
+    padding: 10px;
+    width: 100%;
+    font-size: 1.3em;
+    font-family: inherit;
+  }
+  .sfmc-connector .form__inputs-container .text-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 25px;
+    width: 100%;
+  }
+  .sfmc-connector .form__inputs-container .text-area label {
+    font-size: 1.5em;
+    font-weight: 500;
+    font-family: inherit;
+    margin-bottom: 5px;
+    align-self: self-start;
+  }
+  .sfmc-connector .form__inputs-container .text-area textarea {
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    min-height: 200px;
+    padding: 10px;
+    outline: none;
+  }
+  .sfmc-connector .form__inputs-container label sup {
+    transform: translate(0, 3px);
+    display: none;
+  }
+  .sfmc-connector .form__submit-btn {
+    margin-top: 35px;
+    padding: 15px 20px;
+    font-size: 1.3em;
+    outline: none;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 35px;
+  }
+  .sfmc-connector .form__submit-btn:hover {
+    cursor: pointer;
+  }
+  .sfmc-connector .form__submit-btn[disabled]:hover {
+    cursor: not-allowed;
+  }
+  .sfmc-connector .popup-modal {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+  .sfmc-connector .popup-modal.hidden {
+    display: none;
+  }
+  .sfmc-connector__popup {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 500px;
+    box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.3);
+  }
+  .sfmc-connector__popup .message {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    padding: 10px;
+    font-size: 1.4em;
+    overflow: hidden;
+  }
+  .sfmc-connector__popup .message__text {
+    overflow: hidden;
+    text-align: center;
+  }
+  .sfmc-connector__popup .message__text {
+    padding: 15px;
+    width: 100%;
+  }
+  .sfmc-connector__popup .message .close-btn {
+    margin: 15px auto;
+    padding: 10px 15px;
+    border-radius: 8px;
+  }
+  .sfmc-connector__popup .message .close-btn:hover {
+    cursor: pointer;
+  }
+  .sfmc-connector .required label sup {
+    display: inline-block;
+  }
+  
+  @media screen and (max-width: 850px) {
+    .sfmc-connector .form {
+      width: 95%;
+    }
+    .sfmc-connector .form__inputs-container .input-pair {
+      margin-right: 0;
+    }
+    .sfmc-connector .form__inputs-container .input-pair.small {
+      width: 100%;
+    }
+    .sfmc-connector .form__inputs-container .select-pair {
+      margin-right: 0;
+      width: 100%;
+    }
+    .sfmc-connector .form__inputs-container .text-area textarea {
+      min-height: 150px;
+    }
+    .sfmc-connector__popup {
+      max-width: 80%;
+    }
+  }
+  

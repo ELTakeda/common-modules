@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_prothromp_osecondary_color
+    - node.type.prothromplex_calculator
+third_party_settings:
+  tmgmt_content:
+    excluded: false
+id: node.prothromplex_calculator.field_prothromp_osecondary_color
+field_name: field_prothromp_osecondary_color
+entity_type: node
+bundle: prothromplex_calculator
+label: 'Secondary color'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: purple
+default_value_callback: ''
+settings: {  }
+field_type: string

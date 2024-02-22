@@ -1,0 +1,214 @@
+<?php
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\common_modules\Helper\CustomFunctions;
+use Drupal\takeda_id\TakedaIdInterface;
+
+
+//Custom functions
+function menuLinksToArray($menu_built) {
+    $menu_array = [];
+
+    foreach ($menu_built['#items'] as $item) {
+        $item_title = $item['title'];
+        $item_link = $item['url']->toString();
+
+        if(str_contains( $item_title, '**guest_hide**' )){
+
+            $item_title = trim(str_replace('**guest_hide**', '', $item_title));
+
+            $item_hide = true;
+            
+        }else{
+            $item_hide = false;
+        }
+
+        if(count($item['below']) > 0){
+            $menu_array_below = [];
+
+            foreach ($item['below'] as $item_below) {
+                $item_title_below = $item_below['title'];
+                $item_link_below = $item_below['url']->toString();
+
+                array_push($menu_array_below, [$item_title_below, $item_link_below]);
+            }
+
+            array_push($menu_array, [$item_title, $item_link, $item_hide, $menu_array_below, ]);
+        }else{
+            array_push($menu_array, [$item_title, $item_link, $item_hide]);
+        }
+    }
+
+    return $menu_array;
+}
+
+function buildMenu($menu_machine_name){
+
+    $menu_tree = \Drupal::menuTree();
+    $menu_links = $menu_tree->load($menu_machine_name, new \Drupal\Core\Menu\MenuTreeParameters());
+  
+    // Sort the tree by weight
+    $manipulators = [
+        ['callable' => 'menu.default_tree_manipulators:checkNodeAccess'],
+        ['callable' => 'menu.default_tree_manipulators:checkAccess'],
+        ['callable' => 'menu.default_tree_manipulators:generateIndexAndSort'],
+    ];
+    $menu_links_sorted = $menu_tree->transform($menu_links, $manipulators);
+
+    // Build the links
+    $menu_links_built = $menu_tree->build($menu_links_sorted);
+
+    $result = menuLinksToArray($menu_links_built);
+
+    return $result;
+
+}
+
+function getCustomView($view_name, $args, $has_pager = false) {
+    $view = \Drupal\views\Views::getView($view_name);
+ 
+    if (is_object($view)) {
+        $view->setArguments($args);
+        $view->setDisplay('default');
+        $view->preExecute();
+        $view->execute();
+ 
+        if ($has_pager) {
+            return [
+                $view->buildRenderable('default', $args),
+                $view->pager->render([])
+            ];
+        }
+ 
+        return $view->buildRenderable('default', $args);
+    }
+}
+
+function getTaxonomyTreeInfo($taxonomy_name) {
+    $tree = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($taxonomy_name, 0, 2, TRUE);
+
+    // Get term names and put in array
+    $taxonomy_terms = [];
+
+    foreach ( $tree as $term ) {
+        $parent_arr = $term->get('parent')->getValue();
+        $parent =  $parent_arr[0]['target_id'];
+        $tid = $term->id();
+
+        $no_site = $term->get('field_no_site')->getValue();
+
+        if ( !empty($no_site) ){
+            $no_site_val = $no_site[0]['value'];
+        }else{
+            $no_site_val = null;
+        }
+
+        $details_arr = [
+            'tid' => $tid,
+            'name' => $term->getName(),
+            'description' => $term->getDescription(),
+            'no_site' => $no_site_val,
+            'parent' => $parent
+        ];
+
+        if ( $parent == 0 ) {
+            $taxonomy_terms[$tid] = $details_arr;
+        }else{
+            $taxonomy_terms[$parent]['sub'][$tid] = $details_arr;
+        }
+        
+    }
+
+    return $taxonomy_terms;
+}
+
+
+function getTaxonomyNames($taxonomy_name) {
+    $tids = \Drupal::entityQuery('taxonomy_term')->condition('vid', $taxonomy_name)->execute();
+    $terms = \Drupal\taxonomy\Entity\Term::loadMultiple($tids);
+
+    // Get term names and put in array
+    $taxonomy_terms = [];
+
+    foreach ($terms as $term) {
+        $taxonomy_terms[] = $term->getName();
+    }
+
+    return $taxonomy_terms;
+}
+
+/**
+ * Implements hook_preprocess().
+ */
+function common_modules_preprocess_page(&$variables)
+{   
+    if ( isset($_GET['form_path']) ){
+        $user_reset_path = $_GET['form_path'];
+    }else{
+        $user_reset_path = '';
+    }
+
+    $variables['user_reset_path'] = $user_reset_path;
+
+    //Menu navigaiton
+    $variables['main_navigation'] = buildMenu('main');
+    $variables['footer_navigation'] = buildMenu('footer');
+
+    $current_node = \Drupal::request()->attributes->get('node');
+    $node_id = $current_node ? \Drupal::request()->attributes->get('node')->id() : '';
+    $node_type = $current_node ? \Drupal::request()->attributes->get('node')->getType() : '';
+    $node = \Drupal\node\Entity\Node::load($node_id);
+
+    // If it's a valid node
+    if ($node) {
+        $variables['content_type'] = $node_type;
+        $request = \Drupal::request();
+         $session = $request->getSession();
+        $current_user = \Drupal::currentUser();
+        $variables['current_username'] = $current_user->getDisplayName();
+    }
+
+    if ($node_type === 'login_page') {
+        // Set the default drupal form element for submit purposes
+        // Renders a form on the login content type
+        // The form adds the user_login_form id to the page
+        // After that the form can be submitted and handeled by TakedaID
+        $form = \Drupal::formBuilder()->getForm('Drupal\user\Form\UserLoginForm');
+        
+        $render = Drupal::service('renderer');
+        $variables['login_form'] = $render->renderPlain($form);
+        
+    }
+    
+}
+function common_modules_preprocess_node(&$variables) {
+    $node_type = \Drupal::request()->attributes->get('node')->getType();
+
+    if ($node_type === 'landing_page') {
+        // Get the view and set it to a variable
+        $view_data = getCustomView('home_page_em_events_view', []);
+        $variables['home_page_em_events_view'] = $view_data;
+    }
+
+    if ( $node_type == 'registration_page' ){
+        $variables['country_info'] = getCountryCodes();
+    }else{
+        $variables['country_info'] = getTaxonomyTreeInfo('country_information');
+    }
+
+}
+
+
+
+function getCountryCodes() {
+    $country_manager = \Drupal::service('country_manager');
+    $list = $country_manager->getList();
+
+    $list = array_intersect_key($list, array_flip(TakedaIdInterface::SUPPORTED_COUNTRIES));
+
+    $countries = [];
+    foreach ($list as $key => $value) {
+      $val = $value->__toString();
+      $countries[$key] = $val;
+    }
+    return $countries;
+  }

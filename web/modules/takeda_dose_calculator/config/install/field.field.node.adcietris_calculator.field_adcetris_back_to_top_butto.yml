@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_adcetris_back_to_top_butto
+    - node.type.adcietris_calculator
+id: node.adcietris_calculator.field_adcetris_back_to_top_butto
+field_name: field_adcetris_back_to_top_butto
+entity_type: node
+bundle: adcietris_calculator
+label: 'Adcetris back to top button color'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: '#00728e'
+default_value_callback: ''
+settings: {  }
+field_type: string

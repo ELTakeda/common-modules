@@ -1,0 +1,7 @@
+cookiepro.admin.header:
+  path: '/admin/config/development/cookiepro'
+  defaults:
+    _form: '\Drupal\cookiepro\Form\HeaderForm'
+    _title: 'CookiePro by OneTrust'
+  requirements:
+    _permission: 'cookiepro_settings'

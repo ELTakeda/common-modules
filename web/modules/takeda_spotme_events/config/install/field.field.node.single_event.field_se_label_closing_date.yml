@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+    config:
+        - field.storage.node.field_se_label_closing_date
+        - node.type.single_event
+    module:
+        - text
+id: node.single_event.field_se_label_closing_date
+field_name: field_se_label_closing_date
+entity_type: node
+bundle: single_event
+label: Label - Closing Date
+description: 'Text label for the "Closing Date" of the event'
+required: true
+translatable: true
+default_value: Closing Date
+default_value_callback: ''
+settings:
+    display_summary: false
+field_type: string

@@ -1,0 +1,257 @@
+langcode: bg
+status: true
+dependencies:
+  config:
+    - field.field.node.advante_calculator.field_advante_back_to_top_color
+    - field.field.node.advante_calculator.field_advante_calculate_backhov
+    - field.field.node.advante_calculator.field_advante_calculate_button_b
+    - field.field.node.advante_calculator.field_advante_calculate_button_t
+    - field.field.node.advante_calculator.field_advante_calculate_text
+    - field.field.node.advante_calculator.field_advante_calculate_texthov
+    - field.field.node.advante_calculator.field_advante_even_rows_backgrou
+    - field.field.node.advante_calculator.field_advante_even_rows_text_col
+    - field.field.node.advante_calculator.field_advante_inputs_background_
+    - field.field.node.advante_calculator.field_advante_inputs_text_color
+    - field.field.node.advante_calculator.field_advante_labels_
+    - field.field.node.advante_calculator.field_advante_odd_rows_backgroun
+    - field.field.node.advante_calculator.field_advante_odd_rows_text_colo
+    - field.field.node.advante_calculator.field_advante_placeholder_color
+    - field.field.node.advante_calculator.field_advante_reset_button_backg
+    - field.field.node.advante_calculator.field_advante_reset_button_bc_ho
+    - field.field.node.advante_calculator.field_advante_reset_button_text_
+    - field.field.node.advante_calculator.field_advante_reset_button_txt
+    - field.field.node.advante_calculator.field_advante_reset_button_txtho
+    - field.field.node.advante_calculator.field_advante_table_header_backg
+    - field.field.node.advante_calculator.field_advante_table_header_text_
+    - field.field.node.advante_calculator.field_advante_table_subheader_ba
+    - field.field.node.advante_calculator.field_advante_table_subheader_te
+    - field.field.node.advante_calculator.field_advante_title_color
+    - field.field.node.advante_calculator.field_recommendations
+    - field.field.node.advante_calculator.field_reference_link
+    - node.type.advante_calculator
+  module:
+    - entity_reference_revisions
+    - text
+    - user
+_core:
+  default_config_hash: 6NEDf4G7tcsfyBs_1-dbwQEUoQd4lbZptdW0WBVGcno
+id: node.advante_calculator.default
+targetEntityType: node
+bundle: advante_calculator
+mode: default
+content:
+  field_advante_back_to_top_color:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_advante_calculate_backhov:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  field_advante_calculate_button_b:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_advante_calculate_button_t:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_advante_calculate_text:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  field_advante_calculate_texthov:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 108
+    region: content
+  field_advante_even_rows_backgrou:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 109
+    region: content
+  field_advante_even_rows_text_col:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 110
+    region: content
+  field_advante_inputs_background_:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 113
+    region: content
+  field_advante_inputs_text_color:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 114
+    region: content
+  field_advante_labels_:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 115
+    region: content
+  field_advante_odd_rows_backgroun:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 116
+    region: content
+  field_advante_odd_rows_text_colo:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 117
+    region: content
+  field_advante_placeholder_color:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 118
+    region: content
+  field_advante_reset_button_backg:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 119
+    region: content
+  field_advante_reset_button_bc_ho:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 120
+    region: content
+  field_advante_reset_button_text_:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 124
+    region: content
+  field_advante_reset_button_txt:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 123
+    region: content
+  field_advante_reset_button_txtho:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 125
+    region: content
+  field_advante_table_header_backg:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 130
+    region: content
+  field_advante_table_header_text_:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 129
+    region: content
+  field_advante_table_subheader_ba:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_advante_table_subheader_te:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_advante_title_color:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 126
+    region: content
+  field_recommendations:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 128
+    region: content
+  field_reference_link:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 127
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

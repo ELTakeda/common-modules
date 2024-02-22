@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+    config:
+        - field.storage.node.field_se_description
+        - node.type.single_event
+    module:
+        - text
+id: node.single_event.field_se_description
+field_name: field_se_description
+entity_type: node
+bundle: single_event
+label: Description
+description: 'Description for the event'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+    display_summary: true
+field_type: text_long

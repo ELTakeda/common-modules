@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+    config:
+        - field.storage.node.field_se_label_where
+        - node.type.single_event
+    module:
+        - text
+id: node.single_event.field_se_label_where
+field_name: field_se_label_where
+entity_type: node
+bundle: single_event
+label: Label - Where
+description: 'Text label for the location of the event'
+required: true
+translatable: true
+default_value: Where
+default_value_callback: ''
+settings:
+    display_summary: false
+field_type: string

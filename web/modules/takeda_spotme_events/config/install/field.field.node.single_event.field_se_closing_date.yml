@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_se_closing_date
+    - node.type.single_event
+  module:
+    - datetime
+id: node.single_event.field_se_closing_date
+field_name: field_se_closing_date
+entity_type: node
+bundle: single_event
+label: 'Closing date'
+description: 'Date for when the registration ends'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

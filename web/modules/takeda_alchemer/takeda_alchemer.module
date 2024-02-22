@@ -1,0 +1,258 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\NodeInterface;
+use Drupal\takeda_alchemer\AlchemerFieldsConfig as Config;
+
+/**
+ * Implements hook_theme().
+ */
+function takeda_alchemer_theme() {
+    return [
+      'microfeedback_iframe' => [
+        'variables' => [
+          'data' => [],
+        ],
+      ],
+    ];
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter() for \Drupal\node\NodeForm.
+ *
+ * Adds alchemer item fields to the node form.
+ *
+ * @see takeda_alchemer_form_node_form_submit()
+ */
+function takeda_alchemer_form_node_form_alter(&$form, FormStateInterface $form_state)
+{
+    $node = $form_state->getFormObject()->getEntity();
+    if ($node) {
+
+        //alchemer pop up form build
+        \Drupal::service('takeda_alchemer.form_builder')->alchemerFormBuilder($form, $form_state);
+
+        //microfeedback form build
+        \Drupal::service('takeda_alchemer.form_builder')->microfeedbackFormBuilder($form, $form_state);
+        
+        // set handler for saving alchemer settings
+        foreach (array_keys($form['actions']) as $action) {
+            if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+                $form['actions'][$action]['#submit'][] = 'takeda_alchemer_form_node_form_submit';
+            }
+        }
+    }
+
+}
+
+/**
+ * Form submission handler for alchemer item fields on the node form.
+ *
+ * @see menu_ui_form_node_form_alter()
+ */
+function takeda_alchemer_form_node_form_submit(&$form, FormStateInterface $form_state)
+{
+    $popup_survey_type = Config::POPUP_SURVEY_TYPE;
+    $microfeedback_survey_type = Config::MICROFEEDBACK_SURVEY_TYPE;
+
+    //update alchemer table
+    if (!$form_state->isValueEmpty('alchemer-popup-menu')) {
+        \Drupal::service('takeda_alchemer.form_builder')->submitForm($form_state, $popup_survey_type);
+    }
+
+    //update microfeedback table
+    if (!$form_state->isValueEmpty('alchemer-microfeedback-menu')) {
+        \Drupal::service('takeda_alchemer.form_builder')->submitForm($form_state, $microfeedback_survey_type);
+    }
+   
+}
+
+function takeda_alchemer_validate_field(&$form, &$form_state)
+{
+    $value = $form['#value'];
+    if (!empty($value)) {
+        //get field type
+        $type = $form['#autocomplete_route_parameters']['field_name'];
+
+        $therapy_area = Config::FIELD_ALCHEMER_THERAPY_AREA['name'];
+        $website_product = Config::FIELD_ALCHEMER_WEBSITE_PRODUCT['name'];
+        $function = Config::FIELD_ALCHEMER_FUNCTION['name'];
+        $section = Config::FIELD_MICROFEEDBACK_SECTION['name'];
+
+        $itemExist = \Drupal::service('takeda_alchemer.helper')->checkItemExist($value, $type);
+        if (!$itemExist) {
+            switch ($type) {
+                case $therapy_area:
+                    $form_state->setError($form, t('"' . $value . '" is not in the therapy areas list.'));
+
+                case $website_product:
+                    $form_state->setError($form, t('"' . $value . '" is not in the products list.'));
+                
+                case $section:
+                    $form_state->setError($form, t('"' . $value . '" is not in the sections list.'));
+                
+                case $function:
+                    $form_state->setError($form, t('"' . $value . '" is not in the functions list.'));
+            }
+        }
+    }
+}
+
+/**
+ * Implements hook_page_bottom()
+ */
+function takeda_alchemer_page_bottom(array &$page_bottom)
+{
+    $node = \Drupal::routeMatch()->getParameter('node');
+    $is_admin_context = \Drupal::service('router.admin_context')->isAdminRoute();
+    //prevent showing this script on other type of pages including node edit pages
+    if ($node instanceof NodeInterface && !$is_admin_context) {
+        //define helpers
+        $alchemer_basic_helper = \Drupal::service('takeda_alchemer.helper');
+
+        //define alchemer types
+        $popup_survey_type = CONFIG::POPUP_SURVEY_TYPE;
+
+        //extract data
+        $popup_data = $alchemer_basic_helper->retrieveSurveyData($node, $popup_survey_type);
+
+        //show script only on pages when alchemer popup is enabled
+        if (isset($popup_data['is_popup_active']) && $popup_data['is_popup_active']) {
+            
+            //Define field config names from AlchemerFieldsConfig class
+            $country = Config::FIELD_ALCHEMER_COUNTRY_NAME['name'];
+            $website_name = Config::FIELD_ALCHEMER_WEBSITE_NAME['name'];
+            $therapy_area = Config::FIELD_ALCHEMER_THERAPY_AREA['name'];
+            $website_product = Config::FIELD_ALCHEMER_WEBSITE_PRODUCT['name'];
+            $hcp_id = Config::FIELD_ALCHEMER_HCP_ID['name'];
+            $customer_id = Config::FIELD_ALCHEMER_CUSTOMER_ID['name'];
+            $digital_id = Config::FIELD_ALCHEMER_DIGITAL_ID['name'];
+            $function = CONFIG::FIELD_ALCHEMER_FUNCTION['name'];
+
+            //fetch takeda id
+            $logged_in = \Drupal::currentUser()->isAuthenticated();
+            $takeda_id = "";
+            $user_beacons_to_render = [];
+
+            if ($logged_in) {
+                $user_id = Drupal::currentUser()->id();
+                $takeda_id = $alchemer_basic_helper->retrieveTakedaId($user_id);
+                $user_beacons_to_render = $alchemer_basic_helper->getUserDigitalId($takeda_id);
+            }
+
+            // get alchemer configuration values
+            $alchemer_basic_config = \Drupal::config('takeda_alchemer.settings');
+            $data = $alchemer_basic_config->get('takeda_alchemer_values');
+            $site_id = $data['takeda_alchemer_site_id'];
+            $country_name = $data['takeda_alchemer_country'];
+
+            //get site name
+            $site_name = \Drupal::config('system.site')->get('name');
+
+            $script = '(function(d,e,j,h,f,c,b){d.SurveyGizmoBeacon=f;d[f]=d[f]||function(){(d[f].q=d[f].q||[]).push(arguments)};';
+            $script .= 'c=e.createElement(j),b=e.getElementsByTagName(j)[0];c.async=1;c.src=h;b.parentNode.insertBefore(c,b)})';
+            $script .= "(window,document,'script','//d2bnxibecyz4h5.cloudfront.net/runtimejs/intercept/intercept.js','sg_beacon');";
+            if (!empty($site_id)) {
+                $script .= "\n" . "sg_beacon('init', '$site_id');";
+                $script .= "\n" . 'function getDecodedCookie(name) { var parts = ("; "+document.cookie).split("; "+name+"="); if (parts.length == 2) return decodeURIComponent(parts.pop().split(";").shift()); }';
+                $script .= "\n" . "sg_beacon('data','pagepath',getDecodedCookie('_sg_b_p'));";
+            } else {
+                return;
+            }
+
+            $popup_tags = json_decode($popup_data['popup_tags'], true);
+            if (!empty($popup_tags)) {
+                //get only checked tags and attach them to the beacons
+                $active_popup_tags = array_keys($popup_tags, 1, true);
+                foreach ($active_popup_tags as $tag) {
+                    switch ($tag) {
+                        case $country:
+                            if (!empty($country_name)) {
+                                //get only country code
+                                $country_code = $alchemer_basic_helper->getCode(trim($country_name), $country);
+                                if (!empty($country_code)) {
+                                    $script .= "\n" . "sg_beacon('data', 'co', '$country_code');";
+                                }
+                            }
+                            break;
+
+                        case $website_name:
+                            $script .= "\n" . "sg_beacon('data', 'webname', '$site_name');";
+                            break;
+
+                        case $therapy_area:
+                            $therapy_areas = array_values(json_decode($popup_data['popup_therapy_areas'], true));
+                            foreach ($therapy_areas as $key => $value) {
+                                if (!empty($value)) {
+                                    if ($key == 0) {
+                                        $key = "";
+                                    } else {
+                                        $key += 1;
+                                    }
+                                    //send only therapy area code
+                                    $code = $alchemer_basic_helper->getCode($value, $therapy_area);
+                                    if (!empty($code)) {
+                                        $script .= "\n" . "sg_beacon('data', 'ta$key', '$code');";
+                                    }
+                                }
+                            }
+                            break;
+
+                        case $website_product:
+                            $products = array_values(json_decode($popup_data['popup_products'], true));
+                            foreach ($products as $key => $value) {
+                                if (!empty($value)) {
+                                    if ($key == 0) {
+                                        $key = "";
+                                    } else {
+                                        $key += 1;
+                                    }
+                                    //send only product code
+                                    $code = $alchemer_basic_helper->getCode($value, $website_product);
+                                    if (!empty($code)) {
+                                        $script .= "\n" . "sg_beacon('data', 'pr$key', '$code');";
+                                    }
+                                }
+                            }
+                            break;
+
+                        case $hcp_id:
+                            // if HCP ID is checked as active tag, add also customerID and digitalID
+                            if (isset($user_beacons_to_render[$customer_id])) {
+                                $script .= "\n" . "sg_beacon('data', '{$customer_id}', '{$user_beacons_to_render[$customer_id]}');";
+                            }
+                            if (isset($user_beacons_to_render[$digital_id])) {
+                                $script .= "\n" . "sg_beacon('data', '{$digital_id}', '{$user_beacons_to_render[$digital_id]}');";
+                            }
+                            break;
+
+                        case $function:
+                            $function_name = $popup_data['popup_function'];
+                            $function_code = '';
+                            if (!empty($function_name)) {
+                                //check function name to determine which function code to use
+                                if ($function_name === "Commercial") {
+                                    $function_code = 'cm';
+                                }
+
+                                if ($function_name === "Medical") {
+                                    $function_code = 'md';
+                                }
+                                
+                                $script .= "\n" . "sg_beacon('data', 'fn', '$function_code');";
+                            }
+                            break;
+                    }
+                }
+            }
+            //attach script to the body
+            $page_bottom['takeda_alchemer'] = [
+                '#type' => 'html_tag',
+                '#tag' => 'script',
+                '#attributes' => array('type' => 'text/javascript'),
+                '#value' => $script,
+            ];
+
+        }
+    }
+}

@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+    config:
+        - field.storage.node.field_se_place
+        - node.type.single_event
+    module:
+        - text
+id: node.single_event.field_se_place
+field_name: field_se_place
+entity_type: node
+bundle: single_event
+label: Event Place
+description: 'Place where the event is held'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+    display_summary: false
+field_type: string

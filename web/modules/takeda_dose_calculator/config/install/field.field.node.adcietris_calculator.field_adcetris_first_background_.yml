@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_adcetris_first_background_
+    - node.type.adcietris_calculator
+id: node.adcietris_calculator.field_adcetris_first_background_
+field_name: field_adcetris_first_background_
+entity_type: node
+bundle: adcietris_calculator
+label: 'Adcetris first background color'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: '#00728e'
+default_value_callback: ''
+settings: {  }
+field_type: string

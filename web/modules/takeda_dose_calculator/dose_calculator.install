@@ -1,0 +1,75 @@
+<?php
+use Drupal\node\Entity\Node;
+use Drupal\file\Entity\File;
+
+function dose_calculator_install(){
+$node_advante = Node::create([
+    'type' => 'advante_calculator',
+    'title' => 'Advante calculator',
+]);
+$node_advante->save();
+
+$node_feiba = Node::create([
+    'type' => 'feiba_calculator',
+    'title' => 'Feiba calculator',
+]);
+$node_feiba->save();
+
+$node_ninlaro = Node::create([
+    'type' => 'ninlaro_calculator',
+    'title' => 'Ninlaro calculator',
+]);
+$node_ninlaro->save();
+
+$node_adcetris = Node::create([
+  'type' => 'adcietris_calculator',
+  'title' => 'Adcetris calculator',
+]);
+$node_adcetris->save();
+
+$node_vpriv = Node::create([
+  'type' => 'vpriv_calculator',
+  'title' => 'Vpriv calculator',
+]);
+$node_vpriv->save();
+
+$node_prothromplex = Node::create([
+  'type' => 'prothromplex_calculator',
+  'title' => 'Prothromplex Calculator',
+]);
+$node_prothromplex->save();
+$node_adynovate = Node::create([
+  'type' => 'adynovate_calculator',
+  'title' => 'Adynovate Calculator',
+]);
+$node_adynovate->save();
+
+}
+
+function dose_calculator_uninstall() {
+    $advante_calculator = \Drupal::entityQuery('node')->accessCheck(FALSE)->condition('type','advante_calculator')->execute();
+    $feiba_calculator = \Drupal::entityQuery('node')->accessCheck(FALSE)->condition('type','feiba_calculator')->execute();
+    $ninlaro_calculator = \Drupal::entityQuery('node')->accessCheck(FALSE)->condition('type','ninlaro_calculator')->execute();
+    $adcetris_calculator = \Drupal::entityQuery('node')->accessCheck(FALSE)->condition('type','adcietris_calculator')->execute();
+    $vpriv_calculator = \Drupal::entityQuery('node')->accessCheck(FALSE)->condition('type','vpriv_calculator')->execute();
+    $prothromplex_calculator = \Drupal::entityQuery('node')->accessCheck(FALSE)->condition('type','prothromplex_calculator')->execute();
+    $adynovate_calculator = \Drupal::entityQuery('node')->accessCheck(FALSE)->condition('type','adynovate_calculator')->execute();
+    //delete nodes if exists
+    dose_calculator_delete_nodes($advante_calculator);
+    dose_calculator_delete_nodes($feiba_calculator);
+    dose_calculator_delete_nodes($ninlaro_calculator);
+    dose_calculator_delete_nodes($adcetris_calculator);
+    dose_calculator_delete_nodes($vpriv_calculator);
+    dose_calculator_delete_nodes($prothromplex_calculator);
+    dose_calculator_delete_nodes($adynovate_calculator);
+  }
+   //delete node function
+   function dose_calculator_delete_nodes($data) {
+    if($data) {
+      $storage_handler = \Drupal::entityTypeManager()->getStorage("node");
+      foreach ($data as $key => $value) {
+        $node = $storage_handler->load($value);
+        $node->delete($node);    
+      }
+    }
+  }

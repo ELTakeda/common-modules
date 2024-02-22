@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advante_reset_button_bc_ho
+    - node.type.advante_calculator
+id: node.advante_calculator.field_advante_reset_button_bc_ho
+field_name: field_advante_reset_button_bc_ho
+entity_type: node
+bundle: advante_calculator
+label: 'Advante Reset Button Background Color On Hover'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

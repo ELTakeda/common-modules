@@ -1,0 +1,4 @@
+cookiepro.admin.header:
+  route_name: cookiepro.admin.header
+  title: 'CookiePro'
+  base_route: cookiepro.admin.header

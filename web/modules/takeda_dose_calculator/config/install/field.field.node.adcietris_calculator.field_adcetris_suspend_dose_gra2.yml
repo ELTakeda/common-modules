@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_adcetris_suspend_dose_gra2
+    - node.type.adcietris_calculator
+id: node.adcietris_calculator.field_adcetris_suspend_dose_gra2
+field_name: field_adcetris_suspend_dose_gra2
+entity_type: node
+bundle: adcietris_calculator
+label: 'Adcetris suspend dose grade 2'
+description: 'Original text: Withhold dose until toxicity returns to Grade 2 or baseline; then restart treatment with the same dose and schedule. Consider support with granulocyte colony stimulating factor (GCSF or GM-CSF) in subsequent cycles for patients who develop Grade 3 or 4 neutropenia.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

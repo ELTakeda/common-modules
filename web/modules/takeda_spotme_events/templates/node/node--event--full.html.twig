@@ -1,0 +1,106 @@
+{% set config_color = getSpotMeConfigColor() %}
+{% if config_color %}
+  {% include '@spotme_events/spotme-color-configuration.html.twig' with config_color %}
+{% endif %}
+
+{{ attach_library('spotme_events/main-styles') }}
+{{ attach_library('spotme_events/spotme_events.detail') }}
+{{ attach_library('spotme_events/spotme_events.library') }}
+{% set check_registed = checkRegisteredEvent(null, node.nid.value) %}
+{% set check_user_can_register = checkUserCanRegistered(null) %}
+{% set event_state = checkEventState(node) %}
+{% set destination = getUrlFromDestination() %}
+
+<article class="event-article">
+  <div class="event-article__inner-wrapper">
+      <div class="event-article__banner">
+          <div class="banner-img" style="background-image: url( {{file_url(node.field_event_thumbnail.entity.fileuri)}} );"></div>
+
+      </div>
+      <h2 class="event-article__title">{{ node.title.value }}</h2>
+      <div class="event-article__content">
+          <div class="content-description">
+              <div class="content-description__text">
+                {{ node.body.value|raw }}
+              </div>
+              <div class="content-description__running-time">
+                  <p><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                              fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+                              <path
+                                  d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
+                              <path
+                                  d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
+                          </svg></span>Run time<span class="event-text--bold">&nbsp;{% if node.field_duration_in_minites.value %}
+                            {{ node.field_duration_in_minites.value ~ ' minutes' }}
+                          {% else %}
+                            -
+                          {% endif %}</span></p>
+              </div>
+              
+          </div>
+          <div class="content-info">
+              <div class="content-info__inner-wrapper">
+                  <div class="icon-with-text">
+                      <p class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                          <path d="M5.357 2.57143C4.61819 2.57143 3.90963 2.86492 3.38721 3.38734C2.86478 3.90977 2.57129 4.61832 2.57129 5.35714V18.6429C2.57129 19.3817 2.86478 20.0902 3.38721 20.6127C3.90963 21.1351 4.61819 21.4286 5.357 21.4286H18.6427C19.3815 21.4286 20.0901 21.1351 20.6125 20.6127C21.1349 20.0902 21.4284 19.3817 21.4284 18.6429V5.35714C21.4284 4.61832 21.1349 3.90977 20.6125 3.38734C20.0901 2.86492 19.3815 2.57143 18.6427 2.57143H5.357ZM3.857 8.14543H20.1427V18.6429C20.1427 19.0407 19.9847 19.4222 19.7034 19.7035C19.4221 19.9848 19.0405 20.1429 18.6427 20.1429H5.357C4.95918 20.1429 4.57765 19.9848 4.29634 19.7035C4.01504 19.4222 3.857 19.0407 3.857 18.6429V8.14543ZM16.5007 15.0009C16.2166 15.0009 15.944 15.1137 15.7431 15.3147C15.5422 15.5156 15.4293 15.7881 15.4293 16.0723C15.4293 16.3564 15.5422 16.629 15.7431 16.8299C15.944 17.0308 16.2166 17.1437 16.5007 17.1437C16.7849 17.1437 17.0574 17.0308 17.2583 16.8299C17.4593 16.629 17.5721 16.3564 17.5721 16.0723C17.5721 15.7881 17.4593 15.5156 17.2583 15.3147C17.0574 15.1137 16.7849 15.0009 16.5007 15.0009ZM11.9973 15.0009C11.7131 15.0009 11.4406 15.1137 11.2397 15.3147C11.0387 15.5156 10.9259 15.7881 10.9259 16.0723C10.9259 16.3564 11.0387 16.629 11.2397 16.8299C11.4406 17.0308 11.7131 17.1437 11.9973 17.1437C12.2814 17.1437 12.554 17.0308 12.7549 16.8299C12.9558 16.629 13.0687 16.3564 13.0687 16.0723C13.0687 15.7881 12.9558 15.5156 12.7549 15.3147C12.554 15.1137 12.2814 15.0009 11.9973 15.0009ZM16.5007 10.7151C16.2166 10.7151 15.944 10.828 15.7431 11.029C15.5422 11.2299 15.4293 11.5024 15.4293 11.7866C15.4293 12.0707 15.5422 12.3433 15.7431 12.5442C15.944 12.7451 16.2166 12.858 16.5007 12.858C16.7849 12.858 17.0574 12.7451 17.2583 12.5442C17.4593 12.3433 17.5721 12.0707 17.5721 11.7866C17.5721 11.5024 17.4593 11.2299 17.2583 11.029C17.0574 10.828 16.7849 10.7151 16.5007 10.7151ZM11.9973 10.7151C11.7131 10.7151 11.4406 10.828 11.2397 11.029C11.0387 11.2299 10.9259 11.5024 10.9259 11.7866C10.9259 12.0707 11.0387 12.3433 11.2397 12.5442C11.4406 12.7451 11.7131 12.858 11.9973 12.858C12.2814 12.858 12.554 12.7451 12.7549 12.5442C12.9558 12.3433 13.0687 12.0707 13.0687 11.7866C13.0687 11.5024 12.9558 11.2299 12.7549 11.029C12.554 10.828 12.2814 10.7151 11.9973 10.7151ZM7.493 10.7151C7.20884 10.7151 6.93632 10.828 6.73539 11.029C6.53446 11.2299 6.42157 11.5024 6.42157 11.7866C6.42157 12.0707 6.53446 12.3433 6.73539 12.5442C6.93632 12.7451 7.20884 12.858 7.493 12.858C7.77716 12.858 8.04969 12.7451 8.25062 12.5442C8.45155 12.3433 8.56443 12.0707 8.56443 11.7866C8.56443 11.5024 8.45155 11.2299 8.25062 11.029C8.04969 10.828 7.77716 10.7151 7.493 10.7151ZM5.357 3.85714H18.6427C19.4707 3.85714 20.1427 4.52914 20.1427 5.35714V6.85971H3.857V5.35714C3.857 4.52914 4.529 3.85714 5.357 3.85714Z" fill="currentColor"/>
+                        </svg> When</p>
+                      <p>{{ node.field_start_at.value|date('M d, Y') }}</p>
+                  </div>
+              </div>
+              <a href="{{export_to_ics_url}}?event_id={{event_id }}"
+                  class="download-button {{ hidden_class }} js-download-button" download="calendar">{{
+                  field_se_label_download_ics }}</a>
+          </div>
+
+          <div class="content-cta-btn content-cta-btn--absolute-bottom js-ctaBtn-wrapper">
+              {% if event_state == 'new_arrival' or event_state == 'comming_soon' %}
+                {% if check_registed == '0' and node.field_spot_me_event.value and check_user_can_register %}
+                  <a webinar-id="{{ node.field_event_id.value }}" event-nid="{{ node.nid.value }}" href="#" class="btn-event btn-register-event">Register Event</a>
+                {% endif %}
+              {% elseif event_state == 'live' %}
+                {% if node.field_spot_me_event.value and check_registed == '1' %}
+                  <a target="_blank" rel="noopener" href="/spotme/view-event/{{ node.nid.value }}/{{ node.field_event_id.value }}" class="btn-event">Watch Event</a>
+                {% elseif not node.field_spot_me_event.value %}
+                  <a target="_blank" rel="noopener" href="{{ node.field_event_url_not_spotme.value }}" class="btn-event">Watch Event</a>
+                {% else %}
+                  {% if check_user_can_register == '1' %}
+                    <a webinar-id="{{ node.field_event_id.value }}" event-nid="{{ node.nid.value }}" href="#" class="btn-event btn-register-event">Register Event</a>
+                  {% endif %}
+                {% endif %}
+              {% else %}
+                {% if node.field_video_event_url.value or node.field_video_event.target_id %}
+                  <a data-toggle="modal" data-target="#video-popup-{{ node.nid.value }}" href="#video-popup-{{ node.nid.value }}" class="btn-event">Watch
+                                                                        Event</a>
+                  <div class="modal fade" id="video-popup-{{ node.nid.value }}" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">
+                            {{ node.title.value }}</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+
+                        <div class="modal-body">
+                          {% if node.field_video_event.target_id %}
+                            <div class="video-entity">
+                              {{ renderField(node, 'field_video_event')|raw }}
+                            </div>
+                          {% elseif node.field_video_event_url.value %}
+                            <iframe title="video" allowfullscreen="allowfullscreen" src="{{ node.field_video_event_url.value }}" style="position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px; width: 100%; height: 100%;"></iframe>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      </div>
+  </div>
+</article>

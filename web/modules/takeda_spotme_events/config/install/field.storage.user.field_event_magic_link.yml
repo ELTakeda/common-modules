@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - spotme_events
+    - reference_value_pair
+    - user
+id: user.field_event_magic_link
+field_name: field_event_magic_link
+entity_type: user
+type: reference_value_pair
+settings:
+  max_length: '1000'
+  target_type: node
+  is_ascii: false
+  case_sensitive: false
+module: reference_value_pair
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

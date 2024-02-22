@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_sfmc_background_color
+    - node.type.sfmc_connector
+id: node.sfmc_connector.field_sfmc_background_color
+field_name: field_sfmc_background_color
+entity_type: node
+bundle: sfmc_connector
+label: 'SFMC Background Color'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

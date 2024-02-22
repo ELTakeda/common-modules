@@ -1,0 +1,39 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_title
+field_name: field_title
+entity_type: user
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: Doctor
+      label: Doctor
+    -
+      value: Associate Professor
+      label: Associate Professor
+    -
+      value: Professor
+      label: Professor
+    -
+      value: Mr
+      label: Mr
+    -
+      value: Mrs
+      label: Mrs
+    -
+      value: Ms
+      label: Ms
+    -
+      value: Miss
+      label: Miss
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

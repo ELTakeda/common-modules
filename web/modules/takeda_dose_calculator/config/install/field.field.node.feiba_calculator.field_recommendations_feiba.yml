@@ -1,0 +1,48 @@
+langcode: bg
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_recommendations_feiba
+    - node.type.feiba_calculator
+    - paragraphs.paragraphs_type.recommendations
+  module:
+    - entity_reference_revisions
+id: node.feiba_calculator.field_recommendations_feiba
+field_name: field_recommendations_feiba
+entity_type: node
+bundle: feiba_calculator
+label: 'Recommendations'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      recommendations: recommendations
+    negate: 0
+    target_bundles_drag_drop:
+      adverse_effects_reporting:
+        weight: 8
+        enabled: false
+      consents:
+        weight: 9
+        enabled: false
+      contact_medical_information:
+        weight: 10
+        enabled: false
+      international_advisory:
+        weight: 11
+        enabled: false
+      radio:
+        weight: 12
+        enabled: false
+      recommendations:
+        weight: 13
+        enabled: true
+      request_sponsorship:
+        weight: 14
+        enabled: false
+field_type: entity_reference_revisions

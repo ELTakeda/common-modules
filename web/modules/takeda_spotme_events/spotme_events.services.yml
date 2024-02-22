@@ -1,0 +1,19 @@
+services:
+  spotme_events.custom_functions:
+    class: Drupal\spotme_events\CustomFunctions
+    
+  spotme_events.email_functions:
+    class: Drupal\spotme_events\EmailFunctions
+    
+  spotme_events.curl_functions:
+    class: Drupal\spotme_events\CurlFunctions
+
+  spotme_events.twig_extension:
+    class: Drupal\spotme_events\TwigExtension
+    arguments: ['@module_handler', '@theme.manager']
+    tags:
+      - { name: twig.extension }
+
+  spotme_events_service:
+    class: Drupal\spotme_events\Service\HelperService
+    arguments: ['@entity_type.manager', '@current_user', '@config.factory', '@database', '@logger.factory']

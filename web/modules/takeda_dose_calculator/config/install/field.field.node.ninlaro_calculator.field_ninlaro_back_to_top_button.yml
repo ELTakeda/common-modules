@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ninlaro_back_to_top_button
+    - node.type.ninlaro_calculator
+id: node.ninlaro_calculator.field_ninlaro_back_to_top_button
+field_name: field_ninlaro_back_to_top_button
+entity_type: node
+bundle: ninlaro_calculator
+label: 'Ninlaro Back To Top Button Color'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

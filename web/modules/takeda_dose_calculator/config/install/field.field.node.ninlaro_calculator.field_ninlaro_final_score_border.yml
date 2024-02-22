@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ninlaro_final_score_border
+    - node.type.ninlaro_calculator
+id: node.ninlaro_calculator.field_ninlaro_final_score_border
+field_name: field_ninlaro_final_score_border
+entity_type: node
+bundle: ninlaro_calculator
+label: 'Ninlaro Final Score Border Color'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

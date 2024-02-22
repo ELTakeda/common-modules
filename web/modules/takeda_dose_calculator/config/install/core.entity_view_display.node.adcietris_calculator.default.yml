@@ -1,0 +1,209 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.adcietris_calculator.field_adcetris_adcetris_suspend_
+    - field.field.node.adcietris_calculator.field_adcetris_back_to_top_butto
+    - field.field.node.adcietris_calculator.field_adcetris_calculator_five_c
+    - field.field.node.adcietris_calculator.field_adcetris_calculator_four_c
+    - field.field.node.adcietris_calculator.field_adcetris_calculator_one_co
+    - field.field.node.adcietris_calculator.field_adcetris_calculator_six_co
+    - field.field.node.adcietris_calculator.field_adcetris_calculator_three_
+    - field.field.node.adcietris_calculator.field_adcetris_calculator_two_co
+    - field.field.node.adcietris_calculator.field_adcetris_continue_dose_and
+    - field.field.node.adcietris_calculator.field_adcetris_cycle_info
+    - field.field.node.adcietris_calculator.field_adcetris_discontinue_treat
+    - field.field.node.adcietris_calculator.field_adcetris_first_background_
+    - field.field.node.adcietris_calculator.field_adcetris_fourth_background
+    - field.field.node.adcietris_calculator.field_adcetris_nauropatia_sensor
+    - field.field.node.adcietris_calculator.field_adcetris_neuropatia_reduce
+    - field.field.node.adcietris_calculator.field_adcetris_recommended_proph
+    - field.field.node.adcietris_calculator.field_adcetris_reduce_dose_every
+    - field.field.node.adcietris_calculator.field_adcetris_refer_to_leaflets
+    - field.field.node.adcietris_calculator.field_adcetris_result_box_backgr
+    - field.field.node.adcietris_calculator.field_adcetris_second_background
+    - field.field.node.adcietris_calculator.field_adcetris_suspend_dose_gra2
+    - field.field.node.adcietris_calculator.field_adcetris_suspend_dose_grad
+    - field.field.node.adcietris_calculator.field_adcetris_third_background_
+    - node.type.adcietris_calculator
+  module:
+    - user
+id: node.adcietris_calculator.default
+targetEntityType: node
+bundle: adcietris_calculator
+mode: default
+content:
+  field_adcetris_adcetris_suspend_:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 119
+    region: content
+  field_adcetris_back_to_top_butto:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  field_adcetris_calculator_five_c:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 111
+    region: content
+  field_adcetris_calculator_four_c:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 110
+    region: content
+  field_adcetris_calculator_one_co:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  field_adcetris_calculator_six_co:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 112
+    region: content
+  field_adcetris_calculator_three_:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 109
+    region: content
+  field_adcetris_calculator_two_co:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 108
+    region: content
+  field_adcetris_continue_dose_and:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 117
+    region: content
+  field_adcetris_cycle_info:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 122
+    region: content
+  field_adcetris_discontinue_treat:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 120
+    region: content
+  field_adcetris_first_background_:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_adcetris_fourth_background:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_adcetris_nauropatia_sensor:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 115
+    region: content
+  field_adcetris_neuropatia_reduce:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 116
+    region: content
+  field_adcetris_recommended_proph:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 121
+    region: content
+  field_adcetris_reduce_dose_every:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 118
+    region: content
+  field_adcetris_refer_to_leaflets:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 123
+    region: content
+  field_adcetris_result_box_backgr:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_adcetris_second_background:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_adcetris_suspend_dose_gra2:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 114
+    region: content
+  field_adcetris_suspend_dose_grad:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 113
+    region: content
+  field_adcetris_third_background_:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

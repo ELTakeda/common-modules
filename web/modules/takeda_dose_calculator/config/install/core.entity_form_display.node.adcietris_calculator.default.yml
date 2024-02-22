@@ -1,0 +1,278 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.adcietris_calculator.field_adcetris_adcetris_suspend_
+    - field.field.node.adcietris_calculator.field_adcetris_back_to_top_butto
+    - field.field.node.adcietris_calculator.field_adcetris_calculator_five_c
+    - field.field.node.adcietris_calculator.field_adcetris_calculator_four_c
+    - field.field.node.adcietris_calculator.field_adcetris_calculator_one_co
+    - field.field.node.adcietris_calculator.field_adcetris_calculator_six_co
+    - field.field.node.adcietris_calculator.field_adcetris_calculator_three_
+    - field.field.node.adcietris_calculator.field_adcetris_calculator_two_co
+    - field.field.node.adcietris_calculator.field_adcetris_continue_dose_and
+    - field.field.node.adcietris_calculator.field_adcetris_cycle_info
+    - field.field.node.adcietris_calculator.field_adcetris_discontinue_treat
+    - field.field.node.adcietris_calculator.field_adcetris_first_background_
+    - field.field.node.adcietris_calculator.field_adcetris_fourth_background
+    - field.field.node.adcietris_calculator.field_adcetris_nauropatia_sensor
+    - field.field.node.adcietris_calculator.field_adcetris_neuropatia_reduce
+    - field.field.node.adcietris_calculator.field_adcetris_recommended_proph
+    - field.field.node.adcietris_calculator.field_adcetris_reduce_dose_every
+    - field.field.node.adcietris_calculator.field_adcetris_refer_to_leaflets
+    - field.field.node.adcietris_calculator.field_adcetris_result_box_backgr
+    - field.field.node.adcietris_calculator.field_adcetris_second_background
+    - field.field.node.adcietris_calculator.field_adcetris_suspend_dose_gra2
+    - field.field.node.adcietris_calculator.field_adcetris_suspend_dose_grad
+    - field.field.node.adcietris_calculator.field_adcetris_third_background_
+    - node.type.adcietris_calculator
+  module:
+    - path
+id: node.adcietris_calculator.default
+targetEntityType: node
+bundle: adcietris_calculator
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_adcetris_adcetris_suspend_:
+    type: string_textarea
+    weight: 139
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_adcetris_back_to_top_butto:
+    type: string_textfield
+    weight: 126
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_adcetris_calculator_five_c:
+    type: string_textarea
+    weight: 131
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_adcetris_calculator_four_c:
+    type: string_textarea
+    weight: 130
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_adcetris_calculator_one_co:
+    type: string_textarea
+    weight: 127
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_adcetris_calculator_six_co:
+    type: string_textarea
+    weight: 132
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_adcetris_calculator_three_:
+    type: string_textarea
+    weight: 129
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_adcetris_calculator_two_co:
+    type: string_textarea
+    weight: 128
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_adcetris_continue_dose_and:
+    type: string_textarea
+    weight: 137
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_adcetris_cycle_info:
+    type: string_textarea
+    weight: 142
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_adcetris_discontinue_treat:
+    type: string_textarea
+    weight: 140
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_adcetris_first_background_:
+    type: string_textfield
+    weight: 122
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_adcetris_fourth_background:
+    type: string_textfield
+    weight: 125
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_adcetris_nauropatia_sensor:
+    type: string_textarea
+    weight: 135
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_adcetris_neuropatia_reduce:
+    type: string_textarea
+    weight: 136
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_adcetris_recommended_proph:
+    type: string_textarea
+    weight: 141
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_adcetris_reduce_dose_every:
+    type: string_textarea
+    weight: 138
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_adcetris_refer_to_leaflets:
+    type: string_textarea
+    weight: 143
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_adcetris_result_box_backgr:
+    type: string_textfield
+    weight: 121
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_adcetris_second_background:
+    type: string_textfield
+    weight: 123
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_adcetris_suspend_dose_gra2:
+    type: string_textarea
+    weight: 134
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_adcetris_suspend_dose_grad:
+    type: string_textarea
+    weight: 133
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_adcetris_third_background_:
+    type: string_textfield
+    weight: 124
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    weight: 15
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 120
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    weight: 16
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

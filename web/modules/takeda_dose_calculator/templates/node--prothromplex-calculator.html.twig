@@ -1,0 +1,141 @@
+
+{{ attach_library('dose_calculator/dose-calculator-prothromplex-css') }}
+{{ attach_library('dose_calculator/dose-calculator-prothromplex-js') }}
+
+
+<body>
+  <section class="calc-type-a">
+    <h1 class="calc-type-a__title">{{ "Prothromplex Dose Calculator"|t }}</h1>
+    <div class="calc-type-a__text">
+        <p>{{ "This tool helps in the precise and agile dosing of Prothromplex® . The administration of Prothromplex® is done with individual dosage per patient using the formula:"|t }}</p>
+        <p class="bold">{{"(1.2 x desired increase in prothrombin time x patient kg) divided by 600 IU."|t}}</p>
+        <p>{{"Consult the table and enter the data to obtain the best result in treating the patient."|t}}</p>
+    </div>
+
+    <div class="calc-type-a__table">
+      <div class="calc-type-a__table-title">
+        <h4 class="calc-type-a__information-title">{{"Prothrombin complex replacement 600 UI per patient weight"|t }}1</h4>
+      </div>
+        <div class="calc-type-a__table-image">
+            <img src="{{prothromplex_table1}}" alt="''">
+        </div>
+    </div>
+    <div class="calc-type-a__table">
+        <div class="calc-type-a__table-image">
+            <img src="{{prothromplex_table2}}" alt="''">
+        </div>
+    </div>
+
+    <div class="calc-type-a__calculator-container js-ad-calculator">
+        <div class="calc-type-a__alerts-container">
+          <div class="calc-type-a__alert js-ad-alert js-alert--first">
+            <p> <span class="calc-type-a__alert-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <g id="Group">
+                    <path id="Vector"
+                      d="M10 19C14.9706 19 19 14.9706 19 10C19 5.02944 14.9706 1 10 1C5.02944 1 1 5.02944 1 10C1 14.9706 5.02944 19 10 19Z"
+                      stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path id="Vector_2" d="M10 14H10.01V14.01H10V14Z" stroke="black" stroke-width="2.25"
+                      stroke-linejoin="round" />
+                    <path id="Vector_3" d="M10 10V6" stroke="black" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </g>
+                </svg></span> {{ "Weight Out of Range"|t }} 40 - 100Kg</p>
+            <div class="calc-type-a__alert-close-button js-ad-alert-close-button"><svg width="20" height="20"
+                viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="Icons">
+                  <path id="Vector"
+                    d="M10.5401 10.4167L14.9993 5.9574L14.042 5L9.58268 9.45927L5.12341 5L4.16602 5.9574L8.62529 10.4167L4.16602 14.8759L5.12341 15.8333L9.58268 11.3741L14.042 15.8333L14.9993 14.8759L10.5401 10.4167Z"
+                    fill="#34373F" />
+                </g>
+              </svg></div>
+          </div>
+          <div class="calc-type-a__alert js-ad-alert js-alert--second">
+            <p> <span class="calc-type-a__alert-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <g id="Group">
+                    <path id="Vector"
+                      d="M10 19C14.9706 19 19 14.9706 19 10C19 5.02944 14.9706 1 10 1C5.02944 1 1 5.02944 1 10C1 14.9706 5.02944 19 10 19Z"
+                      stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path id="Vector_2" d="M10 14H10.01V14.01H10V14Z" stroke="black" stroke-width="2.25"
+                      stroke-linejoin="round" />
+                    <path id="Vector_3" d="M10 10V6" stroke="black" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </g>
+                </svg></span>{{ "Dose out of range"|t }} 10 - 70UI/Kg</p>
+            <div class="calc-type-a__alert-close-button js-ad-alert-close-button"><svg width="20" height="20"
+                viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="Icons">
+                  <path id="Vector"
+                    d="M10.5401 10.4167L14.9993 5.9574L14.042 5L9.58268 9.45927L5.12341 5L4.16602 5.9574L8.62529 10.4167L4.16602 14.8759L5.12341 15.8333L9.58268 11.3741L14.042 15.8333L14.9993 14.8759L10.5401 10.4167Z"
+                    fill="#34373F" />
+                </g>
+              </svg></div>
+          </div>
+        </div>
+        <div class="calc-type-a__calculator">
+          <div class="calc-type-a__inputs-container calc-type-a__inputs-container--two-inputs">
+            <div class="calc-type-a__input-pair">
+              <input class="calc-type-a__input js-ad-weight-input js-ad-input" id="input1" data-max_length="3"
+                placeholder="0" type="number" />
+              <div class="calc-type-a__input-placeholder">Kg</div>
+              <label for="ad-input-weight" class="calc-type-a__input-label">{{ "Patient weight"|t }}</label>
+            </div>
+            <div class="calc-type-a__input-pair">
+              <input class="calc-type-a__input js-ad-ui-kg-input js-ad-input" id="input2" data-max_length="3"
+                placeholder="0" type="number" />
+              <div class="calc-type-a__input-placeholder calc-type-a__input-placeholder--wider">UI/Kg</div>
+              <label for="ad-input-percent" class="calc-type-a__input-label">
+                {{ "Desired dose"|t }}
+              </label>
+            </div>
+          </div>
+          <div class="calc-type-a__buttons-container">
+            <button class="calc-type-a__button calc-type-a__button--calculate js-calculate-button">{{ "Calculate"|t
+              }}</button>
+            <button class="calc-type-a__button calc-type-a__button--reset js-reset-button">
+              <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="Group 108920 1" clip-path="url(#clip0_213_1556)">
+                  <g id="Group 108920">
+                    <path id="Icon material-replay"
+                      d="M7 3.75V0.25L2.625 4.625L7 9V5.5C8.03835 5.5 9.05339 5.80791 9.91674 6.38478C10.7801 6.96166 11.453 7.7816 11.8504 8.74091C12.2477 9.70022 12.3517 10.7558 12.1491 11.7742C11.9466 12.7926 11.4465 13.7281 10.7123 14.4623C9.97808 15.1965 9.04263 15.6965 8.02422 15.8991C7.00582 16.1017 5.95022 15.9977 4.99091 15.6004C4.0316 15.203 3.21166 14.5301 2.63478 13.6667C2.05791 12.8034 1.75 11.7884 1.75 10.75H0C0 12.1345 0.410543 13.4878 1.17971 14.639C1.94888 15.7901 3.04213 16.6873 4.32122 17.2172C5.6003 17.747 7.00777 17.8856 8.36563 17.6155C9.7235 17.3454 10.9708 16.6787 11.9497 15.6997C12.9287 14.7208 13.5954 13.4735 13.8655 12.1156C14.1356 10.7578 13.997 9.3503 13.4672 8.07122C12.9373 6.79213 12.0401 5.69888 10.889 4.92971C9.73785 4.16054 8.38447 3.75 7 3.75Z"
+                      fill="#34373F" />
+                  </g>
+                </g>
+                <defs>
+                  <clipPath id="clip0_213_1556">
+                    <rect width="14" height="17.5" fill="white" transform="translate(0 0.25)" />
+                  </clipPath>
+                </defs>
+              </svg>
+              {{ "Reset calculation"|t }}
+            </button>
+          </div>
+          <div class="calc-type-a__results-container js-results-container ad-hidden">
+            <div class="calc-type-a__results-left">
+              <svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" viewBox="0 0 46 46" fill="none">
+                <g clip-path="url(#clip0_213_1575)">
+                  <path
+                    d="M37.7085 29.6859C34.9903 28.3136 32.0037 27.3686 29.0627 26.7751C28.3671 26.0285 27.8887 25.1062 27.6789 24.1076C29.4994 22.6838 30.8932 20.5482 31.6568 18.0042C33.7652 17.6849 34.3135 14.4451 33.4773 12.6709C37.3169 -4.15481 8.00915 -4.18972 11.7576 12.6343C10.8777 14.4075 11.4252 17.6911 13.5581 18.0058C14.3116 20.5499 15.7154 22.6856 17.5359 24.1093C17.3182 25.1519 16.8096 26.1114 16.0689 26.8768C14.6768 27.1202 13.8199 27.3252 13.8015 27.3453C8.09832 28.9152 3.03721 30.6795 3.73205 37.7C3.44252 47.756 41.7687 47.7653 41.4947 37.7003C41.7959 34.5327 40.7731 31.1303 37.7085 29.6859ZM22.6324 1.38425C29.2485 1.29313 33.1449 5.64455 32.2869 11.5172C31.8958 11.3288 31.4259 11.3206 31.0049 11.4155C30.8382 10.9154 30.5664 10.1134 30.0996 8.81143C30.0403 8.6961 29.9434 8.59172 29.8662 8.48638C23.9043 4.51958 21.4154 11.8749 16.0621 8.46472C16.0305 8.44475 16.0088 8.42637 15.9805 8.40471C15.707 8.33498 15.4006 8.38129 15.227 8.62814C14.6728 9.74401 14.3817 10.9808 14.1983 11.4156C13.794 11.3121 13.3503 11.3207 12.968 11.4973C12.1098 5.62953 16.0186 1.29498 22.6324 1.38425ZM14.7184 17.0705C14.3789 16.2117 13.8154 16.8225 13.4464 16.5404C12.6094 15.9715 12.4014 13.0627 13.4765 12.7576C14.0355 12.5736 14.5293 13.286 15.0536 12.8776C15.2004 12.7619 15.2986 12.5953 15.3287 12.4108C15.3787 12.1857 15.7338 11.1487 16.1222 10.0768C22.2238 12.877 23.5363 6.49387 28.8994 9.49991C29.6063 11.2261 29.6217 12.1417 30.1595 12.876C30.682 13.2869 31.1794 12.5673 31.7368 12.7559C32.1653 12.8759 32.5704 13.6911 32.4704 14.7898C32.3871 15.7051 32.0419 16.2902 31.7685 16.5387C31.3714 16.7965 30.7682 16.2142 30.4965 17.0689C28.0651 26.9474 17.1402 26.9498 14.7184 17.0705ZM18.758 24.9245C21.1458 26.2804 24.0708 26.2804 26.4586 24.9245C26.7542 25.9507 27.2871 26.8931 28.0141 27.6753C27.659 28.794 25.1032 30.9113 22.6124 32.4567C20.1117 30.9112 17.5559 28.789 17.2092 27.6753C17.9329 26.8918 18.4634 25.9497 18.758 24.9245ZM5.10555 37.6999C4.59586 32.1021 7.66456 30.7139 12.3677 29.1774C12.151 30.0756 11.9841 30.985 11.8676 31.9015C8.95118 32.7816 9.10885 35.4652 9.56691 37.925C8.92687 38.7951 10.0087 39.98 10.9324 39.4103C11.6209 39.0345 11.5945 37.9733 10.9006 37.6199C10.6416 35.8172 10.1484 33.5888 12.6169 33.2221C14.9558 33.1187 14.9992 35.3844 15.1769 37.0981C14.5771 37.6165 14.8476 38.6504 15.6122 38.8345C16.618 39.1406 17.3787 37.7638 16.549 37.0981C16.3978 34.7843 16.037 32.2037 13.253 31.8299C13.404 30.7837 13.6206 29.748 13.9015 28.7289C14.3474 28.6118 14.5527 28.5444 15.9972 28.2805C16.8825 30.3561 20.5669 32.7985 21.9289 33.6321V43.8652C13.9218 43.5372 5.11217 41.8994 5.10555 37.6999ZM40.1159 37.6999C40.1138 41.891 31.3063 43.5392 23.2892 43.8651V33.632C24.673 32.7768 28.4074 30.2977 29.2426 28.2204C29.918 28.3486 30.5708 28.5161 31.2149 28.6872C31.6065 30.1195 31.872 31.5833 32.0084 33.0619C28.8202 34.2094 30.4461 38.9796 33.6712 37.9412C36.1096 37.1945 35.8782 33.4414 33.3822 32.9818C33.2608 31.6905 33.0496 30.4093 32.7504 29.1473C37.4776 30.6737 40.6438 32.0695 40.1159 37.6999ZM32.8421 34.2839C34.4085 34.2995 34.4124 36.6762 32.841 36.6836C31.2685 36.6727 31.279 34.2967 32.8455 34.2839H32.8421Z"
+                    fill="#BD120A" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_213_1575">
+                    <rect width="45.25" height="45.25" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </div>
+            <div class="calc-type-a__results-right">
+              <p><span class="bold">{{"Result: " |t}}<span class="calc-type-a__result calc-type-a__result--ui js-result-ui"></span>{{" UI or "|t}} <span class="calc-type-a__result calc-type-a__result--ui js-result-ml"></span>{{" ml"|t}}</p>
+              <p class="calc-type-a__result js-expected-result"></p>
+            </div>
+  
+  
+          </div>
+        </div>
+      </div>
+</section>
+
+</body>
+

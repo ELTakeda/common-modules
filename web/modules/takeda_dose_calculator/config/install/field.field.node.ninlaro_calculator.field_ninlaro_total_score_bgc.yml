@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ninlaro_total_score_bgc
+    - node.type.ninlaro_calculator
+id: node.ninlaro_calculator.field_ninlaro_total_score_bgc
+field_name: field_ninlaro_total_score_bgc
+entity_type: node
+bundle: ninlaro_calculator
+label: 'Ninlaro Total Score Background Color'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

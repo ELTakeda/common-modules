@@ -1,0 +1,4 @@
+services:
+  takeda_brightcove.video_factory:
+    class: Drupal\takeda_brightcove\VideoFactory
+    arguments: ['@config.factory', '@http_client']

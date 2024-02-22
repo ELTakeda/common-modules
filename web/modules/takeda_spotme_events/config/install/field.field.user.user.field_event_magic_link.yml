@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_event_magic_link
+    - node.type.event
+  module:
+    - reference_value_pair
+    - user
+id: user.user.field_event_magic_link
+field_name: field_event_magic_link
+entity_type: user
+bundle: user
+label: 'Event Magic Link'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      event: event
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: 0
+    auto_create_bundle: ''
+field_type: reference_value_pair

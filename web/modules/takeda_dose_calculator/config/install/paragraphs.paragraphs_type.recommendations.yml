@@ -1,0 +1,12 @@
+langcode: bg
+status: true
+dependencies:
+  enforced:
+    module:
+      - dose_calculator
+id: recommendations
+label: Recommendations
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

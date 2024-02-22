@@ -1,0 +1,16 @@
+name: Takeda ID
+description: Provides support for Takeda ID login and lead generation
+
+type: module
+package: 'User authentication'
+
+core_version_requirement: ^9 || ^10
+dependencies:
+  - externalauth:externalauth
+  - password_policy:password_policy
+  - password_policy:password_policy_characters
+  - mailsystem:mailsystem
+  - password_policy:password_policy_length
+  - sendgrid_integration:sendgrid_integration
+
+configure: takeda_id.configure_form

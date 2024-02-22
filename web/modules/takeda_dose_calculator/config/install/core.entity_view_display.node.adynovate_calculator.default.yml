@@ -1,0 +1,82 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.adynovate_calculator.field_adynovate_external_links
+    - field.field.node.adynovate_calculator.field_adynovate_mail_to
+    - field.field.node.adynovate_calculator.field_adynovate_primary_color
+    - field.field.node.adynovate_calculator.field_adynovate_product_link
+    - field.field.node.adynovate_calculator.field_adynovate_secondary_color
+    - field.field.node.adynovate_calculator.field_adynovate_subject
+    - field.field.node.adynovate_calculator.field_adynovate_tertiary_color
+    - node.type.adynovate_calculator
+  module:
+    - user
+id: node.adynovate_calculator.default
+targetEntityType: node
+bundle: adynovate_calculator
+mode: default
+content:
+  field_adynovate_external_links:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  field_adynovate_mail_to:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_adynovate_primary_color:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_adynovate_product_link:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  field_adynovate_secondary_color:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_adynovate_subject:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_adynovate_tertiary_color:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

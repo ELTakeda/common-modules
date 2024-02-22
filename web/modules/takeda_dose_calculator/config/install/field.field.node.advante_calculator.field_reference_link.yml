@@ -1,0 +1,20 @@
+langcode: bg
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_reference_link
+    - node.type.advante_calculator
+  module:
+    - text
+id: node.advante_calculator.field_reference_link
+field_name: field_reference_link
+entity_type: node
+bundle: advante_calculator
+label: 'Advante Reference link '
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

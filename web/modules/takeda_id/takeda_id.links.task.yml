@@ -1,0 +1,8 @@
+takeda_id.configure_form:
+  route_name: takeda_id.configure_form
+  title: Settings
+  base_route: takeda_id.configure_form
+takeda_id.auth_email:
+  route_name: takeda_id.auth_email
+  base_route: entity.user.edit_form
+  title: 'Takeda Authentication Email'

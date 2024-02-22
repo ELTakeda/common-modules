@@ -1,0 +1,40 @@
+// --- Colors ---
+$color-white: white;
+$color-black: black;
+$color-takeda-red: #E1242A;
+$color-dark-red: #BD120A;
+$color-azuki-maroon: #891515;
+$color-akane-red :#EA5532;
+$color-light-pink: #F78C85;
+$color-sakura-pink: #DA5283;
+$color-purple: #9B72B0;
+$color-light-gray: #EDF2F4;
+$color-medium-gray: #A1A4AC;
+$color-dark-gray: #34373F;
+$color-sorairo-blue: #4C9BCF;
+$color-asagi-blue: #51B1BF;
+$color-matsuba-green: #ABB436;
+$color-yamabuki-yellow: #EBA800;
+$color-footer-bg: #F5F5F5;
+$color-card-gray-bg: rgba(237, 242, 244, 0.45);
+
+// --- Shadows ---
+$shadow-primary: 0px 5px 10px 0px rgba(52, 55, 63, 0.15);
+$shadow-card: 0px 4px 20px 0px rgba(52, 55, 63, 0.15);
+
+// --- Fonts ---
+$font-open-sans--light: "Open Sans Light", sans-serif;
+$font-open-sans--regular: "Open Sans Regular", sans-serif;
+$font-open-sans--medium: "Open Sans Medium";
+$font-open-sans--regular-italic: "Open Sans Regular Italic", sans-serif;
+$font-open-sans--semi-bold: "Open Sans SemiBold", sans-serif;
+$font-open-sans--bold: "Open Sans Bold", sans-serif;
+$font-open-sans--extra-bold: "Open Sans Extra Bold", sans-serif;
+
+//  --- Breakpoints
+$breakpoint-tablet--big: 1024px;
+$breakpoint-tablet--small: 769px;
+$breakpoint-phone: 480px;
+
+// --- Other ---
+$max-content-width: 1440px;

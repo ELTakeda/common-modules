@@ -1,0 +1,33 @@
+main-styles:
+  css:
+    theme:
+      styles/main.css: {}
+
+main-js:
+  js:
+    scripts/main.js: {}
+    scripts/register.js: {}
+  dependencies:
+    - core/jquery
+spotme_events.library:
+  css:
+    theme:
+      css/spotme_custom.css: {}
+  js:
+    js/spotme_custom.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupal.dialog.ajax
+
+spotme_events.backend:
+  css:
+    theme:
+      css/spotme_custom_backend.css: {}
+  js:
+    js/spotme_custom_backend.js: {}
+
+spotme_events.detail:
+  css:
+    theme:
+      css/spotme_custom_detail.css: {}

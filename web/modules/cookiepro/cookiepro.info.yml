@@ -1,0 +1,11 @@
+name: CookiePro by OneTrust
+description: Simplify Compliance with GDPR & ePrivacy Cookie Laws
+package: CookiePro by OneTrust
+core_version_requirement: ^8.8 || ^9 || ^10
+type: module
+configure: cookiepro.admin.header
+
+# Information added by Drupal.org packaging script on 2023-12-01
+version: '2.1.1'
+project: 'cookiepro'
+datestamp: 1701437395

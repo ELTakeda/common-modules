@@ -1,0 +1,5 @@
+spotme_events.admin.config:
+  title: 'Event Registration'
+  base_route_name: spotme_events.admin.config
+  names:
+    - spotme_events.configure_form

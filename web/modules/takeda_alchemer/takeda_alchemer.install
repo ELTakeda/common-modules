@@ -1,0 +1,117 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function takeda_alchemer_schema() {
+  $database = \Drupal::database();
+  $schema = $database->schema();
+
+  // Table for pop-up survey tags and data
+  // First check if the tables exist...
+  if (!$schema->tableExists('takeda_alchemer_popup')) {
+    $fields = [
+        'description' => 'Takeda alchemer data',
+        'fields' => [
+          'nid' => [
+            'type' => 'int',
+            'unsigned' => TRUE,
+            'not null' => TRUE,
+            'default' => 0,
+            'description' => 'Node ID',
+          ],
+          'is_popup_active' => [
+            'type' => 'int',
+            'length' => 11,
+            'default' => 0,
+            'description' => 'Is Alchemer pop-up survey active',
+          ],
+          'popup_tags' => [
+            'type' => 'text',
+            'description' => 'Alchemer pop-up survey tags',
+          ],
+          'popup_therapy_areas' => [
+            'type' => 'text',
+            'description' => 'Alchemer therapy area names for pop-up survey',
+          ],
+          'popup_products' => [
+            'type' => 'text',
+            'description' => 'Alchemer products names for pop-up survey',
+          ],
+          'popup_function' => [
+              'type' => 'varchar',
+              'length' => 255,
+              'default' => '',
+              'description' => 'Alchemer function text for pop-up survey ',
+          ],
+          'popup_group_id' => [
+            'type' => 'int',
+            'length' => 11,
+            'default' => NULL,
+            'description' => 'Alchemer pop-up survey group ID',
+          ],
+        ],
+        'unique keys' => [
+          'nid' => ['nid'],
+        ],
+      ];
+    $schema->createTable('takeda_alchemer_popup', $fields);
+  }
+
+  //table for MICROFEEDBACK tags and data
+  //First check if the tables exist...
+  if (!$schema->tableExists('takeda_alchemer_microfeedback')) {
+    $feedback_fields = [
+        'description' => ' Alchemer microfeedback survey data',
+        'fields' => [
+          'nid' => [
+            'type' => 'int',
+            'unsigned' => TRUE,
+            'not null' => TRUE,
+            'default' => 0,
+            'description' => 'Node ID',
+          ],
+          'is_microfeedback_active' => [
+            'type' => 'int',
+            'length' => 11,
+            'default' => 0,
+            'description' => 'Is microfeedback survey active',
+          ],
+          'microfeedback_tags' => [
+            'type' => 'text',
+            'description' => 'Alchemer microfeedback tags',
+          ],
+          'microfeedback_therapy_areas' => [
+            'type' => 'text',
+            'description' => 'Alchemer therapy area names for microfeedback survey',
+          ],
+          'microfeedback_products' => [
+            'type' => 'text',
+            'description' => 'Alchemer products names for microfeedback survey',
+          ],
+          'microfeedback_function' => [
+            'type' => 'varchar',
+            'length' => 255,
+            'default' => '',
+            'description' => 'Alchemer microfeedback function ',
+          ],
+          'microfeedback_section' => [
+            'type' => 'varchar',
+            'length' => 255,
+            'default' => '',
+            'description' => 'Alchemer microfeedback section ',
+          ],
+          'microfeedback_group_id' => [
+            'type' => 'int',
+            'length' => 11,
+            'default' => NuLL,
+            'description' => 'Alchemer microfeedback survey group ID',
+          ],
+        ],
+        'unique keys' => [
+          'nid' => ['nid'],
+        ],
+      ];
+    $schema->createTable('takeda_alchemer_microfeedback', $feedback_fields);
+  }
+}

@@ -1,0 +1,20 @@
+langcode: bg
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ninlaro_reference_link
+    - node.type.ninlaro_calculator
+  module:
+    - text
+id: node.ninlaro_calculator.field_ninlaro_reference_link
+field_name: field_ninlaro_reference_link
+entity_type: node
+bundle: ninlaro_calculator
+label: 'Ninlaro Reference Link'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

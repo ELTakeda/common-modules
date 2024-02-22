@@ -1,0 +1,210 @@
+langcode: bg
+status: true
+dependencies:
+  config:
+    - field.field.node.ninlaro_calculator.field_nc_background_color
+    - field.field.node.ninlaro_calculator.field_ninlaro_age_background_col
+    - field.field.node.ninlaro_calculator.field_ninlaro_age_border_color
+    - field.field.node.ninlaro_calculator.field_ninlaro_age_text_color
+    - field.field.node.ninlaro_calculator.field_ninlaro_back_to_top_button
+    - field.field.node.ninlaro_calculator.field_ninlaro_calculator_text_co
+    - field.field.node.ninlaro_calculator.field_ninlaro_dropdowns_border_c
+    - field.field.node.ninlaro_calculator.field_ninlaro_dropdowns_text_col
+    - field.field.node.ninlaro_calculator.field_ninlaro_final_score_border
+    - field.field.node.ninlaro_calculator.field_ninlaro_navigation_bgc
+    - field.field.node.ninlaro_calculator.field_ninlaro_navigation_bgc_hov
+    - field.field.node.ninlaro_calculator.field_ninlaro_navigation_borderc
+    - field.field.node.ninlaro_calculator.field_ninlaro_reference_link
+    - field.field.node.ninlaro_calculator.field_ninlaro_result_button_bgc
+    - field.field.node.ninlaro_calculator.field_ninlaro_result_button_bord
+    - field.field.node.ninlaro_calculator.field_ninlaro_result_button_text
+    - field.field.node.ninlaro_calculator.field_ninlaro_result_button_txtc
+    - field.field.node.ninlaro_calculator.field_ninlaro_title_color
+    - field.field.node.ninlaro_calculator.field_ninlaro_total_score_bc
+    - field.field.node.ninlaro_calculator.field_ninlaro_total_score_bgc
+    - field.field.node.ninlaro_calculator.field_ninlaro_total_score_text_c
+    - node.type.ninlaro_calculator
+  module:
+    - text
+    - user
+_core:
+  default_config_hash: u_w4tcHwzSRg4oUGxTyV2hMspns5zCLoskJfIFiHDr8
+id: node.ninlaro_calculator.default
+targetEntityType: node
+bundle: ninlaro_calculator
+mode: default
+content:
+  field_nc_background_color:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_ninlaro_age_background_col:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  field_ninlaro_age_border_color:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_ninlaro_age_text_color:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  field_ninlaro_back_to_top_button:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 123
+    region: content
+  field_ninlaro_calculator_text_co:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_ninlaro_dropdowns_border_c:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_ninlaro_dropdowns_text_col:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_ninlaro_final_score_border:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 115
+    region: content
+  field_ninlaro_navigation_bgc:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 117
+    region: content
+  field_ninlaro_navigation_bgc_hov:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 118
+    region: content
+  field_ninlaro_navigation_borderc:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 116
+    region: content
+  field_ninlaro_reference_link:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 124
+    region: content
+  field_ninlaro_result_button_bgc:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 113
+    region: content
+  field_ninlaro_result_button_bord:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 111
+    region: content
+  field_ninlaro_result_button_text:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 112
+    region: content
+  field_ninlaro_result_button_txtc:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 114
+    region: content
+  field_ninlaro_title_color:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 121
+    region: content
+  field_ninlaro_total_score_bc:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 108
+    region: content
+  field_ninlaro_total_score_bgc:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 109
+    region: content
+  field_ninlaro_total_score_text_c:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 110
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

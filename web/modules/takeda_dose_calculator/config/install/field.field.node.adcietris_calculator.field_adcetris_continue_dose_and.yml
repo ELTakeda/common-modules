@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_adcetris_continue_dose_and
+    - node.type.adcietris_calculator
+id: node.adcietris_calculator.field_adcetris_continue_dose_and
+field_name: field_adcetris_continue_dose_and
+entity_type: node
+bundle: adcietris_calculator
+label: 'Adcetris continue dose and scheme'
+description: 'Original text: Continue the same dose and scheme'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

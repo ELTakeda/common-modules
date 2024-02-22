@@ -1,0 +1,5 @@
+takeda_brightcove.configure_form:
+  route_name: takeda_brightcove.configure_form
+  title: 'Takeda Brightcove Player Settings'
+  description: 'Configure the Brightcove account credentials.'
+  parent: system.admin_config_media

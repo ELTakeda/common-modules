@@ -1,0 +1,9 @@
+cf-sfmc-css:
+  css:
+    theme:
+      styles/main.css: {}
+cf-sfmc-js:
+  js:
+    js/connectorForm.js: {}
+  dependencies:
+    - core/jquery

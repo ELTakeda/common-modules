@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_set_secondary_color_for_ta
+    - node.type.vpriv_calculator
+third_party_settings:
+  tmgmt_content:
+    excluded: false
+id: node.vpriv_calculator.field_set_secondary_color_for_ta
+field_name: field_set_secondary_color_for_ta
+entity_type: node
+bundle: vpriv_calculator
+label: 'Set secondary color for table td'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: red
+default_value_callback: ''
+settings: {  }
+field_type: string

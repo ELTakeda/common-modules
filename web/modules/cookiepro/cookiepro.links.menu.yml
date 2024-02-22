@@ -1,0 +1,5 @@
+cookiepro.admin.header:
+  title: 'CookiePro by OneTrust'
+  description: 'Simplify Compliance with GDPR & ePrivacy Cookie Laws'
+  parent: system.admin_config_development
+  route_name: cookiepro.admin.header

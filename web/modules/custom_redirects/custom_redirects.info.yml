@@ -1,0 +1,5 @@
+name: Custom Redirects
+type: module
+description: Provides custom default link redirects and deep link functionality.
+core_version_requirement: ^8.8 || ^9 || ^10
+package: Custom

@@ -1,0 +1,46 @@
+{{ attach_library('spotme_events/main-styles') }}
+{{ attach_library('spotme_events/main-js') }}
+
+{% if events_page_url != '#' %}
+  {% set url_events_page = [
+    url('<front>')|render|trim('/', 'right'),
+    events_page_url
+  ]|join('/') %}
+{% else %}
+  {% set url_events_page = events_page_url %}
+{% endif %}
+
+{% if event_registration_event_colour is empty %}
+    {% set theme_colour = '#51b0bf' %}
+{% else %}
+    {% set theme_colour = event_registration_event_colour %}
+{% endif %}
+
+<section class="event-teaser" style="color: black;">
+  <div class="inner-wrapper">
+    <div class="event-teaser__title">
+      <div class="text">
+        <h3>Events</h3>
+        <p>We've added some events that you might like.</p>
+      </div>
+
+      <div class="see-more-events-btn" style="background-color: {{ theme_colour }};">
+        <a style="color: {{ theme_colour }}; border: 1px solid {{ theme_colour }}; background-color: white" href="{{ url_events_page }}">More events <svg
+            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+          </svg> </a>
+      </div>
+
+    </div>
+    <div class="event-teaser__events-container" {{ attributes }}>
+      {% block content %}
+        {{ content }}
+      {% endblock %}
+    </div>
+    <div class="see-more-events-btn see-more-events-btn--mobile" style="background-color: {{ theme_colour }};">
+      <a style="color: {{ theme_colour }}; border: 1px solid {{ theme_colour }}; background-color: white" href="{{ url_events_page }}">More events</a>
+    </div>
+  </div>
+</section>

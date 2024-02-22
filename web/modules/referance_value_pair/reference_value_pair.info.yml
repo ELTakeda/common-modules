@@ -1,0 +1,7 @@
+name: Reference Value Pair
+type: module
+description: Defines a field type for storing a pair of an entity reference and a value.
+core_version_requirement: ^8.8.0 || ^9.0 || ^10
+package: Field types
+dependencies:
+  - drupal:field

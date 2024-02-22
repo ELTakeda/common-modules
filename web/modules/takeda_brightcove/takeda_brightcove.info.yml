@@ -1,0 +1,11 @@
+name: Takeda Brightcove Player
+type: module
+description: 'Provides support for embedding Brightcove Media'
+package: Media
+core_version_requirement: ^9 || ^10
+
+dependencies:
+  - media
+  - media_library
+
+configure: takeda_brightcove.configure_form

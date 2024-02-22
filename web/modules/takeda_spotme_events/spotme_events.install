@@ -1,0 +1,183 @@
+<?php
+
+use Drupal\node\Entity\Node;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\Core\Database\Database;
+
+/**
+ * Implements hook_install().
+ */
+function spotme_events_install() {
+    //Events page creation
+    $node = Node::create([
+        'type' => 'events_page',
+        'title' => 'Events page',
+        'field_ep_subtitle' => 'All events are displayed on this page',
+        'field_ep_lf_all_events' => 'All events',
+        'field_ep_lf_future_events' => 'Future events',
+        'field_ep_lf_live_events' => 'Live events',
+        'field_ep_lf_past_events' => 'Past events',
+        'field_ep_lf_online_offline' => 'Online and Offline',
+        'field_ep_lf_my_events' => 'Show only my events',
+        'field_ep_lf_online' => 'Online',
+        'field_ep_lf_offline' => 'Offline',
+        'field_ep_lb_next' => 'Next',
+        'field_ep_lb_previous' => 'Previous',
+    ])->save();
+
+    //Taxonomy terms creation
+    $nurse_term = Term::create([
+      'vid' => 'event_tags',
+      'name' => 'Nurse',
+    ])->save();
+    
+    $gastroenterologist_term = Term::create([
+      'vid' => 'event_tags',
+      'name' => 'Gastroenterologist',
+    ])->save(); 
+    
+    $pharmacist_term = Term::create([
+      'vid' => 'event_tags',
+      'name' => 'Pharmacist',
+    ])->save();
+    
+    $other_term = Term::create([
+      'vid' => 'event_tags',
+      'name' => 'Other',
+    ])->save();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+
+function spotme_events_uninstall() {
+    $events_page = \Drupal::entityQuery('node')->accessCheck(FALSE)->condition('type','events_page')->execute();
+    $single_event = \Drupal::entityQuery('node')->accessCheck(FALSE)->condition('type','single_event')->execute();  
+   
+    //delete nodes if exists 
+    spotme_events_delete_nodes($events_page); 
+    spotme_events_delete_nodes($single_event);
+  
+  }
+  
+   //delete node function
+   function spotme_events_delete_nodes($data) {
+    if($data) {
+      $storage_handler = \Drupal::entityTypeManager()->getStorage("node");
+      foreach ($data as $key => $value) {
+        $node = $storage_handler->load($value);
+        $node->delete($node);    
+      }
+    }  
+}
+
+
+/**
+ * Implements hook_schema().
+ */
+function spotme_events_schema() {
+  // Creates a table called event_registration on module installation
+  $schema['event_registration'] = [
+    'description' => 'Store the user e-mails that are registered for events.',
+    'fields' => [
+      'created_on' => [
+        'description' => 'Time of registering.',
+        'type' => 'varchar',
+        'mysql_type' => 'timestamp DEFAULT CURRENT_TIMESTAMP',
+        'not null' => TRUE,
+      ],
+      'email' => [
+        'description' => 'User email for registration.',
+        'type' => 'varchar_ascii',
+        'length' => DRUPAL_EXTENSION_NAME_MAX_LENGTH,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'event_id' => [
+        'description' => 'The event id.',
+        'type' => 'varchar_ascii',
+        'length' => DRUPAL_EXTENSION_NAME_MAX_LENGTH,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'user_id' => [
+        'description' => 'User id if available.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'default' => null,
+      ],
+      'takeda_id' => [
+        'description' => 'Takeda id if available.',
+        'type' => 'varchar_ascii',
+        'length' => DRUPAL_EXTENSION_NAME_MAX_LENGTH,
+        'not null' => FALSE,
+        'default' => null,
+      ],
+      'event_type' => [
+        'description' => 'Event type based on button functionality.',
+        'type' => 'varchar_ascii',
+        'length' => DRUPAL_EXTENSION_NAME_MAX_LENGTH,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'country_code' => [
+        'description' => 'Country code of the user.',
+        'type' => 'varchar_ascii',
+        'length' => DRUPAL_EXTENSION_NAME_MAX_LENGTH,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'spotme_url' => [
+        'description' => 'Spotme URL for joining live events.',
+        'type' => 'varchar_ascii',
+        'length' => 1000,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'is_sent' => [
+        'description' => 'Check if this record has been sent already. 0 -> not sent, 1 -> sent',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+    ],
+    'primary key' => ['email', 'event_id'],
+    'indexes' => [
+      'email' => [
+        'email',
+      ],
+      'event_id' => [
+        'event_id',
+      ],
+    ],
+  ];
+
+  $schema['email_cron_log'] = [
+    'description' => 'Stores the time when cron was last executed',
+    'fields' => [
+      'tid' => [
+        'description' => 'ID field',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ],
+      'last_execution' => [
+        'description' => 'Time of last email send.',
+        'type' => 'varchar',
+        'mysql_type' => 'timestamp',
+        'not null' => FALSE,
+        'default' => NULL,
+      ],
+    ],
+    'primary key' => ['tid'],
+    'indexes' => [
+      'tid' => [
+        'tid',
+      ],
+    ],
+  ];
+  
+  return $schema;
+}

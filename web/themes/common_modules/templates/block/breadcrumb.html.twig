@@ -1,0 +1,14 @@
+{# Breadcrumb #}
+<section class="tcm-breadcrumb">
+    <ul class="tcm-breadcrumb__list">
+        {% for item in breadcrumb %}
+            <li class="tcm-breadcrumb__item{% if loop.last %} tcm-breadcrumb__item--last{% endif %}">
+                {% if item.url %}
+                    <a href="{{ item.url }}">{{ item.text }}</a>
+                {% else %}
+                    <span>{{ item.text }}</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</section>

@@ -1,0 +1,18 @@
+langcode: bg
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_patient_chart
+    - paragraphs.paragraphs_type.recommendations
+id: paragraph.recommendations.field_patient_chart
+field_name: field_patient_chart
+entity_type: paragraph
+bundle: recommendations
+label: 'Patient Chart'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_event_id
+    - node.type.event
+_core:
+  default_config_hash: WXrn3aI0nXHds-wAEPL22FywqRxTnfY5yXMn6T93UsE
+id: node.event.field_event_id
+field_name: field_event_id
+entity_type: node
+bundle: event
+label: 'Spotme Event ID'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

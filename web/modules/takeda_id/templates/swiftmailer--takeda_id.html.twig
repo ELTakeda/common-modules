@@ -1,0 +1,91 @@
+{#
+/**
+ * @file
+ * The default template file for Takeda ID e-mails.
+ *
+ * Available variables:
+ * - subject: The subject.
+ * - body: The message content.
+ * - is_html: True if generating HTML output, false for plain text.
+ * - message: The $message array created and used in the mail building
+ *   procedure. Its content varies between cases, but typically contains at
+ *   least the following elements:
+ *   - id: The message identifier.
+ *   - module: The module that handles the building of the message.
+ *   - key: The key of the message.
+ *   - to: The recipient email address.
+ *   - from: The email address of the sender.
+ *   - langcode: The langcode to use to compose the e-mail.
+ *   - params: The message parameters.
+ * - base_url: The site base url including scheme, without trailing slash.
+ *
+ * This template may be overriden by module and/or mail key, using any of the
+ * following template names:
+ * - swiftmailer.html.twig: global, used by default.
+ * - swiftmailer--mymodule.html.twig: only emails sent by the module "mymodule".
+ * - swiftmailer--mymodule--test.html.twig: only emails by the module
+ *   "mymodule" with key "test".
+ *
+ * @see template_preprocess()
+ * @see template_preprocess_swiftmailer()
+ *
+ * @ingroup themeable
+ */
+#}
+{% if is_html %}
+<table class="body" role="presentation" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>&nbsp;</td>
+<td class="container" align="center" width="580">
+<div class="content"><!-- START CENTERED WHITE CONTAINER -->
+<table class="main" style="border-collapse: collapse; font-family: 'Open Sans', sans-serif;" role="presentation"><!-- START HEADER -->
+<tbody>
+<tr>
+<td style="background-color: #ff0000;" height="13">&nbsp;</td>
+</tr>
+<tr>
+<td style="font-size: 7px;" height="5px">&nbsp;</td>
+</tr>
+<tr>
+<td align="center"><img src="https://logodix.com/logo/494112.png" alt="Takeda" width="67" />
+<div class="slogan" style="font-size: 9px;"><strong>Takeda ID</strong></div>
+</td>
+</tr>
+<!-- END HEADER --> <!-- START MAIN CONTENT AREA -->
+<tr>
+<td class="wrapper">
+<table role="presentation" border="0" cellspacing="0" cellpadding="20">
+<tbody>
+<tr>
+<td>
+    {{body}}
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<!-- END MAIN CONTENT AREA --></tbody>
+</table>
+<!-- END CENTERED WHITE CONTAINER --> <!-- START FOOTER -->
+<div class="footer">
+<table style="border-left: red solid 6px; background-color: #f4f4f4;" role="presentation" border="0" width="100%" cellspacing="0" cellpadding="27">
+<tbody>
+<tr>
+<td>
+<p><a style="color: black;" href="#" target="_blank" rel="noopener">PRIVACY POLICY</a> - <a style="color: black;" href="#" target="_blank" rel="noopener">TERMS OF USE</a></p>
+<p><strong>Copyright {{ "now" | date('Y') }}  Takeda Pharmaceutical Company Limited. All rights reserved.</strong></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- END FOOTER --></div>
+</td>
+</tr>
+</tbody>
+</table>
+{% else %}
+{{ body }}
+{% endif %}

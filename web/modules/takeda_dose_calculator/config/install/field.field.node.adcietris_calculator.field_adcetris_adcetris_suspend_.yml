@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_adcetris_adcetris_suspend_
+    - node.type.adcietris_calculator
+id: node.adcietris_calculator.field_adcetris_adcetris_suspend_
+field_name: field_adcetris_adcetris_suspend_
+entity_type: node
+bundle: adcietris_calculator
+label: 'Adcetris adcetris suspend dose grade 2'
+description: 'Original text: Withhold ADCETRIS treatment until toxicity is ≤ Grade 2, then restart treatment at a reduced dose of 0.9 mg/kg to a maximum of 90 mg every 2 weeks. Consider modifying the dose of other neurotoxic agents according to the product label'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

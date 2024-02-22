@@ -1,0 +1,75 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.prothromplex_calculator.field_external_links
+    - field.field.node.prothromplex_calculator.field_mail_to
+    - field.field.node.prothromplex_calculator.field_prothromp_osecondary_color
+    - field.field.node.prothromplex_calculator.field_prothromplex_primary_color
+    - field.field.node.prothromplex_calculator.field_prothromplex_product_link
+    - field.field.node.prothromplex_calculator.field_subject
+    - node.type.prothromplex_calculator
+  module:
+    - user
+_core:
+  default_config_hash: D_UBWvnhyKcPUVpA3Q8icy_tLQdQ4-3fuEpJQUykPGY
+id: node.prothromplex_calculator.default
+targetEntityType: node
+bundle: prothromplex_calculator
+mode: default
+content:
+  field_external_links:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_mail_to:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_prothromp_osecondary_color:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_prothromplex_primary_color:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_prothromplex_product_link:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  field_subject:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

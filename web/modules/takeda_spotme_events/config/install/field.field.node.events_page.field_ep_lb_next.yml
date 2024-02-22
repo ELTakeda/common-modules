@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+    config:
+        - field.storage.node.field_ep_lb_next
+        - node.type.events_page
+    module:
+        - text
+id: node.events_page.field_ep_lb_next
+field_name: field_ep_lb_next
+entity_type: node
+bundle: events_page
+label: Button label - Next
+description: 'Text for the "Next" button'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+    display_summary: false
+field_type: string

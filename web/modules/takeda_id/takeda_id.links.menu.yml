@@ -1,0 +1,6 @@
+takeda_id.configure_form:
+  title: 'Takeda ID'
+  description: 'Configure Takeda ID authentication and registration.'
+  parent: user.admin_index
+  route_name: takeda_id.configure_form
+  weight: 100

@@ -1,0 +1,54 @@
+form[id^=views-exposed-form-webinar-export-page-1] fieldset {
+  padding: 0;
+  border: 0;
+  margin-top: 0.75em;
+  margin-bottom: 0.75em;
+}
+form[id^=views-exposed-form-webinar-export-page-1] fieldset legend {
+  position: initial;
+  text-transform: initial;
+  letter-spacing:initial;
+}
+form[id^=views-exposed-form-webinar-export-page-1] fieldset label {
+  display: none;
+}
+form[id^=views-exposed-form-webinar-export-page-1] .fieldset-wrapper .form-item-field-start-at-value-min,
+form[id^=views-exposed-form-webinar-export-page-1] .fieldset-wrapper .form-item-field-start-at-value-max {
+  margin-top: 2px;
+}
+form[id^=views-exposed-form-webinar-export-page-1]  .feed-icon {
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  padding: 4px 1.5em;
+  cursor: pointer;
+  -webkit-transition: all 0.1s;
+  transition: all 0.1s;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+  border: 1px solid #a6a6a6;
+  border-radius: 20em;
+  background-color: #f2f1eb;
+  background-image: -webkit-linear-gradient(top, #f6f6f3, #e7e7df);
+  background-image: linear-gradient(to bottom, #f6f6f3, #e7e7df);
+  text-shadow: 0 1px hsl(0deg 0% 100% / 60%);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: normal;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -webkit-font-smoothing: antialiased;
+  width: auto;
+  height: auto;
+  text-indent:0;
+  overflow: inherit;
+}
+.view-id-webinar_export table td {
+  word-break: break-word;
+}
+form[id^=spot-me-custom-color-config] fieldset {
+  width: 31%;
+  float: left;
+  margin-right: 20px;
+}

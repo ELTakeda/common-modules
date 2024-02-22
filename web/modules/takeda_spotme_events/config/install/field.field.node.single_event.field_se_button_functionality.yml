@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_se_button_functionality
+    - node.type.single_event
+  module:
+    - options
+id: node.single_event.field_se_button_functionality
+field_name: field_se_button_functionality
+entity_type: node
+bundle: single_event
+label: 'Button functionality'
+description: 'Choose for which service the register should adapt'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

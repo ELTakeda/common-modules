@@ -1,0 +1,8 @@
+services:
+  custom_redirects.event_subscriber:
+    class: Drupal\custom_redirects\EventSubscriber\CustomRedirectsSubscriber
+    arguments: []
+    tags:
+      - {name: event_subscriber}
+  custom_redirects.takeda_redirect:
+    class: Drupal\custom_redirects\TakedaRedirect

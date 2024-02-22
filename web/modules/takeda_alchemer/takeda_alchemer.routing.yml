@@ -1,0 +1,31 @@
+takeda_alchemer.autocomplete:
+  path: '/takeda_alchemer/autocomplete'
+  defaults:
+    _controller: '\Drupal\takeda_alchemer\Controller\TakedaAlchemerAutocomplete::handleAutocomplete'
+    _format: json
+  requirements:
+    _permission: 'access content'
+
+takeda_alchemer.configure_form:
+  path: '/admin/config/system/takeda_alchemer'
+  defaults:
+    _form: '\Drupal\takeda_alchemer\Form\TakedaAlchemerConfigureForm'
+    _title: 'Takeda Alchemer configuration for microfeedback and popup surveys'
+  requirements:
+    _permission: 'administer site configuration'
+
+takeda_alchemer.configure_form_popup:
+  path: '/admin/config/system/alchemer_popup_tag_groups'
+  defaults:
+    _form: '\Drupal\takeda_alchemer\Form\TakedaAlchemerPopup'
+    _title: 'Configure alchemer popup survey tags in groups'
+  requirements:
+    _permission: 'administer site configuration'
+
+takeda_alchemer.configure_form_microfeedback:
+  path: '/admin/config/system/takeda_alchemer_microfeedback'
+  defaults:
+    _form: '\Drupal\takeda_alchemer\Form\TakedaAlchemerMicrofeedback'
+    _title: 'Configure alchemer microfeedback survey tags and information'
+  requirements:
+    _permission: 'administer site configuration'

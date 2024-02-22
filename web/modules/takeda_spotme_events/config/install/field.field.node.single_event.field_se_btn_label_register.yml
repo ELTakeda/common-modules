@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+    config:
+        - field.storage.node.field_se_btn_label_register
+        - node.type.single_event
+    module:
+        - text
+id: node.single_event.field_se_btn_label_register
+field_name: field_se_btn_label_register
+entity_type: node
+bundle: single_event
+label: Button label - Register
+description: 'Text on the "Register" button'
+required: true
+translatable: true
+default_value: Register
+default_value_callback: ''
+settings:
+    display_summary: false
+field_type: string

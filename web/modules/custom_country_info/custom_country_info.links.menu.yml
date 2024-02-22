@@ -1,0 +1,6 @@
+custom_country_info.configure_form:
+  title: Country Information
+  description: Input fields for custom country information.
+  parent: user.admin_index
+  route_name: custom_country_info.configure_form
+  weight: 100

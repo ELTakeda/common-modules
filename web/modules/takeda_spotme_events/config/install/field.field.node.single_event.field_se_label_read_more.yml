@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+    config:
+        - field.storage.node.field_se_label_read_more
+        - node.type.single_event
+    module:
+        - text
+id: node.single_event.field_se_label_read_more
+field_name: field_se_label_read_more
+entity_type: node
+bundle: single_event
+label: Label - Read More
+description: 'Text label for "Read more" link'
+required: true
+translatable: true
+default_value: Read more
+default_value_callback: ''
+settings:
+    display_summary: false
+field_type: string

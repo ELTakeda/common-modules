@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - takeda_id
+  enforced:
+    module:
+      - takeda_id
+id: takeda_id_non_hcp
+label: 'Takeda ID: Non HCP'
+weight: 6
+is_admin: false
+permissions: {  }

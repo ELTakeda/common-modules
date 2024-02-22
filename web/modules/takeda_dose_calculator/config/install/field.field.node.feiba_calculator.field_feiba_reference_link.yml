@@ -1,0 +1,20 @@
+langcode: bg
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_feiba_reference_link
+    - node.type.feiba_calculator
+  module:
+    - text
+id: node.feiba_calculator.field_feiba_reference_link
+field_name: field_feiba_reference_link
+entity_type: node
+bundle: feiba_calculator
+label: 'Feiba Reference Link'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

@@ -1,0 +1,12 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+    - sfmc
+id: radio
+label: question
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

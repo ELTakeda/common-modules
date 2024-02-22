@@ -1,0 +1,18 @@
+custom_country_info.custom_country_info_callback:
+  path: '/country-information'
+  defaults:
+    _controller: '\Drupal\custom_country_info\CustomCountryInfo::loadCountryData'
+    _title: 'Callback to load more data'
+  requirements:
+    _access: 'TRUE'
+  methods: [ POST ]
+  options:
+    _maintenance_access: TRUE
+    no_cache: TRUE
+custom_country_info.configure_form:
+  path: '/admin/config/system/custom_country_info'
+  defaults:
+    _form: '\Drupal\custom_country_info\Form\CustomCountryInformationConfigureForm'
+    _title: 'Country Information'
+  requirements:
+    _permission: 'administer site configuration'

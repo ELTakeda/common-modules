@@ -1,0 +1,534 @@
+<?php
+
+use Drupal\takeda_id\TakedaIdInterface;
+use Drupal\takeda_consents\TakedaConsentsInterface;
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function takeda_consents_preprocess_node(&$variables){
+    // Get the saved data of the config
+    $config = \Drupal::config('takeda_consents.settings');
+    $takeda_consents_values = $config->get('takeda_consents_values');
+
+    // Make the variable accessible to every node
+    $variables['takeda_consents_values'] = $takeda_consents_values;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function takeda_consents_form_user_register_form_alter(&$form, &$form_state, $form_id) {
+    // The fieldset that will hold all of the consents values
+    $form['takeda_consents_values'] = [
+        '#type' => 'fieldset',
+        '#weight' => 99, // almost max weight so that the group is in the end of the form
+        '#tree' => TRUE, // Used to group the values in the form_state array
+    ];
+
+    $form['consent_marketing'] = [
+        '#type' => 'checkbox',
+        '#title' => t('I agree to the terms and conditions'),
+        '#default_value' => 0, // Set the default value as needed.
+    ];
+
+    // Get the saved data of the config
+    $config = \Drupal::config('takeda_consents.settings');
+    $takeda_consents_values = $config->get('takeda_consents_values');
+
+    // Takeda consents values check - blank array if no data so that it can be countable
+    if (!$takeda_consents_values) {
+        $takeda_consents_values = [];
+    }
+
+    $takeda_consents_purposes = isset($takeda_consents_values['takeda_consents_purposes']) ? $takeda_consents_values['takeda_consents_purposes'] : [];
+
+    // Loop through all of the purposes
+    for ($i = 0; $i < count($takeda_consents_purposes); $i++) {
+        $current_purpose = $takeda_consents_purposes[$i];
+
+        // If the preference checkbox is not checked
+        // Render the purpose
+        if (!$current_purpose['purpose_preference_boolean']) {
+            $form['takeda_consents_values']['tc_' . $i] = [
+                '#type' => 'checkbox',
+                '#title' => $current_purpose['purpose_name'],
+                '#default_value' => 0,
+            ];
+
+            continue; // Skip further code
+        }
+
+        // If the preference checkbox is checked
+        // Render the options, not the main purpose
+        $current_preferences = $current_purpose['preferences'];
+
+        // Purpose group container
+        if (count($current_preferences)) {
+            $current_purpose_selector = '[tc_' . $i . ']' . '[purpose_checkbox]';
+
+            $form['takeda_consents_values']['tc_' . $i] = [
+                '#type' => 'fieldset',
+                '#tree' => TRUE, // Used to group the values in the form_state array
+            ];
+
+            $form['takeda_consents_values']['tc_' . $i]['purpose_checkbox'] = [
+                '#type' => 'checkbox',
+                '#title' => $current_purpose['purpose_name'],
+                '#default_value' => 0,
+            ];
+        }
+
+        // Loop through all of the preferences for the purpose
+        for ($j = 0; $j < count($current_preferences); $j++) {
+            $current_options = $current_preferences[$j]['preference_fieldset']['preference_options'];
+
+            if ($current_options) {
+                $form['takeda_consents_values']['tc_' . $i][$j] = [
+                    '#type' => 'fieldset',
+                    '#tree' => TRUE, // Used to group the values in the form_state array
+                    '#states' => [ // the conditional field display functionality for the select
+                        'visible' => [
+                            ':input[name="takeda_consents_values' . $current_purpose_selector . '"]' => ['checked' => TRUE],
+                        ]
+                    ]
+                ];
+            }
+
+            // Loop through all of the options
+            foreach ($current_options as $current_option_key => $current_option_value) {
+                $current_option = $current_options[$current_option_key]['option_fieldset'];
+
+                if ($current_preferences[$j]['preference_fieldset']['preference_hidden_boolean']) {
+                    $form['takeda_consents_values']['tc_' . $i][$j][$current_option_key] = [
+                        '#type' => 'hidden',
+                        '#default_value' => 1,
+                    ];
+                } else {
+                    $form['takeda_consents_values']['tc_' . $i][$j][$current_option_key] = [
+                        '#type' => 'checkbox',
+                        '#title' => $current_option['option_name'],
+                        '#default_value' => 1,
+                    ];
+                }
+
+            }
+        }
+    }
+
+    // Sets a function to run after all other processes have ended (end of function queue array)
+    foreach (array_keys($form['actions']) as $action) {
+        if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+            array_push($form['actions'][$action]['#submit'], 'takeda_consents_registration_submit');
+        }
+    }
+}
+
+// A function that is executed on register form submit
+function takeda_consents_registration_submit($form, &$form_state) {
+
+    $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+    $consentConfig = \Drupal::config('consents.settings');
+    $langConfig = \Drupal::config('takeda_consents.settings');
+    $consentsLanguageValues = $langConfig->get('takeda_consents_language_values');
+
+    if (!$consentConfig->get('enable_takeda_id_consent', false) || !$form_state->getValue('consent_marketing')) {
+        return;
+    }
+
+    // Country flags
+    $gemCountry = false;
+    $eucanCountry = false;
+
+    // Get GEM and EUCAN countries
+    $gemCountries = takeda_consent_countries_list('gemCountries');
+    $eucanCountries = takeda_consent_countries_list('eucanCountries');
+
+    // Get all checkbox values
+    $form_data = $form_state->getValues();
+    $consent_values = $form_data['takeda_consents_values'];
+    $countryRegistration = strtolower($form_data['field_crm_country'][0]['value']);
+
+    if (empty($countryRegistration)) {
+        return;
+    }
+
+    if (in_array($countryRegistration, $eucanCountries['list'])) {
+        $eucanCountry = true;
+        foreach ($consentsLanguageValues[0][$countryRegistration][0] as $option_id => $option_value) {
+            if ($option_id == 'preference_display') {
+                continue;
+            }
+
+            if (!$option_value['value']) {
+                unset($consent_values['tc_0'][0][$option_id]);
+            }
+        }
+    } elseif (in_array($countryRegistration, $gemCountries['list'])) {
+        $gemCountry = true;
+    }
+
+    $country = '';
+
+    if (!isset($form_data['field_crm_country'])) {
+        $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+        $country = $config->get('default_country');
+    } else {
+        $country = $form_data['field_crm_country'][0]['value'];
+    }
+
+    if (empty($country)) {
+        return;
+    }
+
+    // Save the data to a table
+    /**
+     * The table should have the following fields and be created on module install
+     * email
+     * language
+     * countryCode
+     * identifierType
+     * firstName
+     * lastName
+     * consentDate
+     * Purposes, preferences and options
+     */
+
+    if ($eucanCountry) {
+        $database = \Drupal::database();
+        $table = 'takeda_consents_storage';
+
+        // Get specific fields
+        $language_and_country = explode('-', $form_data['preferred_langcode']);
+        $language = $language_and_country[0];
+        $current_date = date('Y-m-d\TH:i:s');
+
+        // Add the data to the table
+        $database->insert($table)
+            ->fields([
+                'uid' => $form_data['uid'], // The user data is received by the user id
+                'email' => $form_data['mail'],
+                'page_language' => $form_data['preferred_langcode'], // Used for the consents language mode data retrieval
+                'language' => $language, // required language (en, es, bg) for the request
+                'countryCode' => $country, // required country code (GB, ES, BG) for the request
+                'firstName' => $form_data['field_first_name'][0]['value'],
+                'lastName' => $form_data['field_last_name'][0]['value'],
+                'consentDate' => $current_date,
+                'purposes' => json_encode($consent_values),
+            ])
+            ->execute();
+
+        \Drupal::logger('takeda_consents')->notice('User with e-mail: ' . $form_data['mail'] . ' registered. His consents were stored and he is in the TakedaID process of verification.');
+    }
+
+    // Capture consent GEM
+    if ($gemCountry) {
+        $account = $form_state->getFormObject()->getEntity();
+        $userData = \Drupal::service('user.data');
+        $currentTimestamp = \Drupal::time()->getRequestTime();
+
+        $userData->set('takeda_consents', $account->id(), 'consent_captured', $currentTimestamp);
+        \Drupal::logger('takeda_consents')->notice('Takeda consent captured for ' . $account->id() . ' at ' . date('Y-m-d\TH:i:s'));
+    }
+}
+
+/**
+ * Implements hook_takeda_account_set_hcp_matched().
+ *
+ * This hook is invoked from takeda_id_form_user_register_submit() or the leadCallback() once the user is
+ * verified as a valid HCP.
+ *
+ * The User account is activated when required, the takeda_id_active role is added to the user,
+ * the Takeda Customer ID is been added to the user data object, and user consent is submitted where
+ * enabled by the enable_takeda_id_consent setting.
+ *
+ * @param Drupal\user\Entity\User $account
+ *   The user object on which the operation is being performed.
+ */
+
+function takeda_consents_hook_takeda_account_set_hcp_matched($account) {
+    // Get the user data 
+    $userData = \Drupal::service('user.data');
+    $uid = $account->id();
+
+    // Get the TakedaID of the user
+    $customerId = $userData->get('takeda_id', $uid, 'customer_id');
+
+    // Get the database and table name
+    $database = \Drupal::database();
+    $table = 'takeda_consents_storage';
+
+    // Get the user data
+    $consent_data = $database->select($table, 'f')
+        ->fields('f')
+        ->condition('uid', $uid)
+        ->execute()
+        ->fetchAssoc();
+
+    if (!$consent_data) {
+        // - Submit user consent depending on site preferences
+        if($userData->get('takeda_consents', $account->id(), 'consent_captured')){
+            try {
+                $consentStorage = takeda_consents_api_consent($account);
+            } catch (\Exception $e) {
+                \Drupal::logger('takeda_consents')->notice('Error saving consent for ' . $account->id());
+            }
+        }
+        
+        return;
+    }
+
+    // Country
+    $countryRegistration = strtolower($consent_data['countryCode']);
+
+    // Get the saved data of the config
+    $config = \Drupal::config('takeda_consents.settings');
+    $takeda_consents_values = $config->get('takeda_consents_values') ?: []; // Takeda consents values check - blank array if no data so that it can be countable
+    $takeda_consents_values_purposes = $takeda_consents_values['takeda_consents_purposes'];
+    $takeda_consents_language_values = $config->get('takeda_consents_language_values') ?: []; // Takeda consents language values check - blank array if no data so that it can be countable
+
+    // Get the general consent info
+    $omnichannel_url = $takeda_consents_values['omnichannel_url'];
+    $omnichannel_api_key = $takeda_consents_values['omnichannel_api_key'];
+    $omnichannel_api_secret = $takeda_consents_values['omnichannel_api_secret'];
+
+    $purposes = json_decode($consent_data['purposes'], true);
+    $source = 'sourceSite';
+
+    foreach ($purposes as $purpose_key => $purpose_value) {
+
+        // Get the purpose index
+        $current_purpose_index = str_replace('tc_', '', $purpose_key);
+
+        $current_purpose_data = $takeda_consents_values_purposes[$current_purpose_index];
+        $purpose_id = $current_purpose_data['purpose_id'];
+        $purpose_has_preferences = $current_purpose_data['purpose_preference_boolean'];
+        $purpose_request_info = $current_purpose_data['request_info'];
+        $purpose_identifier_type = $current_purpose_data['purpose_identifier']; // email or takedaid
+        $purpose_identifier = $consent_data['email']; // supporting email or takedaid currently
+
+        if ($purpose_identifier_type === 'takedaid') {
+            $purpose_identifier = $customerId; // The TakedaID
+        }
+
+        $purposes = [];
+
+        // Check if the purpose is checked
+        if ($purpose_has_preferences) {
+            $preferences = [];
+
+            // Go over each defined preference
+            foreach ($current_purpose_data['preferences'] as $preference_key => $preference_value) {
+                $current_preference_data = $preference_value['preference_fieldset'];
+                $current_preference_id = $current_preference_data['preference_id'];
+                $current_preference_options = $current_preference_data['preference_options'];
+                $current_preference_hidden_options = $current_preference_data['preference_hidden_boolean']; // 0 or 1
+                $current_language_options = $takeda_consents_language_values[$current_purpose_index][$countryRegistration][$preference_key];
+                $current_language_option_display = $takeda_consents_language_values[$current_purpose_index][$countryRegistration][$preference_key]['preference_display']['display_setting'];
+                $current_checked_options = isset($purpose_value[$preference_key]) ? $purpose_value[$preference_key] : [];
+
+                $options = [];
+
+                foreach ($current_preference_options as $option_key => $option_value) {
+                    $current_option_data = $option_value['option_fieldset'];
+                    $current_option_id = $current_option_data['option_id'];
+
+                    // Check if the option is enabled for the lang-country
+  
+
+                    // Check if the option is checked
+                    // Current language option display has a value of 0 or 1
+                    // Current checked options have a value of 0 or 1
+                    // If the display options is on, get the options from the form
+                    // If the display options are off, check all options
+                    $isChecked = $current_language_option_display ? (isset($current_checked_options[$current_option_id]) ? $current_checked_options[$current_option_id] : 0) : 1; // 0 or 1
+
+                    // In case of hidden inputs, they have to be enabled and are always selected if enabled
+                    // Otherwise keep the above checked value
+                    $isChecked = $current_preference_hidden_options ? 1 : $isChecked;
+
+                    // Then add it to the options array
+                    if ($isChecked) {
+                        array_push($options, $current_option_id);
+                    }
+                }
+
+                $current_preference = [
+                    "Id" => $current_preference_id,
+                    "Options" => $options
+                ];
+
+                if (count($options) > 0) {
+                    array_push($preferences, $current_preference);
+                }
+            }
+            
+            $purposes = [
+                [
+                    "Id" => $purpose_id,
+                    "TransactionType" => "CONFIRMED",
+                    "CustomPreferences" => $preferences
+                ]
+            ];
+        } else { // Consents without preferences and options
+            $purposes = [
+                [
+                    "Id" => $purpose_id,
+                    "TransactionType" => "CONFIRMED",
+                    "CustomPreferences" => []
+                ]
+            ];
+        }
+
+        $site_url = \Drupal::request()->getSchemeAndHttpHost();
+
+       if ($current_purpose_data['purpose_name'] == 'HCP Profiling') {
+            $source = 'profilingSourceSite';
+       }
+
+        $data = [
+            "identifier" => $purpose_identifier,
+            "language" => $consent_data['language'],
+            "dataElements" => [
+                "firstName" => $consent_data['firstName'],
+                "lastName" => $consent_data['lastName'],
+                "sourceSite" => $site_url, // Possibly not required
+                "countryCode" => $consent_data['countryCode'],
+                "takedaId" => $customerId // Received from the TakedaId module hook
+            ],
+            "consentDate" => $consent_data['consentDate'],
+            "requestInfo"  => $purpose_request_info,
+            "purposes" => $purposes,
+            "additionalInfo" => [
+                "callBackUrl" => "" // Used to pass back the consent status
+            ]
+        ];
+
+        $data_encoded = json_encode($data);
+
+        // Log the attempt
+        \Drupal::logger('takeda_consents')->notice('Attempting to send the following data:<pre><code>' . print_r($data, true) . '</code></pre>');
+
+        try {
+            // Get the Drupal http client
+            $client = \Drupal::httpClient();
+
+            // Send the request
+            $request_consent_registration = $client->post($omnichannel_url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'client_id' => $omnichannel_api_key,
+                    'client_secret' => $omnichannel_api_secret,
+                ],
+                'body' => $data_encoded
+            ]);
+
+            $response = $request_consent_registration;
+            $response_status_code = $response->getStatusCode();
+
+            // Commit actions based on the response status code - log success or error messages
+            if ($response_status_code == 200 || $response_status_code == 201) {
+                \Drupal::logger('takeda_consents')->notice('Takeda Id account with site ID ' . $account->id() . ' and Takeda Customer ID ' . $customerId . ' has sent a consent for a purpose with ID ' . $purpose_id);
+            } else {
+                \Drupal::logger('takeda_consents')->error('Takeda Id account with site ID ' . $account->id() . ' and Takeda Customer ID ' . $customerId . ' has sent a consent for a purpose with ID ' . $purpose_id . ' but received an error.');
+            }
+        } catch (\Exception $e) {
+            \Drupal::logger('takeda_consents')->error('Takeda Id account with site ID ' . $account->id() . ' and Takeda Customer ID ' . $customerId . ' has sent a consent for a purpose with ID ' . $purpose_id . ' but received an error.');
+        }
+    }
+}
+
+function takeda_consents_api_consent($account) {
+
+    $client = \Drupal::httpClient();
+    $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+    $consentConfig = \Drupal::config('consents.settings');
+    $userData = \Drupal::service('user.data');
+    $customerId = $userData->get('takeda_id', $account->id(), 'customer_id');
+    $consentCaptured = $userData->get('takeda_consents', $account->id(), 'consent_captured');
+    $crmCountry = $userData->get('takeda_id', $account->id(), 'crm_country');
+    $consentCapturedUTCDate = str_replace('+0000', 'Z', gmdate(DateTime::ISO8601, $consentCaptured));
+  
+    $consentChannels = $consentConfig->get('consent_channels');
+    $phoneField = $consentConfig->get('consent_phone_field');
+  
+    $consent = [
+      "consentStatus" => "Opt_in_vod",
+      "customer_id" => $customerId,
+      "crm_country" => $crmCountry,
+      "captureDateTime" => $consentCapturedUTCDate,
+      "source" => "VEEVA"
+    ];
+  
+    $responses = [];
+  
+    foreach ($consentChannels as $channel) {
+      $consent['websiteChannel'] = $channel;
+  
+       switch ($channel) {
+         case 'TPI_Text_SMS':
+           if(isset($account->{$phoneField}) && $account->{$phoneField}->value){
+               $consent['phone'] = $account->{$phoneField}->value;
+           }
+           break;
+         default:
+           $consent['email'] = $account->mail->value;
+           break;
+       }
+  
+       $requestData = [
+         'consent' => $consent
+       ];
+  
+       // Log request initiation
+       \Drupal::logger('takeda_consents')->notice('initiate takeda_id_api_consent (' . $channel . ') with request data for user ' . $account->id() . ' / ARRAY <pre><code>' . print_r($requestData, TRUE) . '</code></pre> / JSON <pre><code>' . json_encode($requestData) . '</code></pre> / to URL ' . $config->get('lead_api_url') . "/consent");
+  
+       try {
+         $request = $client->post($config->get('lead_api_url') . "/consent", [
+           "headers" => [
+             "client_id" => $config->get('api_key'),
+             "client_secret" => $config->get('api_secret'),
+             "Content-Type" => "application/json",
+           ],
+           'json' => $requestData
+         ]);
+         $response = $request->getBody();
+         $data = json_decode($response);
+  
+         \Drupal::logger('takeda_consents')->notice('takeda_api_consent (' . $channel . ') response for ' . $account->id() . ' / <pre><code>' . print_r($data, TRUE) . '</code></pre>');
+  
+         $responses[] = $data;
+       } catch (RequestException $e) {
+  
+         if ($e->getResponse()) {
+           \Drupal::logger('takeda_consents')->notice('takeda_api_consent (' . $channel . ') error for ' . $account->id() . ' / <pre><code>' . print_r($e->getResponse()->getBody()->getContents(), TRUE) . '</code></pre>');
+         }
+  
+         $responses[] = $e->getResponse()->getBody()->getContents();
+  
+         watchdog_exception('takeda_consents', $e);
+       }
+  
+    }
+    return $responses;
+  }
+  
+function takeda_consent_countries_list(string $settingsVar) : array {
+
+    $consentConfig = \Drupal::config('consents.settings');
+    $countries = $consentConfig->get($settingsVar);
+
+    $countryMap = array();
+
+    $countriesSplitEOL = explode(PHP_EOL, $countries);
+    $items = array_map(fn($val) => explode("|", trim($val)), $countriesSplitEOL);
+    $countriesList['list'] = $items;
+
+    foreach ($countriesList as $index) {
+        foreach ($index as $country) {
+            $countryMap['list'][] = strtolower($country[0]);
+        }
+    }
+
+    return $countryMap;
+}

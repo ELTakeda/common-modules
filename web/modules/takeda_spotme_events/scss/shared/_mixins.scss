@@ -1,0 +1,20 @@
+@mixin flex-centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin reset {
+    *,
+    *:before,
+    *:after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+}
+
+@mixin component-1000-centered {
+    max-width: 1000px;
+    margin: 15px auto;
+}

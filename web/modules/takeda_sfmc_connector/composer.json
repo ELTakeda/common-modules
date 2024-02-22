@@ -1,0 +1,7 @@
+{
+    "name": "drupal/sfmc",
+    "description": "A drupal module to establish connection to SFMC",
+    "type": "drupal-custom-module",
+    "license": "GPL-2.0-or-later",
+    "require": {}
+}

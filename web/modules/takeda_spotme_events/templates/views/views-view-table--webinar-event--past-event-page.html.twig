@@ -1,0 +1,119 @@
+{#
+/**
+ * @file
+ * Default theme implementation for displaying a view as a table.
+ *
+ * Available variables:
+ * - attributes: Remaining HTML attributes for the element.
+ *   - class: HTML classes that can be used to style contextually through CSS.
+ * - title : The title of this group of rows.
+ * - header: The table header columns.
+ *   - attributes: Remaining HTML attributes for the element.
+ *   - content: HTML classes to apply to each header cell, indexed by
+ *   the header's key.
+ * - caption_needed: Is the caption tag needed.
+ * - caption: The caption for this table.
+ * - accessibility_description: Extended description for the table details.
+ * - accessibility_summary: Summary for the table details.
+ * - responsive: Whether or not to use the .table-responsive wrapper.
+ * - rows: Table row items. Rows are keyed by row number.
+ *   - attributes: HTML classes to apply to each row.
+ *   - columns: Row column items. Columns are keyed by column number.
+ *     - attributes: HTML classes to apply to each column.
+ *     - content: The column content.
+ * - bordered: Flag indicating whether or not the table should be bordered.
+ * - condensed: Flag indicating whether or not the table should be condensed.
+ * - hover: Flag indicating whether or not table rows should be hoverable.
+ * - striped: Flag indicating whether or not table rows should be striped.
+ * - responsive: Flag indicating whether or not the table should be wrapped to
+ *   be responsive (using the Bootstrap Framework .table-responsive wrapper).
+ *
+ * @ingroup templates
+ *
+ * @see template_preprocess_views_view_table()
+ */
+#}
+{% set config_color = getSpotMeConfigColor() %}
+{% if config_color %}
+  {% include '@spotme_events/spotme-color-configuration.html.twig' with config_color %}
+{% endif %}
+{% if result|length > 0 %}
+  {% set current_path = getCurrentPath() %}
+    {% set current_user = getCurrentUser() %}
+    {% for key, row in rows %}
+      {% set entity = result[key]._entity %}
+      {% set check_registed = 0 %}
+      {% if entity.field_spot_me_event.value %}
+        {% set check_registed = checkRegisteredEvent(current_user, entity.nid.value) %}
+        {% set check_user_can_register = checkUserCanRegistered(current_user) %}
+      {% endif %}
+      <article class="express-events__event">
+        <div class="express-events__event-date">
+            <p class="express-events__event-day">{{ entity.field_start_at.value|date('d') }}</p>
+            <p class="express-events__event-month">{{ entity.field_start_at.value|date('M') }}</p>
+        </div>
+        <div class="express-events__event-img">
+          <a href="{{ path('entity.node.canonical', {'node': entity.nid.value}, {'query': {'destination': current_path}}) }}">
+            {% if entity.field_event_thumbnail.target_id and entity.field_event_thumbnail.entity.uri.value is defined %}
+              <img alt="{{ entity.title.value }}" src="{{ file_url(entity.field_event_thumbnail.entity.uri.value) }}" class="img-fluid">
+            {% else %}
+              <img alt="{{ entity.title.value }}" src="/modules/custom/spotme_events/image/blank.jpg" class="img-fluid">
+            {% endif %}
+          </a>
+        </div>
+        <div class="express-events__event-title">
+          <a href="{{ path('entity.node.canonical', {'node': entity.nid.value}, {'query': {'destination': current_path}}) }}">
+            <p class="event-title">{{ entity.title.value }}</p>
+          </a>
+          <p class="express-events__event-description">
+                {{ entity.body.value }}
+              </p>
+        </div>
+        <div class="express-events__event-register">
+          <div class="express-events__event-info">
+                <p class="express-events__event-location">
+                  <svg
+                    fill="#bd120a"
+                    height="20px"
+                    width="20px"
+                    version="1.1"
+                    id="Layer_1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 0 368.666 368.666"
+                    xml:space="preserve"
+                  >
+                    <g id="XMLID_2_">
+                      <g>
+                        <g>
+                          <path
+                            d="M184.333,0C102.01,0,35.036,66.974,35.036,149.297c0,33.969,11.132,65.96,32.193,92.515
+                     c27.27,34.383,106.572,116.021,109.934,119.479l7.169,7.375l7.17-7.374c3.364-3.46,82.69-85.116,109.964-119.51
+                     c21.042-26.534,32.164-58.514,32.164-92.485C333.63,66.974,266.656,0,184.333,0z M285.795,229.355
+                     c-21.956,27.687-80.92,89.278-101.462,110.581c-20.54-21.302-79.483-82.875-101.434-110.552
+                     c-18.228-22.984-27.863-50.677-27.863-80.087C55.036,78.002,113.038,20,184.333,20c71.294,0,129.297,58.002,129.296,129.297
+                     C313.629,178.709,304.004,206.393,285.795,229.355z"
+                          />
+                          <path
+                            d="M184.333,59.265c-48.73,0-88.374,39.644-88.374,88.374c0,48.73,39.645,88.374,88.374,88.374s88.374-39.645,88.374-88.374
+                     S233.063,59.265,184.333,59.265z M184.333,216.013c-37.702,0-68.374-30.673-68.374-68.374c0-37.702,30.673-68.374,68.374-68.374
+                     s68.373,30.673,68.374,68.374C252.707,185.341,222.035,216.013,184.333,216.013z"
+                          />
+                        </g>
+                      </g>
+                    </g></svg> Online
+                </p>
+                <p class="express-events__event-duration"><svg  fill="#bd120a"
+                  height="20px"
+                  width="20px" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24" id="clock"><path d="M15.5,11.5h-3v-5C12.5,6.223877,12.276123,6,12,6s-0.5,0.223877-0.5,0.5V12c0,0.0001831,0,0.0003662,0,0.0005493C11.5001831,12.2765503,11.723999,12.5001831,12,12.5h3.5c0.276123,0,0.5-0.223877,0.5-0.5S15.776123,11.5,15.5,11.5z M12,2C6.4771729,2,2,6.4771729,2,12s4.4771729,10,10,10c5.5201416-0.0064697,9.9935303-4.4798584,10-10C22,6.4771729,17.5228271,2,12,2z M12,21c-4.9705811,0-9-4.0294189-9-9s4.0294189-9,9-9c4.9683228,0.0054321,8.9945679,4.0316772,9,9C21,16.9705811,16.9705811,21,12,21z"></path></svg> {{ entity.field_start_at.value|date('H:i')}} - {{ entity.field_start_at.value|date_modify('+' ~ entity.field_duration_in_minites.value ~ ' min')|date('H:i') }} </p>
+          </div>
+          {% if not check_registed and entity.field_spot_me_event.value and check_user_can_register %}
+            <a webinar-id="{{ entity.field_event_id.value }}" event-nid="{{ entity.nid.value }}"href="{{ path('entity.node.canonical', {'node': entity.nid.value}, {'query': {'destination': current_path}}) }}" class="express-events__event-btn">Register</a>
+          {% endif %}
+        </div>
+      </article>
+    {% endfor %}
+  
+  {% else %}
+      <p>Please stay tuned for future events. In the meantime, we invite you to browse HemonClub.com for previous webinars and other materials.</p>
+{% endif %}

@@ -1,0 +1,19 @@
+langcode: en
+dependencies:
+  enforced:
+    module:
+    - spotme_events
+    - datetime
+  module:
+  - node
+  - spotme_events
+  - datetime
+id: node.single_event.field_se_start_date
+field_name: field_se_start_date
+entity_type: node
+type: datetime
+settings:
+  datetime_type: datetime
+module: core
+locked: false
+cardinality: 1

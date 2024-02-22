@@ -1,0 +1,6 @@
+sfmc.sfmc_configure_form:
+  title: 'SFMC Connector'
+  parent: system.admin_config_system
+  description: 'SFMC Connector settings'
+  route_name: sfmc.sfmc_configure_form
+  weight: -20

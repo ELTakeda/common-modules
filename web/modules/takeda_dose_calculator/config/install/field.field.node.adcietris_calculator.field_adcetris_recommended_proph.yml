@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_adcetris_recommended_proph
+    - node.type.adcietris_calculator
+id: node.adcietris_calculator.field_adcetris_recommended_proph
+field_name: field_adcetris_recommended_proph
+entity_type: node
+bundle: adcietris_calculator
+label: 'Adcetris recommended prophylaxis'
+description: "Original text: Primary G-CSF prophylaxis is recommended for all patients receiving combination therapy, starting with the first dose. Continue with the same dose and scheme.\r\n"
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

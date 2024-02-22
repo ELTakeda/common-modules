@@ -1,0 +1,248 @@
+.ninlaro {
+    width: 90%;
+    max-width: $max-module-width;
+    margin: 30px auto 60px auto;
+    
+
+    &__title {
+        h1 {
+            font-family: $font-semi-bold;
+            font-weight: 600;
+            font-size: 26px;
+            color: $color-secondary;
+        }
+
+        p {
+            font-family: $font-regular;
+            font-weight: 400;
+            font-size: 14px;
+            color: $color-primary;
+            margin-top: 12px;
+        }
+    }
+
+    &__calculator-container {
+        width: 100%;
+        margin-top: 40px;
+    }
+
+    &__calculator-section {
+        width: 100%;
+        display: none;
+
+        &.visible {
+            display: block;
+        }
+    }
+
+    &__question-container {
+        margin-bottom: 25px;
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+
+    &__question-title {
+        font-family: $font-bold;
+        font-weight: 700;
+        font-size: 16px;
+        color: $color-primary;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+    }
+
+    &__question-text {
+        font-family: $font-semi-bold;
+        font-weight: 600;
+        font-size: 14px;
+        color: $color-primary;
+        margin-bottom: 12px;
+    }
+
+    &__form {
+        width: 253px;
+        margin: 0 auto;
+    }
+
+    &__radio-container {
+        margin-bottom: 8px;
+        transform: translateX(22px);
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+
+    &__radio-input {
+        display: none;
+    }
+
+    &__radio-input:checked~&__radio-label::before {
+        background-image: url("../../assets/ninlaro/icons/radio-selected.svg");
+    }
+
+    &__radio-label {
+        font-family: $font-regular;
+        font-weight: 400;
+        font-size: 14px;
+        color: $color-primary;
+        position: relative;
+        cursor: pointer;
+
+        &:before {
+            content: "";
+            display: block;
+            width: 18px;
+            height: 18px;
+            background-image: url("../../assets/ninlaro/icons/radio.svg");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            position: absolute;
+            left: -22px;
+            top: 2px;
+        }
+    }
+
+    &__age-container {
+        margin-top: 25px;
+        position: relative;
+        z-index: -1;
+        opacity: 0;
+
+        label {
+            font-family: $font-regular;
+            font-weight: 400;
+            font-size: 14px;
+            color: $color-primary;
+            margin-bottom: 4px;
+        }
+
+        input {
+            font-family: $font-regular;
+            font-weight: 400;
+            font-size: 14px;
+            color: $color-primary;
+            border: 1px solid $color-input-placeholder;
+            border: 4px;
+            background-color: $color-input-background;
+            width: 100%;
+            height: 40px;
+            outline: none;
+
+            &::placeholder {
+                color: $color-input-placeholder;
+            }
+        }
+
+        &.visible {
+            opacity: 1;
+            z-index: 10;
+        }
+    }
+
+    &__calculate-btn{
+        width: 100%;
+        margin: 25px 0;
+        background-color: $color-secondary;
+        color: $color-white;
+        font-family: $font-medium;
+        font-weight: 500;
+        font-size: 15px;
+        text-transform: capitalize;
+        height: 40px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $color-secondary--hover;
+        }
+    }
+
+    &__section-result {
+        width: 100%;
+        background-color: $color-result-bg;
+        font-family: $font-regular;
+        font-weight: 400;
+        font-size: 15px;
+        padding: 10px 12px;
+        border-radius: 4px;
+        opacity: 0;
+
+        span {
+            font-weight: bold;
+        }
+
+        &.visible {
+            opacity: 1;
+        }
+    }
+
+    &__final-result {
+        width: 100%;
+        margin-top: 30px;
+        border-top: 1px solid $color-result-border-top;
+        padding-top: 30px;  
+        display: none;
+
+        &.visible{
+            display: block;
+        }
+    }
+
+    &__final-result-inner-container {
+        width: 250px;
+        margin: 0 auto;
+        display: flex;
+    }
+
+    &__final-result-icon {
+        width: 45px;
+        height: 45px;
+        overflow: hidden;
+        color: $color-secondary;
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    &__final-result-right {
+        font-family: $font-regular;
+        font-weight: 400;
+        font-size: 14px;
+        margin-left: 12px;
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            margin-bottom: 5px;
+
+            &:last-of-type {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    &__final-score,
+    &__final-result-title,
+    &__final-result-right span {
+        font-family: $font-bold;
+        font-weight: 700;
+    }
+
+    &__final-score {
+        color: $color-secondary;
+	margin-top: 20px;
+        span{
+            color: $color-primary;
+        }
+    }
+
+   
+}

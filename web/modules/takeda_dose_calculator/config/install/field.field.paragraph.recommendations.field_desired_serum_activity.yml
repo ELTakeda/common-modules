@@ -1,0 +1,18 @@
+langcode: bg
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_desired_serum_activity
+    - paragraphs.paragraphs_type.recommendations
+id: paragraph.recommendations.field_desired_serum_activity
+field_name: field_desired_serum_activity
+entity_type: paragraph
+bundle: recommendations
+label: 'Desired Serum Activity'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

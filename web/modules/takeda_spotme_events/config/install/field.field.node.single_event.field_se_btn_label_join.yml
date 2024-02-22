@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+    config:
+        - field.storage.node.field_se_btn_label_join
+        - node.type.single_event
+    module:
+        - text
+id: node.single_event.field_se_btn_label_join
+field_name: field_se_btn_label_join
+entity_type: node
+bundle: single_event
+label: Button label - Join
+description: 'Text on the "Join" button'
+required: true
+translatable: true
+default_value: Join
+default_value_callback: ''
+settings:
+    display_summary: false
+field_type: string

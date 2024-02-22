@@ -1,0 +1,14 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a Brightcove audio player.
+ *
+ * @ingroup themeable
+ */
+#}
+<div class="takeda_brightcove--audio" style="position: relative; display: block; max-width: 960px;">
+  <div>
+    <video data-account="{{ account }}" id="audio_{{video_id}}" data-player="{{ player }}" data-video-id="{{ video_id }}" data-embed="default" data-application-id class="video-js" controls {% if digital_id %}data-bc-custom-guid="{{digital_id}}"{% endif %} {% if tracking_id %}data-bc-trackingid="{{tracking_id}}"{% endif %}></video>
+    <script src="{{ script_url }}"></script>
+  </div>
+</div>

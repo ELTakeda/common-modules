@@ -1,0 +1,17 @@
+langcode: en
+dependencies:
+  enforced:
+    module:
+    - spotme_events
+  module:
+  - node
+  - spotme_events
+id: node.events_page.field_ep_lf_all_events
+field_name: field_ep_lf_all_events
+entity_type: node
+type: string
+settings:
+  max_length: 255
+module: core
+locked: false
+cardinality: 1

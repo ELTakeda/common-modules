@@ -1,0 +1,142 @@
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.line-clamp--1 {
+  -webkit-line-clamp: 1;
+}
+.line-clamp--2 {
+  -webkit-line-clamp: 2;
+}
+
+.calculators-module {
+  width: 100%;
+  font-size: inherit;
+  font-family: inherit;
+}
+.calculators-module *,
+.calculators-module *:before,
+.calculators-module *:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.calculators-module .about-to-leave-popup {
+  width: 500px;
+  height: 300px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border: 1px solid #444;
+  border-radius: 5px;
+}
+.calculators-module .about-to-leave-popup .leave-popup__text {
+  text-align: center;
+  font-size: 22px;
+  font-family: inherit;
+}
+.calculators-module .about-to-leave-popup .leave-popup__buttons {
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+}
+.calculators-module .about-to-leave-popup .x-close-btn {
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.calculators-module .about-to-leave-popup .x-close-btn:hover {
+  cursor: pointer;
+}
+.calculators-module .about-to-leave-popup .btn-leave,
+.calculators-module .about-to-leave-popup .btn-stay {
+  width: 120px;
+  height: 50px;
+  outline: none;
+  overflow: hidden;
+  border: 1px solid #444;
+  border-radius: 5px;
+  color: white;
+  opacity: 0.7;
+}
+.calculators-module .about-to-leave-popup .btn-leave:hover,
+.calculators-module .about-to-leave-popup .btn-stay:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+.calculators-module .about-to-leave-popup .btn-leave {
+  background-color: red;
+}
+.calculators-module .about-to-leave-popup .btn-stay {
+  background-color: #444;
+}
+.calculators-module .about-to-leave-popup.visible {
+  display: flex;
+}
+.calculators-module .calculator__footer {
+  width: 100%;
+  position: relative;
+}
+.calculators-module .calculator__footer .inner-wrapper {
+  padding: 10px 32px;
+  font-family: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+}
+.calculators-module .calculator__footer .calculator-back-to-top {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 0;
+  right: 5px;
+}
+.calculators-module .calculator__footer .calculator-back-to-top:hover {
+  cursor: pointer;
+}
+.calculators-module .popup-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: none;
+}
+.calculators-module .popup-modal.visible {
+  display: block;
+}
+
+@media screen and (max-width: 768px) {
+  .calculators-module .about-to-leave-popup {
+    width: 90%;
+    height: auto;
+  }
+  .calculators-module .about-to-leave-popup .leave-popup__text {
+    padding: 10px 25px;
+  }
+  .calculators-module .about-to-leave-popup .leave-popup__buttons {
+    width: 85%;
+    margin: 30px auto;
+  }
+  .calculators-module .about-to-leave-popup .x-close-btn {
+    top: 5px;
+    right: 5px;
+    height: 20px;
+    width: 20px;
+  }
+}
+

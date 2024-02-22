@@ -1,0 +1,6 @@
+name: Site global fields
+description: Provides input fields and URLs for the site global text.
+type: module
+package: Custom
+core: 8.x
+core_version_requirement: ^8 || ^9 || ^10

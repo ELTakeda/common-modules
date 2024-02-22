@@ -1,0 +1,44 @@
+{% set front_path = [ url('<front>')|render|trim('/', 'right'), active_theme_path(),]|join('/') %}
+
+<!-- Footer Begin-->
+  <footer class="tcm-footer">
+    <div class="tcm-footer__top">
+      <div class="tcm-footer__content-container">
+        <a href="{{ path('<front>') }}" class="tcm-footer__logo">
+          <img src="{{front_path}}/assets/icons/site-logo.svg" alt="logo">
+        </a>
+        <div class="tcm-footer__links-section">
+          <nav class="tcm-footer__navigation">
+            <ul class="tcm-footer__navigation-list">
+              {% for menu_info in footer_navigation|slice(0, footer_navigation|length - 2) %}
+                <li class="tcm-footer__navigation-item">
+                    <a href="{{ menu_info[1] }}" target="_blank">{{ menu_info[0] }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </nav>
+          <div class="tcm-footer__social-links">
+            <p class="tcm-footer__social-links-text"> Follow </p>
+            <!-- last 2 footer menu items, menu titles are image names  -->
+            {% for menu_info in footer_navigation|slice(footer_navigation|length - 2) %}
+              <a href="{{ menu_info[1] }}" target="_blank"><img src="{{front_path}}/assets/icons/small/{{ menu_info[0] }}-icon.svg" alt="{{ menu_info[0] }}"></a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tcm-footer__bottom">
+      <div class="tcm-footer__content-container tcm-footer__content-container--bottom">
+        <div class="tcm-footer__bottom-text">
+          <p>{{page.footer_text.common_modules_footercopyright}}</p>
+        </div>
+      </div>
+    </div>
+    <button class="tcm-back-to-top-btn js-back-to-top-btn">
+      <svg width="100%" height="100%" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="30" cy="30" r="30" fill="currentColor" />
+        <path d="M39 35.3999L30 24.8999L21 35.3999L39 35.3999Z" fill="white" />
+      </svg>
+    </button>
+  </footer>
+<!-- Footer End -->

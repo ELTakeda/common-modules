@@ -1,0 +1,10 @@
+{
+    "name": "drupal/takeda_datalayer",
+    "description": "A Drupal module to integrate Takeda ID with GTM / DataLayer",
+    "type": "drupal-custom-module",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "drupal/google_tag": "^1.4",
+        "drupal/matomo": "^1.19"
+    }
+}

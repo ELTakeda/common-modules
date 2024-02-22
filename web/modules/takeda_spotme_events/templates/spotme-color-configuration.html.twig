@@ -1,0 +1,88 @@
+<style>
+  .event-page header h2,
+  .event-detail-page .event-title {
+    color: {{ config_color['tab_title_color'] }};
+  }
+  .webinar-list-block ul li a, .list-view-webinar ul li a {
+    color: {{ config_color['tab_text_color'] }};
+  }
+  .webinar-list-block ul, .list-view-webinar ul {
+    background: {{ config_color['tab_background_color'] }};
+  }
+   /* .webinar-list-block ul li:hover, .list-view-webinar ul li:hover {
+    background: {{ config_color['tab_hover_background_color'] }};
+   } */
+  .webinar-list-block ul li a:hover,
+  .webinar-list-block ul li a.active,
+  .list-view-webinar ul li a:hover,
+  .list-view-webinar ul li a.active {
+    color: {{ config_color['tab_text_hover_color'] }};
+    border-color: {{ config_color['border_color'] }}!important;
+  }
+  /* .start-at-wrapper {
+    background: {{ config_color['item_time_background_color']}};
+    color: {{ config_color['item_time_text_color'] }};
+  } */
+  .event-title {
+    color: {{ config_color['item_title_text_color'] }};
+  }
+  a:hover .event-title,
+  a.event-title:hover {
+    color: {{ config_color['item_title_text_hover_color'] }};
+  }
+  .btn-event:focus, .btn-event {
+    background-color: {{ config_color['item_button_background_color'] }};
+    color: {{ config_color['item_button_text_color'] }};
+  }
+  .btn-event:hover {
+    background-color: {{ config_color['item_button_background_hover_color'] }};
+    color: {{ config_color['item_button_text_hover_color'] }};
+  }
+  .line-popup form[class^=register-event] p {
+    color: {{ config_color['message_text_color'] }};
+  }
+  .line-popup form[class^=register-event] .btn {
+    border-color: {{ config_color['popup_button_text_color'] }}!important;
+    background: {{ config_color['popup_button_background_color'] }};
+    color: {{ config_color['popup_button_text_color'] }};
+  }
+  .line-popup form[class^=register-event] .btn:hover {
+    border-color: {{ config_color['popup_button_text_hover_color'] }}!important;
+    background: {{ config_color['popup_button_background_hover_color'] }};
+    color: {{ config_color['popup_button_text_hover_color'] }};
+  }
+  .line-popup form[class^=register-event] .btn.btn-yes {
+    background: {{ config_color['popup_button_yes_background_color'] }};
+    color: {{ config_color['popup_button_yes_text__color'] }};
+    border-color: {{ config_color['popup_button_yes_background_color'] }}!important;
+  }
+  .line-popup form[class^=register-event] .btn.btn-yes:hover {
+    background: {{ config_color['popup_button_yes_background_hover_color'] }};
+    color: {{ config_color['popup_button_yes_text_hover_color'] }};
+    border-color: {{ config_color['popup_button_yes_background_hover_color'] }}!important;
+  }
+  .event-detail-page .event-detail-right {
+    border-color: {{ config_color['border_color'] }}!important;
+  }
+  .event-detail-page .event-detail-right .label {
+    color: {{ config_color['border_color'] }}!important;
+  }
+  .view-more-webinar {
+    color: {{ config_color['item_title_text_hover_color'] }};
+  }
+  .event-page .pager ul li a {
+    color: {{ config_color['item_title_text_color'] }};
+  }
+  .event-page .pager ul li a:hover {
+    color: {{ config_color['item_title_text_hover_color'] }};
+  }
+  .event-page .pager ul li.is-active a {
+    background: {{ config_color['tab_background_color'] }};
+  }
+  .event-page .pager .pager__item.pager__item--next,
+  .event-page .pager .pager__item.pager__item--previous {
+    border-left-color: {{ config_color['item_title_text_hover_color'] }}!important;
+    border-right-color: {{ config_color['item_title_text_hover_color'] }}!important;
+    color: {{ config_color['item_title_text_hover_color'] }};
+  }
+</style>

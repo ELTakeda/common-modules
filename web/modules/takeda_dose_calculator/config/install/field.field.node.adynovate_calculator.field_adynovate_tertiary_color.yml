@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_adynovate_tertiary_color
+    - node.type.adynovate_calculator
+third_party_settings:
+  tmgmt_content:
+    excluded: false
+id: node.adynovate_calculator.field_adynovate_tertiary_color
+field_name: field_adynovate_tertiary_color
+entity_type: node
+bundle: adynovate_calculator
+label: 'Tertiary color'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: green
+default_value_callback: ''
+settings: {  }
+field_type: string

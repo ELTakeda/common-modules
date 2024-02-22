@@ -1,0 +1,373 @@
+.pr-calculator {
+    width: 100%;
+    max-width: 1120px;
+    margin: 50px auto;
+    background-color: transparent;
+    font-family: $font-rubik--regular;
+    color: $color-primary;
+
+    // Header
+    &__header-title {
+        font-size: 32px;
+        text-transform: uppercase;
+        padding-left: 15px;
+        margin-bottom: 15px;
+        border-left: 4px solid $color-secondary;
+
+        sup {
+            font-weight: 400;
+            font-size: 17px;
+        }
+    }
+
+    &__header-text {
+        font-size: 24px;
+        line-height: 33px;
+    }
+
+    &__header-button {
+        width: fit-content;
+        display: block;
+        color: $color-primary;
+        margin: 30px 0;
+        border: 2px solid $color-primary;
+        border-radius: 50px;
+        padding: 8px 13px;
+        transition: all 0.15s ease-in-out;
+        background-color: $color-white;
+        font-family: $font-rubik--bold;
+        font-size: 14px;
+
+        &:hover {
+            cursor: pointer;
+            color: $color-secondary;
+            border: 2px solid $color-secondary;
+        }
+    }
+
+    &__header-formula {
+        padding: 42px 56px;
+        margin-bottom: 48px;
+        text-align: center;
+        color: $color-secondary;
+        font-size: 28px;
+        line-height: 24px;
+        font-family: $font-rubik--bold;
+        border: 3px solid $color-secondary;
+        border-radius: 15px;
+
+    }
+
+    // Information
+    &__information {
+        margin-top: 80px;
+    }
+
+    &__information-text {
+        color: $color-secondary;
+        font-family: $font-rubik--bold;
+        font-size: 27px;
+        text-align: center;
+    }
+
+    &__information-image {
+        margin-top: 18px;
+        width: 100%;
+        height: auto;
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    // Calculator
+    &__calculator-container {
+        width: 100%;
+        margin: 40px auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__alert {
+        width: 500px;
+        border-radius: 10px;
+        background-color: $color-alert-bg;
+        padding: 15px 30px;
+        position: relative;
+        margin-bottom: 20px;
+        opacity: 0;
+        display: none;
+
+        &.pr-visible {
+            display: block;
+            animation-name: fadeIn;
+            animation-duration: 1s;
+            opacity: 1;
+        }
+    }
+
+    &__alert-close-button {
+        width: 24px;
+        height: 24px;
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        font-weight: 900;
+        text-align: center;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &__calculator {
+        width: 800px;
+        height: auto;
+        border-radius: 15px;
+        background-color: $color-secondary;
+        margin-top: 20px;
+    }
+
+    &__inputs-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    &__input-pair {
+        width: 27%;
+        display: flex;
+        flex-direction: column;
+        margin: 27px;
+        position: relative;
+    }
+
+    &__input {
+        width: 174px;
+        height: 85px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 75px 0 0;
+        border: none;
+        border-radius: 15px;
+        outline: none;
+        background-color: $color-white;
+        color: $color-secondary;
+        font-family: inherit;
+        font-size: 22px;
+        font-weight: 700;
+        text-align: right;
+        margin: 27px;
+
+        &::placeholder {
+            color: $color-secondary;
+        }
+    }
+
+    &__input-placeholder {
+        position: absolute;
+        top: 55px;
+        right: 60px;
+        font-family: inherit;
+        font-size: 22px;
+        color: $color-secondary;
+    }
+
+    &__input-label {
+        color: $color-white;
+        text-align: center;
+    }
+
+    &__buttons-container {
+        display: flex;
+        justify-content: space-around;
+        margin: 30px 0;
+    }
+
+    &__button {
+        height: 65px;
+        border: 1px solid $color-white;
+        border-radius: 50px;
+        text-transform: uppercase;
+        font-size: 22px;
+        font-family: $font-rubik--bold;
+
+        &--calculate {
+            width: 275px;
+            background-color: $color-white;
+            color: $color-secondary;
+        }
+
+        &--reset {
+            width: 375px;
+            background-color: transparent;
+            color: $color-white;
+
+            svg {
+                transform: translateY(5px);
+            }
+        }
+
+        &:hover {
+            cursor: pointer;
+            opacity: 0.8;
+        }
+    }
+
+    &__results-container {
+        padding: 20px 0;
+        text-align: center;
+        color: $color-white;
+        font-size: 32px;
+        font-family: $font-rubik--bold;
+    }
+
+    &__result {
+        margin-bottom: 20px;
+
+        &--ui {
+            font-size: 48px;
+        }
+
+        &--ml {
+            font-size: 32px;
+        }
+    }
+
+    // More Information
+    &__more-information {
+        margin: 100px 0;
+        width: 100%;
+        height: 100px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    &__email-link,
+    &__product-link {
+        width: fit-content;
+        display: block;
+        margin: 30px 0;
+        border-radius: 50px;
+        text-transform: uppercase;
+        transition: all 0.15s ease-in-out;
+    }
+
+    &__email-link {
+        font-size: 16px;
+        color: $color-white;
+        border: 2px solid $color-primary;
+        background-color: $color-primary;
+        padding: 12px 16px;
+
+        &:hover {
+            background-color: $color-white;
+            color: $color-primary;
+        }
+    }
+
+    &__product-link {
+        color: $color-primary;
+        border: 2px solid $color-primary;
+        font-size: 14px;
+        padding: 8px 13px;
+
+        &:hover {
+            color: $color-secondary;
+            border: 2px solid $color-secondary;
+        }
+    }
+
+    //Footer
+    &__footer {
+        width: 100%;
+        padding: 80px 55px;
+    }
+
+    &__footer-title {
+        font-size: 18px;
+        font-family: $font-rubik--bold;
+        margin-bottom: 30px;
+    }
+
+    &__footer-content {
+        font-size: 16px;
+        font-family: $font-rubik--regular;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .pr-calculator {
+        width: 95%;
+
+        //Header
+        &__header-formula {
+            font-size: 20px;
+            padding: 30px 40px;
+        }
+
+        &__header-text {
+            font-size: 16px;
+            line-height: 20px;
+        }
+
+        //Information
+        &__information-text {
+            font-size: 20px;
+        }
+
+        // Calculator
+        &__calculator {
+            width: 100%;
+        }
+
+        &__inputs-container {
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        &__input-pair {
+            width: 80%;
+        }
+
+        &__input {
+            width: 100%;
+            margin: 0;
+            padding-right: 50%;
+        }
+
+        &__input-placeholder {
+            top: 29px;
+            right: 40%;
+        }
+
+        &__input-label {
+            margin-top: 5px;
+        }
+
+        &__buttons-container {
+            flex-direction: column;
+        }
+
+        &__button {
+            font-size: 14px;
+
+            &--calculate,
+            &--reset {
+                width: 70%;
+                margin: 10px auto;
+            }
+        }
+
+        //More Information
+        &__more-information{
+            margin: 50px 0;
+        }
+    }
+}

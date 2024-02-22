@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="webinar-list-block d-block">
+  <div class="tab">
+    <div class="nav-tab-wrapper" id="navTabWebinar">
+      <ul class="nav nav-tabs nav-justified container" id="myTabWebinar" role="tablist">
+      {% set is_hide_past_events = isHidePastEvents() %}
+        {% for key,item in data %}
+          {% set tab_key = key|replace({'_block' : '', '_': '-'}) %}
+          {% if is_hide_past_events == 0 %}
+          <li class="nav-item">
+            <a class="nav-link {% if loop.index == 1 %}active{% endif %}" id="{{ tab_key }}-tab" data-toggle="tab"
+               href="#{{ tab_key }}" role="tab" aria-controls="{{ tab_key }}"
+               aria-selected="{% if loop.index == 1 %}true{% else %}false{% endif %}">{{ item['title'] }}</a>
+          </li>
+          {% else %}
+            {% if tab_key != 'past-event' %}
+             <li class="nav-item">
+            <a class="nav-link {% if loop.index == 1 %}active{% endif %}" id="{{ tab_key }}-tab" data-toggle="tab"
+               href="#{{ tab_key }}" role="tab" aria-controls="{{ tab_key }}"
+               aria-selected="{% if loop.index == 1 %}true{% else %}false{% endif %}">{{ item['title'] }}</a>
+          </li>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="tab-content" id="myTabContentWebinar">
+
+    {% for key,item in data %}
+      {% set tab_key = key|replace({'_block' : '', '_': '-'}) %}
+      <div class="overflow-hidden tab-pane fade {% if loop.index == 1 %}show active{% endif %}" id="{{ tab_key }}"
+           role="tabpanel" aria-labelledby="{{ tab_key }}-tab">
+        {{- item['html']|raw -}}
+        {% if item['path'] %}
+        <a class="view-more-webinar d-none" href="/{{ item['path'] }}">View more</a>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+</div>

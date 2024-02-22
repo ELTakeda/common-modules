@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function takeda_brightcove_theme($existing, $type, $theme, $path) {
+  return [
+    'takeda_brightcove_video' => [
+      'variables' => [
+        'video_src' => NULL,
+        'account' => NULL,
+        'player' => NULL,
+        'video_id' => NULL,
+        'script_url' => NULL,
+        'tracking_id' => NULL,
+        'digital_id' => NULL,
+        'video_name' => NULL,
+      ],
+    ],
+    'takeda_brightcove_audio' => [
+      'variables' => [
+        'video_src' => NULL,
+        'account' => NULL,
+        'player' => NULL,
+        'video_id' => NULL,
+        'script_url' => NULL,
+        'tracking_id' => NULL,
+        'digital_id' => NULL,
+        'video_name' => NULL,
+      ],
+    ],
+    'takeda_brightcove_experience' => [
+      'variables' => [
+        'video_src' => NULL,
+        'account' => NULL,
+        'player' => NULL,
+        'video_id' => NULL,
+        'script_url' => NULL,
+        'tracking_id' => NULL,
+        'digital_id' => NULL,
+        'video_name' => NULL,
+      ],
+    ],
+  ];
+}

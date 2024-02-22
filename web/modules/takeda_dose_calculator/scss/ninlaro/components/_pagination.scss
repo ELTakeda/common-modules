@@ -1,0 +1,83 @@
+.ninlaro-pagination {
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+
+    &__button {
+        position: relative;
+        font-family: $font-semi-bold;
+        font-weight: 600;
+        font-size: 12px;
+        width: 100px;
+        padding: 4px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        border-radius: 50px;
+        text-transform: uppercase;
+        cursor: pointer;
+
+        .btn-icon {
+            display: none;
+        }
+
+        &--current {
+            background-color: $color-secondary;
+            color: $color-white;
+        }
+
+        &--unlocked {
+            background-color: $color-white;
+            color: $color-primary;
+            border: 1px solid $color-secondary;
+        }
+
+        &--locked {
+            background-color: $color-locked-btn-bg;
+            color: $color-locked-btn;
+            cursor: not-allowed;
+        }
+
+        &--ready {
+            background-color: $color-ready-btn-bg;
+            color: $color-primary;
+
+            .btn-icon {
+                display: inline-block;
+                margin-right: 5px;
+            }
+
+            &:after {
+                background-color: $color-ready-btn-bg !important
+            }
+        }
+
+        &:after {
+            content: "";
+            display: block;
+            width: 35px;
+            height: 1.5px;
+            position: absolute;
+            top: 13px;
+            right: -50px;
+            background-color: $color-secondary;
+        }
+
+        &:last-of-type:after {
+            display: none;
+        }
+    }
+}
+
+@media screen and (max-width: $breakpoint-phone){
+    .ninlaro-pagination {
+        &__button {
+            &:after {
+                display: none;
+            }
+        }
+    }
+}

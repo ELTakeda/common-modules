@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Uninstall functions for cookiepro module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function cookiepro_uninstall() {
+  \Drupal::service('config.factory')
+    ->getEditable('cookiepro.header.settings')
+    ->delete();
+}

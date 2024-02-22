@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_advante_calculate_button_b
+    - node.type.advante_calculator
+id: node.advante_calculator.field_advante_calculate_button_b
+field_name: field_advante_calculate_button_b
+entity_type: node
+bundle: advante_calculator
+label: 'Advante Calculate Button Background Color'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

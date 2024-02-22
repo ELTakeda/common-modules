@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - takeda_id
+  enforced:
+    module:
+      - takeda_id
+id: takeda_id_pending
+label: 'Takeda ID: Pending HCP Verification'
+weight: 5
+is_admin: false
+permissions: {  }

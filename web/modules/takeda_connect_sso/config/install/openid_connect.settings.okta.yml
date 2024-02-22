@@ -1,0 +1,6 @@
+enabled: true
+settings:
+  client_id:
+  client_secret:
+  okta_domain: "takedaext.oktapreview.com"
+  only_hcp: true

@@ -1,0 +1,2186 @@
+<?php
+
+/**
+ * @file
+ * Contains takeda_id.module.
+ */
+use Drupal\user\Entity\User;
+use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
+use Drupal\takeda_id\Event\TakedaIdLinkEvent;
+use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Language\LanguageInterface;
+use Drupal\Core\Url;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Middleware;
+use Drupal\user\UserInterface;
+use \GuzzleHttp\Exception\RequestException;
+
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\field\Entity\FieldStorageConfig;
+use Symfony\Component\Validator\Constraints\NotNull;
+
+use Drupal\Component\Render\FormattableMarkup;
+
+use \Symfony\Component\HttpFoundation\RedirectResponse;
+
+use Drupal\Core\Render\Element;
+
+use Drupal\user\Form\UserPasswordForm;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Component\Render\PlainTextOutput;
+use Drupal\Component\Utility\NestedArray;
+
+use Drupal\takeda_id\TakedaIdInterface;
+
+/*
+ * --------------------------- ----- Module Setup ----- ----------------------
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function takeda_id_theme($existing, $type, $theme, $path) {
+  return [
+    'swiftmailer--takeda_id' => [
+      'variables' => ['test_var' => NULL,],
+    ],
+    'authemail' => [
+      'render element' => 'children',
+     ],
+  ];
+}
+
+/**
+ * Implements hook_translation_projects_alter().
+ */
+
+function takeda_id_locale_translation_projects_alter(&$projects) {
+  $projects['takeda_id']['info']['interface translation server pattern'] =
+    \Drupal::service('extension.list.module')->getPath('takeda_id') . '/translations/%project.%language.po';
+}
+
+/**
+ * Takeda ID Help Page Content
+ *
+ * Implements hook_help().
+ */
+function takeda_id_help($route_name, RouteMatchInterface $route_match)
+{
+  switch ($route_name) {
+    // Main module help for the takeda_id module.
+    case 'help.page.takeda_id':
+      $readme = __DIR__ . '/README.TXT';
+      $text = file_get_contents($readme);
+      $output = '';
+
+      // Render as Markdown if possible
+      if ($text && Drupal::moduleHandler()
+          ->moduleExists('markdown') === TRUE) {
+        $filter_manager = Drupal::service('plugin.manager.filter');
+        $settings = Drupal::configFactory()
+          ->get('markdown.settings')
+          ->getRawData();
+        $config = ['settings' => $settings];
+        $filter = $filter_manager->createInstance('markdown', $config);
+        $output = $filter->process($text, 'en');
+      }
+      // Fall back to plain text
+      else {
+        if ($text) {
+          $output = '<pre>' . $text . '</pre>';
+        }
+      };
+      return $output;
+    default:
+  }
+}
+
+
+/*
+ * --------------------------- ----- User Login ----- ----------------------
+ */
+
+/**
+ * Update Account Form to reference Takeda ID components
+ *
+ * Drupal uses variants of the account form in a number of locations,
+ * including within the Admin page and the Password Reset form
+ *
+ * Implements hook_form_alter().
+ */
+function takeda_id_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+
+  switch ($form_id) {
+    case 'user_form':
+
+      // Get the path elements for more precise targeting
+      $current_path = \Drupal::service('path.current')->getPath();
+      $path_args = explode('/', $current_path);
+
+      // Alter user editing form (profile form) to restrict Takeda ID managed fields
+      $user = $form_state->getBuildInfo()['callback_object']->getEntity();
+
+      /** @var \Drupal\externalauth\Authmap $authmap */
+      $authmap = \Drupal::service('externalauth.authmap');
+      $authname = $authmap->get($user->id(), 'takeda_id');
+
+      // User is authed via Takeda ID
+      if ($authname) {
+        $form['field_takeda_id']['#disabled'] = TRUE;
+
+        $form['account']['mail']['#disabled'] = TRUE;
+        $form['account']['mail']['#description'] = t('This email address is managed by Takeda ID and may not be changed.');
+
+        $form['account']['name']['#disabled'] = TRUE;
+        $form['account']['name']['#description'] = t('This username is linked to an email address and may not be changed.');
+
+        // If not on the reset password page, we disable the account password reset options
+        if (!\Drupal::currentUser()->isAnonymous()) {
+          $form['account']['current_pass']['#disabled'] = TRUE;
+          $form['account']['pass']['#disabled'] = TRUE;
+
+          $form['account']['current_pass']['#access'] = FALSE;
+          $form['account']['pass']['#access'] = FALSE;
+
+          $form['account']['current_pass']['#description'] = t('Manage or Reset your password via Takeda ID');
+        } elseif (isset($path_args[1], $path_args[2]) && $path_args[1] == 'user' && $path_args[2] == 'reset') {
+          $account = \Drupal::entityTypeManager()->getStorage('user')->load($path_args[3]);
+
+          // Handle password reset requests for Takeda ID enrolled users
+          $form['actions']['submit']['#submit'][] = 'takeda_id_pass_reset_submit';
+          $form['actions']['submit']['#value'] = t('Update Password', ['@username' => $account->getDisplayName()]);
+
+          // Ensure the desired fields are visible
+          if (!isset($form['account']['#access']) || $form['account']['#access']) {
+            // Require a new password.
+            $form['account']['pass']['#required'] = TRUE;
+            // Hide "To change the current user password...".
+            unset($form['account']['pass']['#description']);
+
+            // Hide other elements so it's just the password reset component
+            foreach (Element::children($form) as $key) {
+              if (isset($form[$key]['#type']) && in_array($form[$key]['#type'], [
+                'hidden', 'actions', 'captcha',
+              ])) {
+                // Do not alter these elements.
+              } else {
+                // Hide other elements.
+                $form[$key]['#access'] = FALSE;
+              }
+            }
+            // Ensure we never display the email field.
+            $form['account']['mail']['#access'] = FALSE;
+
+            // Ensure the required fields *are* displayed.
+            $form['account']['#access'] = TRUE;
+            $form['actions']['#access'] = TRUE;
+            if (isset($form['_field_layout'])) {
+              $form['_field_layout']['#access'] = TRUE;
+            }
+
+            // Hide the password policy status block
+            if ($config->get('hide_password_policy_table', true) && isset($form['account']['password_policy_status'])) {
+              $form['account']['password_policy_status']['#prefix'] = '<div id="password-policy-status" class="visually-hidden">';
+            }
+
+            // Drupal's password reset flow clears the session, and can fail if one
+            // isn't set. We check to ensure it has something to clear.
+            if (empty($_SESSION)) {
+              $_SESSION = ['takeda_id_pass_reset' => TRUE];
+            }
+          }
+        }
+      }
+      break;
+    case 'user_login_form':
+      // Update login form text to reference Takeda ID
+      $form['name']['#title'] = t('Email Address');
+      $form['name']['#description'] = t('Enter your Takeda ID Email Address');
+      // $form['name']['#element_validate'][] = 'takeda_id_user_login_validate';
+
+      $form['pass']['#description'] = t('Enter your Takeda ID Password');
+
+      // Add external user login validation in user_login_form
+      // after ::validateAuthentication
+      // and before ::validateFinal.
+      if (@in_array('::validateFinal', $form['#validate'])) {
+        $key = array_search('::validateFinal', $form['#validate']);
+        $form['#validate'][$key] = 'takeda_id_authenticate';
+        $form['#validate'][] = '::validateFinal';
+      }
+
+      // Hook into the submit handler
+      $form['#submit'][] = 'takeda_id_user_login_submit';
+      break;
+  }
+}
+
+
+/**
+ * Implements hook_user_login().
+ */
+function takeda_id_user_login($account) {
+
+  // Instantiate our event.
+  $event = new TakedaIdLinkEvent($account);
+
+  // Get the event_dispatcher service and dispatch the event.
+  $event_dispatcher = \Drupal::service('event_dispatcher');
+  $event_dispatcher->dispatch($event, TakedaIdLinkEvent::EVENT_NAME);
+
+  // Check if user is linked to Takeda ID
+  /** @var \Drupal\externalauth\Authmap $authmap */
+  $authmap = \Drupal::service('externalauth.authmap');
+  $authname = $authmap->get($account->id(), 'takeda_id');
+
+  $session = \Drupal::request()->getSession();
+
+  // Set a session var if we're logging in for the first time
+  if ($authname && empty($account->getLastAccessedTime())) {
+      $session->set('takeda_id_first_login', true);
+  } else {
+      $session->remove('takeda_id_first_login');
+  }
+
+  // User will be redirected to post-login via the submit function to handle the redirect
+}
+
+function takeda_id_user_login_submit(&$form, FormStateInterface $form_state)
+{
+  // Set Redirect Url
+  $url = Url::fromRoute('takeda_id.post_login');
+  $form_state->setRedirectUrl($url);
+}
+
+function takeda_id_authenticate(array &$form, FormStateInterface $form_state)
+{
+  if (!$form_state->get('uid')) {
+    // Default Drupal authentication failed, trying with Takeda ID
+
+    $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+    if (!$config->get('api_url') || !$config->get('api_key') || !$config->get('api_secret')) {
+      $form_state->setErrorByName('name', t('Unable to connect to Takeda ID.'));
+      return;
+    }
+
+    $name = $form_state->getValue('name');
+    $password = trim($form_state->getValue('pass'));
+
+    // Check for common role/permission related errors before we call the API
+    $drupalAccount = user_load_by_mail($name);
+
+    if ($drupalAccount && $drupalAccount->isBlocked()) {
+      if ($drupalAccount->hasRole('takeda_id_non_hcp')) {
+        \Drupal::logger('takeda_id')->notice('takeda_id_authenticate for ' . $drupalAccount->id() . ' failed due to blocked / non-hcp role');
+        $message = t('<h2>Sorry, the activation of your account could not be processed as we have not been able to identify you as a registered healthcare professional. Please contact Takeda if you require further assistance.</h2>');
+      } elseif ($drupalAccount->hasRole('takeda_id_pending')) {
+        \Drupal::logger('takeda_id')->notice('takeda_id_authenticate for ' . $drupalAccount->id() . ' failed due to blocked / pending role');
+        $message = t('<h2>Your account is currently pending verification.</h2><p>You will receive an email once your account has been verified.</p><p>You may be contacted by someone from Takeda to confirm your details.</p>');
+      } elseif ($drupalAccount->hasRole('takeda_id_unverified')) {
+        \Drupal::logger('takeda_id')->notice('takeda_id_authenticate for ' . $drupalAccount->id() . ' failed due to blocked / awaiting email validation');
+        $message = t('<h2>Your email address is currently pending validation.</h2><p>Please check your email and follow the instructions.</p>');
+      }
+
+      if (isset($message)) {
+        $form_state->setErrorByName('mail', $message);
+      }
+    }
+
+    // Attempt to login by Takeda ID
+    if ($account_data = takeda_id_get_account_data_if_valid($name, $password)) {
+      $accountRegistration = takeda_account_register_existing_user($account_data, $drupalAccount, $doLogin = true);
+      if ($accountRegistration['error']) {
+        $form_state->setErrorByName('name', $accountRegistration['error']);
+      } else {
+        $account = $accountRegistration['account'];
+        $form_state->set('uid', $account->id());
+      }
+    } else {
+      // Display an error message for failed auth
+      $form_state->setErrorByName('name', t('Unrecognized Takeda ID email or password.'));
+    }
+  }
+}
+
+function takeda_id_get_account_data_if_valid($name, $password)
+{
+  $auth = takeda_id_api_authenticate($name, $password);
+
+  if ($auth->status === 'PASSWORD_EXPIRED') {
+      $session = \Drupal::request()->getSession();
+      $session->set('user_id', $auth->_embedded->user->id);
+      $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+      $session->set('hashedPassword', $hashedPassword);
+      $session->save();
+
+      $url = Url::fromRoute('takeda_id.reset_password');
+      return (new RedirectResponse($url->toString()))->send();
+  }
+
+
+  if ($auth && $auth->status === 'SUCCESS') {
+
+    $session = \Drupal::request()->getSession();
+    $session->set('takeda_id_session_token', $auth->sessionToken);
+
+    $account_data = [
+      'name' => $auth->_embedded->user->profile->firstName . " " . $auth->_embedded->user->profile->lastName,
+      'field_takeda_id' => $auth->_embedded->user->id,
+      'mail' => $auth->_embedded->user->profile->login,
+      'field_first_name' => $auth->_embedded->user->profile->firstName,
+      'field_last_name' => $auth->_embedded->user->profile->lastName,
+      'locale' => $auth->_embedded->user->profile->locale,
+      'timezone' => $auth->_embedded->user->profile->timeZone
+    ];
+
+    if(isset($auth->_embedded->user->profile->title) && $auth->_embedded->user->profile->title){
+      $account_data['field_title'] = $auth->_embedded->user->profile->title;
+    }
+
+    return $account_data;
+  }
+  return FALSE;
+}
+
+/*
+ * --------------------------- ----- Password Reset ----- ----------------------
+ */
+
+function takeda_id_form_user_pass_alter(&$form, FormStateInterface $form_state, $form_id)
+{
+  $form['name']['#title'] = t('Email Address');
+  $form['name']['#description'] = t('Enter your Takeda ID Email Address');
+  $form['actions']['submit']['#submit'][] = 'takeda_id_user_pass_submit';
+}
+
+function takeda_id_user_pass_submit(&$form, FormStateInterface $form_state)
+{
+  global $language;
+  $values = $form_state->getValues();
+  $name = $values['name'];
+
+  // Unknown account, check for presence in Takeda ID
+  if (!isset($values['account']) && $takedaAccount = takeda_id_check_user_exists($name, $withData = true)) {
+      \Drupal::logger('user')->info('Password reset form was submitted for a known Takeda ID that has not previously registered here: ' . $name);
+    if (isset($takedaAccount->status) && $takedaAccount->status === 'ACTIVE') {
+        $account_data = [
+          'name' => $takedaAccount->profile->firstName . " " . $takedaAccount->profile->lastName,
+          'field_takeda_id' => $takedaAccount->id,
+          'mail' => $takedaAccount->profile->login,
+          'field_first_name' => $takedaAccount->profile->firstName,
+          'field_last_name' => $takedaAccount->profile->lastName,
+        ];
+
+        if(isset($takedaAccount->profile->title) && $takedaAccount->profile->title){
+          $account_data['field_title'] = $takedaAccount->profile->title;
+        }
+
+        if(isset($takedaAccount->profile->field_customer_id) && $takedaAccount->profile->field_customer_id){
+          $account_data['field_customer_id'] = $takedaAccount->profile->field_customer_id;
+        }
+
+        // Create Drupal account and prepare for reset
+        $accountRegistration = takeda_account_register_existing_user($account_data, $doLogin = false);
+
+        if ($accountRegistration['error']) {
+          \Drupal::logger('user')->info('Password reset form request failed with error: ' . $accountRegistration['error']);
+        } else {
+          $account = $accountRegistration['account'];
+          $values['account'] = $account;
+        }
+    }
+  }
+
+  // Existing Drupal Account is present
+  if (isset($values['account'])) {
+    $account = $values['account'];
+
+    // Check if we're a linked Takeda ID account
+    $authmap = \Drupal::service('externalauth.authmap');
+    $authname = $authmap->get($account->id(), 'takeda_id');
+
+    // Takeda ID User - generate a recovery token with Okta for use
+    if($authname){
+      $recoveryToken = takeda_id_api_get_recovery_token($account);
+      if ($recoveryToken && $recoveryToken->recoveryToken) {
+        $userData = \Drupal::service('user.data');
+        $userData->set('takeda_id', $account->id(), 'recovery_token', $recoveryToken->recoveryToken);
+        $userData->set('takeda_id', $account->id(), 'recovery_token_exp', $recoveryToken->expiresAt);
+      }
+    }
+
+    // Send the Takeda ID Password Reset email
+    $mail = \Drupal::service('plugin.manager.mail')->mail($module = 'takeda_id', $key = 'forgot_password', $account->getEmail(), $account->getPreferredLangcode(), ['account' => $account], $reply = NULL, $send = TRUE);
+
+    // Log if successfull
+    if (!empty($mail)) {
+      \Drupal::logger('user')->info('Password reset instructions mailed to %name at %email.', [
+        '%name' => $account->name->value,
+        '%email' => $account->getEmail()
+      ]);
+    }
+
+  } else {
+    \Drupal::logger('user')->info('Password reset form was submitted with an unknown or inactive account: ' . $name);
+  }
+
+  \Drupal::messenger()->addStatus(t('If %identifier is a valid account, please follow the instructions sent to your email to reset your password.', ['%identifier' => $name]));
+
+  $form_state->setRedirect('user.login');
+}
+
+function takeda_id_pass_reset_submit(&$form, FormStateInterface $form_state)
+{
+  $session = \Drupal::request()->getSession();
+  $authmap = \Drupal::service('externalauth.authmap');
+
+  // Remove the default Drupal Notification Message
+  // It's not easy to delete a single message, so we get them all and re-add the others
+  $message = t('The changes have been saved.');
+
+  $messenger = \Drupal::messenger();
+  foreach ($messenger->deleteByType(MessengerInterface::TYPE_STATUS) as $statusmessage) {
+    if (!((string) $message == (string) $statusmessage)) {
+      $messenger->addStatus($statusmessage);
+    }
+  }
+
+  // Ensure we are working with an anonymous user
+  if (\Drupal::currentUser()->isAnonymous()) {
+    $values = $form_state->getValues();
+
+    $stateToken = $session->get('takeda_id_state_token');
+    $stateTokenExp = $session->get('takeda_id_state_token_exp');
+
+    $stateTokenExpDate = new \DateTime($stateTokenExp);
+    $stateTokenExpTimestamp = $stateTokenExpDate->getTimestamp();
+    $currentTimestamp = \Drupal::time()->getRequestTime();
+
+    // Remove roles that were disabled in the form.
+    if (!empty($values['roles'])) {
+      $form_state->set('roles', array_filter($values['roles']));
+    }
+    // Load the user account afresh and finalize the login.
+    // @see user_login_submit()
+    $account = \Drupal::entityTypeManager()->getStorage('user')->load($values['uid']);
+
+    $password = trim($form_state->getValue('pass'));
+    $authname = $authmap->get($account->id(), 'takeda_id');
+
+    // User is registered to Takeda ID, submit the update
+    if ($authname) {
+      // Clear the password from the form, ensure the user is logging in with a Takeda ID pass, not the one they've set here...
+      $form_state->unsetValue('pass');
+
+      $user = User::load($values['uid']);
+      $user->setPassword(\Drupal::service('password_generator')->generate(30));
+      $user->save();
+
+      if ($stateToken && $stateTokenExp || $currentTimestamp < $stateTokenExpTimestamp) {
+        $passwordReset = takeda_id_api_reset_password($stateToken, $password);
+
+        if (!$passwordReset) {
+          \Drupal::messenger()->addError(t('Sorry, your password reset request has failed or timed out. Please try again.'));
+          $form_state->setRedirect('user.login');
+          return;
+        }
+      }
+    }
+
+    // user_login_finalize($account);
+    \Drupal::logger('user')->notice(t('Password reset for Takeda ID User @name', ['@name' => $values['name']]));
+
+    \Drupal::messenger()->addMessage(t('Your password has been reset and you may now login with your new details.'));
+
+    // Redirect to login page
+    if (empty($form_state->getRedirect())) {
+      $form_state->setRedirect('user.login');
+    }
+  }
+}
+
+/*
+ * --------------------------- ----- User Registration ----- ----------------------
+ */
+
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * @see user_register_form()
+ * @see takeda_id_form_user_register_submit()
+ */
+function takeda_id_form_user_register_form_alter(&$form, FormStateInterface $form_state, $form_id)
+{
+
+  /** @var \Drupal\user\UserInterface $account */
+  $account = $form_state->getFormObject()->getEntity();
+  $user_config = \Drupal::config('user.settings');
+  $config = \Drupal::configFactory()->get(TakedaIdInterface::CONFIG_OBJECT_NAME);
+
+  // Ensure registration forms are not cached to support dynamic content loading
+  \Drupal::service('page_cache_kill_switch')->trigger();
+
+  // Load available prefill fields based on Takeda ID Configuration
+  $prefillFields = $config->get('prefill_fields');
+
+  // Prefill fields from query params
+  $params = \Drupal::request()->query->all();
+
+  // Prefill fields from Invitation Token data
+  $storedData = isset($_COOKIE[TakedaIdInterface::INVITATION_COOKIE_NAME]) ? $_COOKIE[TakedaIdInterface::INVITATION_COOKIE_NAME] : false;
+
+  foreach ($params as $key => $value) {
+    if (in_array($key, $prefillFields)) {
+      if (NestedArray::keyExists($form, ['account', $key])) {
+        if(!$form['account'][$key]['#default_value']){
+            $form['account'][$key]['#default_value'] = $value;
+        }
+      }
+      if (NestedArray::keyExists($form, [$key])) {
+        if(!$form[$key]['widget'][0]['value']['#default_value']){
+          $form[$key]['widget'][0]['value']['#default_value'] = $value;
+        }
+      }
+    }
+  }
+
+  // Map stored Invitation fields to Drupal / Takeda ID form fields
+  if ($storedData) {
+    $storedData = json_decode($storedData);
+    $canEdit = ($config->get('invitations_can_edit') && $storedData->QueryStrings->canEdit) || false;
+
+    // If we have form input, check to see if this matches the expected address from the stored data
+    $matchedAddress = false;
+    if(isset($form_state->getUserInput()['mail']) && isset($storedData->QueryStrings->email)){
+      $matchedAddress = $form_state->getUserInput()['mail'] === $storedData->QueryStrings->email;
+    }
+
+    $form_state->set('hasStoredData', true);
+    $form_state->set('storedData', $storedData);
+    $form_state->set('canEdit', $canEdit);
+
+    // Email
+    if ($storedData->QueryStrings->email && !$form['account']['mail']['#default_value']) {
+        $form['account']['mail']['#default_value'] = $storedData->QueryStrings->email;
+        if (!$canEdit && $matchedAddress) {
+          $form['account']['mail']['#value'] = $storedData->QueryStrings->email;
+          $form['account']['mail']['#attributes']['disabled'] = 'disabled';
+        }
+    }
+
+    // First Name
+    if (NestedArray::keyExists($form, ['field_first_name']) && $storedData->QueryStrings->firstName && !$form['field_first_name']['widget'][0]['value']['#default_value']) {
+        $form['field_first_name']['widget'][0]['value']['#default_value'] = $storedData->QueryStrings->firstName;
+        if (!$canEdit && $matchedAddress) {
+          $form['field_first_name']['widget'][0]['value']['#value'] = $storedData->QueryStrings->firstName;
+          $form['field_first_name']['widget'][0]['value']['#attributes']['disabled'] = 'disabled';
+        }
+    }
+
+    // Last Name
+    if (NestedArray::keyExists($form, ['field_last_name']) && $storedData->QueryStrings->lastName && !$form['field_last_name']['widget'][0]['value']['#default_value']) {
+        $form['field_last_name']['widget'][0]['value']['#default_value'] = $storedData->QueryStrings->lastName;
+        if (!$canEdit && $matchedAddress) {
+          $form['field_last_name']['widget'][0]['value']['#value'] = $storedData->QueryStrings->lastName;
+          $form['field_last_name']['widget'][0]['value']['#attributes']['disabled'] = 'disabled';
+        }
+    }
+
+    // Customer ID
+    if (NestedArray::keyExists($form, ['field_customer_id']) && $storedData->QueryStrings->cid && !$form['field_customer_id']['widget'][0]['value']['#default_value']) {
+        $form['field_customer_id']['widget'][0]['value']['#default_value'] = $storedData->QueryStrings->cid;
+        if (!$canEdit && $matchedAddress) {
+          $form['field_customer_id']['widget'][0]['value']['#value'] = $storedData->QueryStrings->cid;
+          $form['field_customer_id']['widget'][0]['value']['#attributes']['disabled'] = 'disabled';
+        }
+    }
+
+    // Country Code
+    if (NestedArray::keyExists($form, ['field_crm_country']) && $storedData->QueryStrings->cc && !$form['field_crm_country']['widget']['#default_value']) {
+        $form['field_crm_country']['widget']['#default_value'] = $storedData->QueryStrings->cc;
+        $form['field_crm_country']['widget']['#value'] = $storedData->QueryStrings->cc;
+        if (!$canEdit && $matchedAddress) {
+          $form['field_crm_country']['widget']['#attributes']['disabled'] = 'disabled';
+        }
+    } elseif($storedData->QueryStrings->cc && !NestedArray::keyExists($form, ['field_crm_country'])){
+      // Ensure that the field_crm_country is present
+      $form['field_crm_country'] = [
+          '#type' => 'hidden',
+          '#value' => $storedData->QueryStrings->cc
+       ];
+    }
+  } else {
+    $form_state->set('hasStoredData', false);
+  }
+
+  // Only run when the registration type is set to Takeda ID and Drupal settings are appropriate
+  if (
+    $user_config->get('register') == UserInterface::REGISTER_VISITORS
+    && ($config->get('registration') == 'takeda-id' || $config->get('registration') == 'takeda-id-no-email-verification')
+    && $account->isNew()
+  ) {
+    // Remove the username field (we'll use the email address instead)
+    $form['account']['name']['#required'] = FALSE;
+    $form['account']['name']['#access'] = FALSE;
+    $form['account']['mail']['#required'] = TRUE;
+
+    array_unshift($form['#validate'], 'takeda_id_prepare_form_user_values');
+    $form['#validate'][] = 'takeda_id_form_user_validate_email_not_registered';
+    $form['#validate'][] = 'takeda_id_form_user_post_validate';
+    $form['#validate'][] = 'takeda_id_form_user_country_validate';
+
+    // Hide the password policy status block
+    if ($config->get('hide_password_policy_table', true) && isset($form['account']['password_policy_status'])) {
+      $form['account']['password_policy_status']['#prefix'] = '<div id="password-policy-status" class="visually-hidden">';
+    }
+
+    // Set the user account to blocked.
+    $form['account']['status']['#default_value'] = 0;
+    // Suppress any notification.
+    $form['account']['notify']['#default_value'] = 0;
+    // Register our validate and submit handlers.
+    $form['actions']['submit']['#submit'][] = 'takeda_id_form_user_register_submit';
+  }
+}
+
+/**
+ * Copy the 'mail' field to the 'name' field before form validation.
+ *
+ * @param array $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ */
+function takeda_id_prepare_form_user_values(&$form, FormStateInterface $form_state)
+{
+  // DEBUG: Random account id
+  // $form_state->setValue('mail', 'takidtest+' . \Drupal::service('date.formatter')->format(time(), 'custom', "YmdGi") . '@gmail.com');
+  $email = $form_state->getValue('mail');
+  $form_state->setValue('name', $email);
+}
+
+/**
+ * Validate that the email address is not already registered to Takeda ID
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ */
+function takeda_id_form_user_validate_email_not_registered(&$form, FormStateInterface $form_state)
+{
+  $email = $form_state->getValue('mail');
+  if(takeda_id_check_user_exists($email)){
+    $form_state->setErrorByName('mail', t('Your email address is already registered with Takeda ID. You can login to this site using your Takeda ID email address and password.'));
+  }
+}
+
+/**
+ * Remove any errors related to the username ('name') field as this is not used
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ */
+function takeda_id_form_user_post_validate(&$form, FormStateInterface $form_state)
+{
+  $errors = $form_state->getErrors();
+  unset($errors['name']);
+  $form_state->clearErrors();
+  foreach ($errors as $field => $value) {
+    $form_state->setErrorByName($field, $value);
+  }
+}
+
+/**
+ * Remove any errors related to the username ('name') field as this is not used
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ */
+function takeda_id_form_user_country_validate(&$form, FormStateInterface $form_state)
+{
+  $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+  $defaultCountry = trim($config->get('default_country'));
+
+  if (trim($defaultCountry) == 'aq') {
+    $form_state->setErrorByName('country', t('Invalid country. Please contact site administrator.'));
+    \Drupal::logger('takeda_id')->notice('Trying to register an user with invalid country. Please change default country from takeda_id configurations');
+  }
+}
+
+/**
+ * Add non-verified role to user
+ *
+ * Implements hook_ENTITY_TYPE_presave() for user entities.
+ */
+function takeda_id_user_presave(UserInterface $user)
+{
+  $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+
+  // Do not assign the roles by default.
+  $assign_roles = FALSE;
+
+  // Get the current user id.
+  $current_user_id = \Drupal::currentUser()->id();
+
+  if ($current_user_id == 0 && PHP_SAPI !== 'cli') {
+    // If the current user id is 0, then this user is self registrating
+    // and should have the role assigned
+    $assign_roles = TRUE;
+  }
+
+  // Add Takeda ID Roles on save
+  if ($user->isNew() && $assign_roles) {
+    if ($user->field_takeda_id->value) {
+      $groups = takeda_id_check_user_groups($user->field_takeda_id->value);
+      $groupNames = array_column($groups, 'name');
+
+      // Search groups for desired values
+      if (in_array('Validation Pending', $groupNames)) {
+        $user->addRole('takeda_id_unverified');
+        if ($config->get('require_hcp_match_to_activate')) {
+          // This site requires users to be matched with a HCP prior to activation, so the user status is set to Blocked
+          $user->status->value = 0;
+        }
+      } elseif(in_array('HCP', $groupNames)){
+        $user->addRole('takeda_id_active');
+      } elseif(in_array('Okta-Takeda-Users', $groupNames) || in_array('Takeda Users', $groupNames)){
+        $user->addRole('takeda_id_active');
+      } else {
+        $user->addRole('takeda_id_non_hcp');
+        if(null === $config->get('block_rejected_leads') || $config->get('block_rejected_leads')){
+          // This site requires users to be matched with a HCP prior to activation, so the user status is set to Blocked
+          $user->status->value = 0;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements post submission handler for the user registration form.
+ *
+ * @see user_register_form()
+ * @see takeda_id_form_user_register_form_alter()
+ */
+function takeda_id_form_user_register_submit(&$form, FormStateInterface $form_state)
+{
+
+  /** @var \Drupal\user\UserInterface $account */
+  $account = $form_state->getFormObject()->getEntity();
+  $password = trim($form_state->getValue('pass'));
+
+  $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+
+  $currentTimestamp = \Drupal::time()->getRequestTime();
+
+  $crmCountry = $account->field_crm_country->value ?: $config->get('default_country');
+  $customerId = $account->field_customer_id ? $account->field_customer_id->value : null;
+  $takedaAccount = takeda_id_api_register($account, $password, $crmCountry, $customerId);
+
+  if (!$takedaAccount && $customerId) {
+    // Account registration failed with customer ID, attempt without
+    \Drupal::logger('takeda_id')->notice('Retrying Account Creation for ' . $account->id() . ' without Customer ID, fall back to lead generation flow.');
+    $customerId = null;
+    $takedaAccount = takeda_id_api_register($account, $password, $crmCountry);
+  }
+
+  $digitalId = $takedaAccount->_embedded->user->profile->digital_id;
+  $takedaUserId = $takedaAccount->_embedded->user->id;
+
+  /** @var UserDataInterface $userData */
+  $userData = \Drupal::service('user.data');
+  $userData->set('takeda_id', $account->id(), 'recovery_token', $takedaAccount->recoveryToken);
+  $userData->set('takeda_id', $account->id(), 'recovery_token_exp', $takedaAccount->expiresAt);
+  $userData->set('takeda_id', $account->id(), 'digital_id', $digitalId);
+  $userData->set('takeda_id', $account->id(), 'takeda_id', $takedaUserId);
+  $userData->set('takeda_id', $account->id(), 'crm_country', $crmCountry);
+
+  $account->set('field_takeda_id', $takedaUserId);
+
+  $account->save();
+
+  // Add initial roles
+  $account->addRole('takeda_id_unverified');
+  $account->save();
+
+  $registrationFormat = $config->get('registration');
+
+  if($registrationFormat === 'takeda-id-no-email-verification' || ($form_state->get('hasStoredData') && $form_state->get('canEdit') === false)) {
+    // Validate with Takeda ID
+    $verification = takeda_id_api_verify($takedaAccount->recoveryToken);
+
+    if ($verification && $verification->status == "PASSWORD_RESET") {
+      // Account successfully activated with Takeda ID, process HCP registration
+      $isVerified = takeda_account_set_verified($account, $currentTimestamp);
+
+      // Customer ID has already been provided and a direct HCP created, so no need to process HCP conversion request
+      if ($customerId) {
+        \Drupal::logger('takeda_id')->notice('HCP conversion bypassed for account ' . $account->id() . ' which has been directly registered as a HCP from supplied Customer ID ' . $customerId);
+        // Update account profile
+        takeda_account_set_hcp_matched($account, $customerId);
+
+        // Return success message
+        takeda_id_clear_form_session_cookies();
+        \Drupal::messenger()->addMessage(t('Your account has been activated and you may now login.'));
+      } else {
+        // Attempt HCP Conversion via the Takeda ID APIs
+        $hcpConversion = takeda_id_hcp_conversion($account, $customerId, $digitalId, $crmCountry);
+
+        if ($hcpConversion) {
+          if (isset($hcpConversion->profile)) {
+
+              // Get Customer ID from response
+              if(isset($hcpConversion->profile->customer_id) && $hcpConversion->profile->customer_id){
+                  $customerId = $hcpConversion->profile->customer_id;
+              }
+
+              // Update account profile
+              takeda_account_set_hcp_matched($account, $customerId);
+
+              // Return success message
+              takeda_id_clear_form_session_cookies();
+              \Drupal::messenger()->addMessage(t('Your account has been activated and you may now login.'));
+          } elseif (isset($hcpConversion->leadId)) {
+              takeda_account_set_hcp_pending($account, $hcpConversion->leadId);
+              takeda_id_clear_form_session_cookies();
+              if ($config->get('require_hcp_match_to_activate')) {
+                  \Drupal::messenger()->addMessage(t('Thank you for your registration. Takeda needs to verify your details to complete your enrollment. You will recieve an email once your account has been activated.'));
+              } else {
+                  \Drupal::messenger()->addMessage(t('Your account has been activated and you may proceed to login. Takeda will verify your details to complete your enrollment.'));
+              }
+          } else {
+              \Drupal::logger('takeda_id')->notice('Unexpected result from HCP Conversion for ' . $account->id() . ' / <pre><code>' . print_r($hcpConversion, true) . '</code></pre>');
+
+              $account->addRole('takeda_id_unverified');
+
+              // Display warning
+              \Drupal::messenger()->addMessage(t('Sorry, we were unable to confirm your Takeda ID registration. Please try again or contact Takeda for further assistance.'));
+          }
+        }
+      }
+    } else {
+      \Drupal::messenger()->addMessage(t('Sorry, we were unable to verify your account with Takeda ID.'));
+      \Drupal::logger('takeda_id')->notice('takeda_id_form_user_register_submit / takeda-id-no-email-verification calling block account for ' . $account->id() . ' due to failed OKTA email verification');
+      $account->block();
+      $account->save();
+    };
+
+
+  } else {
+    // Generate Verification URL
+    $verifyUrl = takeda_id_generate_confirmation_url($account, $takedaAccount->recoveryToken);
+
+    // Notify the user and send the confirmation email.
+    $verificationMail = \Drupal::service('plugin.manager.mail')->mail($module = 'takeda_id', $key = 'register_confirmation', $account->getEmail(), $account->getPreferredLangcode(), ['account' => $account], $reply = NULL, $send = TRUE);
+
+    takeda_id_clear_form_session_cookies();
+
+    // Set success message and redirect to the front page.
+    \Drupal::messenger()->addMessage(t('Thank you for registering with Takeda ID. To complete your account setup, please check your email and follow the instructions to verify your account.'));
+  }
+
+  // Remove the default Drupal Notification Message
+  // It's not easy to delete a single message, so we get them all and re-add the others
+  $message = t('Thank you for applying for an account. Your account is currently pending approval by the site administrator.<br />In the meantime, a welcome message with further instructions has been sent to your email address.');
+
+  $messenger = \Drupal::messenger();
+  foreach ($messenger->deleteByType(MessengerInterface::TYPE_STATUS) as $statusmessage) {
+    if (!((string) $message == (string) $statusmessage)) {
+      $messenger->addStatus($statusmessage);
+    }
+  }
+}
+
+/*
+ * --------------------------- ----- Admin/Config Form Handling Functions ----- ----------------------
+ */
+
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function takeda_id_form_user_admin_settings_alter(&$form, FormStateInterface $form_state, $form_id)
+{
+
+  $config = \Drupal::configFactory()->getEditable(TakedaIdInterface::CONFIG_OBJECT_NAME);
+  $mail_config = \Drupal::config('takeda_id.mail');
+  $user_config = \Drupal::configFactory()->getEditable('user.settings');
+
+  // Add the Takeda ID Registration options
+  $form['registration_cancellation']['takeda_id_registration'] = [
+    '#type' => 'radios',
+    '#title' => t('Require email verification when a visitor creates an account'),
+    '#options' => [
+      'none' => t('Do not require a verification email, and let users set their password on the registration form.'),
+      'default' => t('Require a verification email, but wait for the approval email to let users set their password.'),
+      'takeda-id-no-email-verification' => t('Use the Takeda ID Workflow, allowing users to set their Takeda ID password during registration, but do not require a verification email.'),
+      'takeda-id' => t('Use the Takeda ID Email Validation Workflow, allowing users to set their Takeda ID password during registration.'),
+    ],
+    '#default_value' => $config->get('registration'),
+  ];
+
+  // Hide the default option.
+  $form['registration_cancellation']['user_email_verification']['#access'] = FALSE;
+
+  // Set up available tokens.
+  $email_token_registration_help = t('Available variables are: [site:name], [site:url], [user:display-name], [user:account-name], [user:mail], [site:login-url], [site:url-brief], [user:edit-url], [user:cancel-url], [user:takeda-id-verification-url].');
+  $email_token_help = t('Available variables are: [site:name], [site:url], [user:display-name], [user:account-name], [user:mail], [site:login-url], [site:url-brief], [user:edit-url], [user:one-time-login-url], [user:cancel-url]');
+
+  // Render email template settings.
+  $form['email_takeda_id_registration'] = [
+    '#type' => 'details',
+    '#title' => t('Takeda ID: Registration'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+    '#description' => t('Edit the welcome email messages sent to new members upon registering, when awaiting Takeda ID email validation.') . ' ' . $email_token_registration_help,
+    '#group' => 'email',
+  ];
+
+  $form['email_takeda_id_registration']['takeda_id_register_confirmation_subject'] = [
+    '#type' => 'textfield',
+    '#title' => t('Subject'),
+    '#default_value' => $mail_config->get('register_confirmation.subject'),
+    '#maxlength' => 180,
+  ];
+  $form['email_takeda_id_registration']['takeda_id_register_confirmation_body'] = [
+    '#type' => 'textarea',
+    '#title' => t('Body'),
+    '#default_value' => $mail_config->get('register_confirmation.body'),
+    '#rows' => 15,
+  ];
+
+  $form['email_takeda_id_forgot_password'] = [
+    '#type' => 'details',
+    '#title' => t('Takeda ID: Forgot Password'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+    '#description' => t('Edit the email messages sent to users who request a new Takeda ID password.') . ' ' . $email_token_help,
+    '#group' => 'email',
+  ];
+  $form['email_takeda_id_forgot_password']['takeda_id_forgot_password_subject'] = [
+    '#type' => 'textfield',
+    '#title' => t('Subject'),
+    '#default_value' => $mail_config->get('forgot_password.subject'),
+    '#maxlength' => 180,
+  ];
+  $form['email_takeda_id_forgot_password']['takeda_id_forgot_password_body'] = [
+    '#type' => 'textarea',
+    '#title' => t('Body'),
+    '#default_value' => $mail_config->get('forgot_password.body'),
+    '#rows' => 15,
+  ];
+
+  $form['email_takeda_id_accepted'] = [
+    '#type' => 'details',
+    '#title' => t('Takeda ID: Lead accepted'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+    '#description' => t('Edit the welcome email messages sent to users once their Takeda ID Account Lead has been accepted. ') . ' ' . $email_token_help,
+    '#group' => 'email',
+  ];
+  $form['email_takeda_id_accepted']['takeda_id_accepted_subject'] = [
+    '#type' => 'textfield',
+    '#title' => t('Subject'),
+    '#default_value' => $mail_config->get('accepted.subject'),
+    '#maxlength' => 180,
+  ];
+  $form['email_takeda_id_accepted']['takeda_id_accepted_body'] = [
+    '#type' => 'textarea',
+    '#title' => t('Body'),
+    '#default_value' => $mail_config->get('accepted.body'),
+    '#rows' => 15,
+  ];
+
+  $form['email_takeda_id_rejected'] = [
+    '#type' => 'details',
+    '#title' => t('Takeda ID: Lead rejected'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+    '#description' => t('Edit the welcome email messages sent to users once their Takeda ID Account Lead has been rejected. ') . ' ' . $email_token_help,
+    '#group' => 'email',
+  ];
+  $form['email_takeda_id_rejected']['takeda_id_rejected_subject'] = [
+    '#type' => 'textfield',
+    '#title' => t('Subject'),
+    '#default_value' => $mail_config->get('rejected.subject'),
+    '#maxlength' => 180,
+  ];
+  $form['email_takeda_id_rejected']['takeda_id_rejected_body'] = [
+    '#type' => 'textarea',
+    '#title' => t('Body'),
+    '#default_value' => $mail_config->get('rejected.body'),
+    '#rows' => 15,
+  ];
+
+  // Register our extra submit function.
+  $form['#submit'][] = 'takeda_id_admin_settings_submit';
+
+  // Reorder the form items back to their original order.
+  $form['anonymous_settings']['#weight'] = -2;
+  $form['admin_role']['#weight'] = -1;
+  $form['registration_cancellation']['#weight'] = 0;
+  $form['registration_cancellation']['user_cancel_method']['#weight'] = 3;
+  $form['registration_cancellation']['takeda_id_registration']['#weight'] = 2;
+  $form['personalization']['#weight'] = 4;
+  $form['email_title']['#weight'] = 5;
+  $form['email']['#weight'] = 6;
+  $form['email_admin_created']['#weight'] = 6;
+}
+
+/**
+ * Submit handler for the user admin form.
+ */
+function takeda_id_admin_settings_submit(&$form, FormStateInterface $form_state)
+{
+  $config = \Drupal::configFactory()->getEditable(TakedaIdInterface::CONFIG_OBJECT_NAME);
+  $mail_config = \Drupal::configFactory()->getEditable('takeda_id.mail');
+  $user_config = \Drupal::configFactory()->getEditable('user.settings');
+
+  // Set the registration method
+  $takeda_id_type = $form_state->getValue('takeda_id_registration');
+  $config->set('registration', $takeda_id_type);
+
+  // Core option.
+  $user_register = $form_state->getValue('user_register');
+
+  // To use Takeda ID Registration, we need to ensure both the 'core' and 'takeda id' options are set correctly
+  if (($takeda_id_type == 'takeda-id' || $takeda_id_type == 'takeda-id-no-email-verification') && $user_register == UserInterface::REGISTER_VISITORS) {
+    $user_config
+      // Disable core verification emails and prevent default email notifications
+      ->set('verify_mail', 0)
+      ->set('notify.register_pending_approval', 0)
+      ->set('notify.status_activated', 0)
+      ->set('notify.register_no_approval_required', 0)
+      ->set('notify.password_reset', 0);
+  }
+  // If the Drupal core option is selected, update notification values are set to default
+  else {
+    // Based on the Takeda ID checkbox...
+    switch ($takeda_id_type) {
+      case 'none':
+      case 'takeda-id-no-email-verification':
+        $user_config->set('verify_mail', 0);
+        break;
+
+      case 'default':
+      case 'takeda-id':
+        $user_config->set('verify_mail', 1);
+        break;
+    }
+
+    // Based on the Drupal Core checkbox...
+    switch ($user_register) {
+      case UserInterface::REGISTER_ADMINISTRATORS_ONLY:
+        $user_config
+          ->set('notify.register_pending_approval', 0)
+          ->set('notify.register_no_approval_required', 0)
+          ->set('notify.password_reset', 1);
+        break;
+
+      case UserInterface::REGISTER_VISITORS:
+      case UserInterface::REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL:
+        $user_config
+          ->set('notify.register_pending_approval', 1)
+          ->set('notify.register_no_approval_required', 1)
+          ->set('notify.password_reset', 1);
+        break;
+    }
+  }
+
+  // Save mail data
+  $mail_config
+    ->set('register_confirmation.subject', $form_state->getValue('takeda_id_register_confirmation_subject'))
+    ->set('register_confirmation.body', $form_state->getValue('takeda_id_register_confirmation_body'))
+
+    ->set('forgot_password.subject', $form_state->getValue('takeda_id_forgot_password_subject'))
+    ->set('forgot_password.body', $form_state->getValue('takeda_id_forgot_password_body'))
+
+    ->set('accepted.subject', $form_state->getValue('takeda_id_accepted_subject'))
+    ->set('accepted.body', $form_state->getValue('takeda_id_accepted_body'))
+
+    ->set('rejected.subject', $form_state->getValue('takeda_id_rejected_subject'))
+    ->set('rejected.body', $form_state->getValue('takeda_id_rejected_body'));
+
+  // Save config
+  $config->save();
+  $mail_config->save();
+  $user_config->save();
+}
+
+/*
+ * --------------------------- ----- Form Handling Functions ----- ----------------------
+ */
+
+  function takeda_id_allowed_country_values_function(FieldStorageConfig $definition, ContentEntityInterface $entity = NULL, $cacheable = TRUE) {
+    $country_manager = \Drupal::service('country_manager');
+    $list = $country_manager->getList();
+
+    $list = array_intersect_key($list, array_flip(TakedaIdInterface::SUPPORTED_COUNTRIES));
+
+    $countries = [];
+    foreach ($list as $key => $value) {
+      $val = $value->__toString();
+      $countries[$key] = $val;
+    }
+    return $countries;
+  }
+
+  function takeda_id_clear_form_session_cookies(){
+    if (isset($_COOKIE[TakedaIdInterface::INVITATION_COOKIE_NAME])) {
+        unset($_COOKIE[TakedaIdInterface::INVITATION_COOKIE_NAME]);
+        setcookie(TakedaIdInterface::INVITATION_COOKIE_NAME, null, time() - 3600, '/');
+    }
+
+    if (isset($_COOKIE[TakedaIdInterface::INVITATION_FORM_TYPE_COOKIE_NAME])) {
+        unset($_COOKIE[TakedaIdInterface::INVITATION_FORM_TYPE_COOKIE_NAME]);
+        setcookie(TakedaIdInterface::INVITATION_FORM_TYPE_COOKIE_NAME, null, time() - 3600, '/');
+    }
+
+    return true;
+  }
+
+/*
+ * --------------------------- ----- Mail Handling Functions ----- ----------------------
+ */
+
+function takeda_id_generate_confirmation_url(UserInterface $account, $code, array $options = [])
+{
+  $timestamp = \Drupal::time()->getRequestTime();
+  $langcode = isset($options['langcode']) ? $options['langcode'] : $account->getPreferredLangcode();
+
+  return \Drupal::service('url_generator')->generateFromRoute(
+    'takeda_id.verify',
+    [
+      'user' => $account->uuid->value,
+      'timestamp' => $timestamp,
+      'hash' => user_pass_rehash($account, $timestamp),
+      'code' => $code
+    ],
+    [
+      'absolute' => TRUE,
+      'language' => \Drupal::languageManager()->getLanguage($langcode),
+    ]
+  );
+}
+
+function takeda_id_generate_reset_url(UserInterface $account, $code, array $options = [])
+{
+  $timestamp = \Drupal::time()->getRequestTime();
+  $langcode = isset($options['langcode']) ? $options['langcode'] : $account->getPreferredLangcode();
+
+  return \Drupal::service('url_generator')->generateFromRoute(
+    'takeda_id.verify',
+    [
+      'user' => $account->uuid->value,
+      'timestamp' => $timestamp,
+      'hash' => user_pass_rehash($account, $timestamp),
+      'code' => $code
+    ],
+    [
+      'absolute' => TRUE,
+      'language' => \Drupal::languageManager()->getLanguage($langcode),
+    ]
+  );
+}
+
+/**
+ * Token callback to add unsafe tokens for user mails.
+ *
+ * @see user_mail_tokens()
+ * @see takeda_id_mail()
+ * @see takeda_id_confirmation_url()
+ */
+function takeda_id_mail_tokens(&$replacements, $data, $options)
+{
+  user_mail_tokens($replacements, $data, $options);
+
+  if (isset($data['user'])) {
+    /** @var UserDataInterface $userData */
+    $userData = \Drupal::service('user.data');
+    $token = $userData->get('takeda_id', $data['user']->uid->value, 'recovery_token');
+
+    if ($token) {
+      $replacements['[user:takeda-id-verification-url]'] = takeda_id_generate_confirmation_url($data['user'], $token, $options);
+    }
+
+  }
+}
+
+/**
+ * Implements hook_mail().
+ *
+ */
+function takeda_id_mail($key, &$message, $params)
+{
+
+  $site_name = \Drupal::config('system.site')->get('name');
+  $site_mail = \Drupal::config('system.site')->get('mail_notification');
+
+  // If the custom site notification email has not been set, we use the site
+  // default
+  if (empty($site_mail)) {
+    $site_mail = \Drupal::config('system.site')->get('mail');
+  }
+  if (empty($site_mail)) {
+    $site_mail = ini_get('sendmail_from');
+  }
+
+  $token_service = \Drupal::token();
+  $language_manager = \Drupal::languageManager();
+  $langcode = $message['langcode'];
+
+  $variables = [
+    'user' => $params['account'],
+  ];
+
+  $language = $language_manager->getLanguage($params['account']->getPreferredLangcode());
+  $original_language = $language_manager->getConfigOverrideLanguage();
+  $language_manager->setConfigOverrideLanguage($language);
+  $mail_config = \Drupal::config('takeda_id.mail');
+
+  $token_options = [
+    'langcode' => $langcode,
+    'callback' => 'takeda_id_mail_tokens',
+    'clear' => TRUE,
+  ];
+
+  switch ($key) {
+    case 'register_confirmation':
+    case 'forgot_password':
+    case 'accepted':
+    case 'rejected':
+      $message['headers']['Reply-To'] = $site_mail;
+      $message['headers']['Content-Type'] = 'text/html; charset=UTF-8; format=flowed; delsp=yes';
+      $message['headers']['From'] = $site_name . '<' . $site_mail . '>';
+
+      $message['base_url'] = \Drupal::request()->getSchemeAndHttpHost();
+
+      $message['subject'] .= PlainTextOutput::renderFromHtml($token_service->replace($mail_config->get($key . '.subject'), $variables, $token_options));
+      $message['body'][] = $token_service->replace($mail_config->get($key . '.body'), $variables, $token_options);
+
+      foreach ($message['body'] as $key => $body) {
+        $message['body'][$key] = new FormattableMarkup($body, []);
+      }
+
+      break;
+
+    default:
+      $message = array_merge($message, $params);
+      $message['headers']['Reply-To'] = $site_mail;
+      $message['headers']['Content-Type'] = 'text/html';
+      $message['headers']['From'] = $site_name . '<' . $site_mail . '>';
+      $message['cta_url'] = $params['cta_url'];
+      $message['cta_text'] = $params['cta_text'];
+      $message['bold_text'] = $params['bold_text'];
+      $message['lower_body'] = $params['lower_body'];
+      $message['sender_name'] = $params['sender_name'];
+      $message['new_string'] = $params['new_string'];
+      $message['name_recipient'] = $params['name_recipient'];
+      $message['base_url'] = $params['base_url'];
+  }
+
+  $language_manager->setConfigOverrideLanguage($original_language);
+}
+
+/*
+ * --------------------------- ----- Account Handling Functions ----- ----------------------
+ */
+
+function takeda_account_set_verified($account, $currentTimestamp){
+  // Account has been registered and verified in Okta
+  // - Update account details
+  \Drupal::logger('takeda_id')->notice('takeda_account_set_verified for ' . $account->id());
+  $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+
+  $account
+  ->setLastAccessTime($currentTimestamp)
+  ->setLastLoginTime($currentTimestamp)
+  ->save();
+
+  // - Remove account password to facilitate Takeda ID login in future
+  $account->pass = null;
+  $account->save();
+
+  // Activate user if permitted by settings
+  $requireLeadConfirmation = $config->get('require_hcp_match_to_activate');
+
+  if (!$requireLeadConfirmation) {
+    \Drupal::logger('takeda_id')->notice('takeda_account_set_verified calling activate account for ' . $account->id() . ' due to requireLeadConfirmation being false');
+    $account->activate();
+    $account->save();
+  }
+
+  $authmap = \Drupal::service('externalauth.authmap');
+  $authname = $authmap->save($account, 'takeda_id', $account->mail->value);
+
+  // Remove the user's unverified role
+  $account->removeRole('takeda_id_unverified');
+  $account->save();
+
+  // Allow modules to add further actions
+  \Drupal::moduleHandler()->invokeAll('hook_takeda_account_set_verified', [$account]);
+
+  return true;
+
+}
+
+function takeda_account_set_hcp_pending($account, $leadId){
+  // Account is pending manual verification (Pending - Qualification)
+  // - Assign takeda_id_pending role
+  // - Save details on generated Lead
+  // - Activate or block user depending on site preferences
+  // - Notify user of registration status
+  \Drupal::logger('takeda_id')->notice('takeda_account_set_hcp_pending for ' . $account->id());
+  $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+  $userData = \Drupal::service('user.data');
+
+  $account->removeRole('takeda_id_active');
+  $account->removeRole('takeda_id_non_hcp');
+  $account->removeRole('takeda_id_unverified');
+  $account->addRole('takeda_id_pending');
+
+  if ($config->get('require_hcp_match_to_activate')) {
+      \Drupal::logger('takeda_id')->notice('takeda_account_set_hcp_pending calling block account for ' . $account->id() . ' due to require_hcp_match_to_activate');
+      $account->block();
+  }
+
+  if ($leadId) {
+      $userData->set('takeda_id', $account->id(), 'lead_id',
+      $leadId);
+  }
+
+  $account->save();
+
+  // Allow modules to add further actions
+  \Drupal::moduleHandler()->invokeAll('hook_takeda_account_set_hcp_pending', [$account]);
+
+  return true;
+
+}
+
+function takeda_account_set_hcp_matched($account, $customerId){
+  // Account is matched as a valid HCP (Closed - Matched)
+  \Drupal::logger('takeda_id')->notice('takeda_account_set_hcp_matched for ' . $account->id());
+  $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+  $userData = \Drupal::service('user.data');
+
+  // - Assign takeda_id_active role
+  $account->removeRole('takeda_id_unverified');
+  $account->removeRole('takeda_id_pending');
+  $account->removeRole('takeda_id_non_hcp');
+  $account->addRole('takeda_id_active');
+
+  // - Ensure user is activated
+  \Drupal::logger('takeda_id')->notice('takeda_account_set_hcp_matched calling activate account for ' . $account->id() . ' due to HCP match');
+  $account->activate();
+
+  // - Save Customer ID Details
+  if ($customerId) {
+    $userData->set('takeda_id', $account->id(), 'customer_id', $customerId);
+    $account->set('field_customer_id', $customerId);
+  }
+
+  $account->save();
+
+  \Drupal::moduleHandler()->invokeAll('hook_takeda_account_set_hcp_matched', [$account]);
+
+  return true;
+}
+
+function takeda_account_set_hcp_rejected($account){
+  // User has been rejected / marked as non-hcp (Closed - Rejected)
+  \Drupal::logger('takeda_id')->notice('takeda_account_set_hcp_rejected for ' . $account->id());
+  $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+
+  // - Block user depending on site preferences
+  if(null === $config->get('block_rejected_leads') || $config->get('block_rejected_leads')){
+    \Drupal::logger('takeda_id')->notice('takeda_account_set_hcp_rejected calling block account for ' . $account->id() . ' due to block_rejected_leads');
+      $account->block();
+  }
+
+  // - Assign takeda_id_non_hcp role
+  $account->removeRole('takeda_id_active');
+  $account->removeRole('takeda_id_pending');
+  $account->removeRole('takeda_id_unverified');
+  $account->addRole('takeda_id_non_hcp');
+
+  $account->save();
+
+  \Drupal::moduleHandler()->invokeAll('hook_takeda_account_set_hcp_rejected', [$account]);
+
+  return true;
+
+}
+
+
+function takeda_account_register_existing_user($account_data, $drupalAccount = false, $doLogin = false){
+  $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+  \Drupal::logger('takeda_id')->notice('takeda_account_register_existing_user for ' . $account_data['mail']);
+
+  /** @var \Drupal\externalauth\Authmap $authmap */
+  $authmap = \Drupal::service('externalauth.authmap');
+  $externalauth = \Drupal::service('externalauth.externalauth');
+  $provider = 'takeda_id';
+  $userCountry = $config->get('default_country');
+
+  $account_data['name'] = $account_data['mail'];
+
+  // Perform initial authorisation prior to login/registration
+  if (isset($account_data['field_takeda_id']) && $account_data['field_takeda_id']) {
+    $userInfo = takeda_id_get_user_info($account_data['field_takeda_id']);
+    $groups = takeda_id_check_user_groups($account_data['field_takeda_id']);
+
+    // Check user's registered country
+    if(isset($userInfo->profile) && isset($userInfo->profile->countryCode) && $userInfo->profile->countryCode){
+      $userCountry = $userInfo->profile->countryCode;
+    } elseif(isset($userInfo->profile) && isset($userInfo->profile->crm_country) && $userInfo->profile->crm_country){
+      // Fallback to use the crm_country instead
+      $userCountry = $userInfo->profile->crm_country;
+    }
+
+    // If required, verify that the registered country matches the permitted options for this site
+    if ($config->get('restrict_country_access') && $userCountry && !empty($userCountry) && !in_array($userCountry, $config->get('restrict_country_access_to_countries'))) {
+      \Drupal::logger('takeda_id')->notice('Login failed because account country does not match accepted countries : ' . $userCountry);
+      // !! RETURN ERROR $form_state->setErrorByName('name', t('Sorry, your Takeda ID is not authorised to access this site. Please contact Takeda if you require further assistance.'));
+      return ['error' => t('Sorry, your Takeda ID is not authorised to access this site. Please contact Takeda if you require further assistance.')];
+    }
+
+    // If required, verify that the user's groups match the permitted groups for this site
+    if ($groups && count($groups)) {
+      // Search groups for desired values
+      $groupNames = array_column($groups, 'name');
+
+      if ($drupalAccount) {
+        $groupNames =  array_merge($groupNames, $drupalAccount->getRoles());
+      }
+
+      if ($config->get('require_hcp_match_to_activate') && in_array('Validation Pending', $groupNames)) {
+        // Reject users pending activation
+        \Drupal::logger('takeda_id')->notice('takeda_id_authenticate for ' . $account_data['name'] . ' failed due to require_hcp_match_to_activate / validation pending OKTA group');
+
+        return ['error' => t('<h2>Your account is currently pending verification.</h2><p>You will receive an email once your account has been verified.</p><p>You may be contacted by someone from Takeda to confirm your details.</p>')];
+      } elseif(!$config->get('require_hcp_match_to_activate') && in_array('takeda_id_pending', $groupNames)) {
+        \Drupal::logger('takeda_id')->notice('takeda_id_authenticate for pending account ' . $account_data['name'] . ' permitted because require_hcp_match_to_activate is false.');
+      } elseif((null === $config->get('block_rejected_leads') || $config->get('block_rejected_leads')) && !in_array('HCP', $groupNames) && !in_array('Okta-Takeda-Users', $groupNames) && !in_array('Takeda Users', $groupNames)){
+        // Reject non-hcp users
+        \Drupal::logger('takeda_id')->notice('takeda_id_authenticate for ' . $account_data['name'] . ' failed due to block_rejected_leads / no valid HCP OKTA group');
+        return ['error' => t('<h2>Sorry, the activation of your account could not be processed as we have not been able to identify you as a registered healthcare professional. Please contact Takeda if you require further assistance.</h2>')];
+      }
+    }
+  }
+
+  // loginRegister will only make a new account if one does not exist.
+  if ($doLogin) {
+    $account = $externalauth->loginRegister($account_data['mail'], $provider, $account_data);
+  } else {
+    $account = $externalauth->register($account_data['mail'], $provider, $account_data);
+  }
+
+  /** @var UserDataInterface $userData */
+  $userData = \Drupal::service('user.data');
+
+  if ($account && isset($account_data['field_takeda_id']) && $account_data['field_takeda_id']) {
+
+    $userData->set('takeda_id', $account->id(), 'takeda_id', $account_data['field_takeda_id']);
+
+    if(isset($userInfo->profile)){
+      \Drupal::logger('takeda_id')->notice('Updating profile information on login for ' . $account->id() . ' / <pre><code>' . print_r($userInfo->profile, TRUE) . '</code></pre>');
+      // Set Digital ID
+      if(isset($userInfo->profile->digital_id) && $userInfo->profile->digital_id){
+        $userData->set('takeda_id', $account->id(), 'digital_id', $userInfo->profile->digital_id);
+        \Drupal::logger('takeda_id')->notice('Set Digital ID for ' . $account->id() . ' : ' . $userInfo->profile->digital_id);
+      }
+      // Set Customer ID
+      if(isset($userInfo->profile->customer_id) && $userInfo->profile->customer_id){
+        $userData->set('takeda_id', $account->id(), 'customer_id', $userInfo->profile->customer_id);
+        $account->set('field_customer_id', $userInfo->profile->customer_id);
+        \Drupal::logger('takeda_id')->notice('Set Customer ID for ' . $account->id() . ' : ' . $userInfo->profile->customer_id);
+        $account->save();
+      }
+
+      // Set User Country
+      $userData->set('takeda_id', $account->id(), 'countryCode', $userCountry);
+
+      // Set CRM Country
+      if(isset($userInfo->profile) && isset($userInfo->profile->crm_country) && $userInfo->profile->crm_country){
+        $userCountry = $userInfo->profile->crm_country;
+        $userData->set('takeda_id', $account->id(), 'crm_country', $userInfo->profile->crm_country);
+        $account->set('field_crm_country', $userInfo->profile->crm_country);
+        \Drupal::logger('takeda_id')->notice('Set CRM Country for ' . $account->id() . ' : ' . $userInfo->profile->crm_country);
+        $account->save();
+      }
+    }
+  }
+
+  \Drupal::moduleHandler()->invokeAll('hook_takeda_account_register_existing_user', [$account]);
+
+  return [
+    'account' => $account,
+    'error' => false
+  ];
+
+}
+
+/*
+ * --------------------------- ----- Takeda ID API Helper Functions ----- ----------------------
+ */
+
+function takeda_id_api_authenticate($name, $password){
+  $client = \Drupal::httpClient();
+  $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+
+  try {
+    $request = $client->post($config->get('api_url') . "/user/authenticate", [
+      "headers" => [
+        "client_id" => $config->get('api_key'),
+        "client_secret" => $config->get('api_secret'),
+        "Content-Type" => "application/json",
+      ],
+
+        'json' => [
+          'username' => $name,
+          'password' => $password
+        ]
+    ]);
+    $response = $request->getBody();
+    $data = json_decode($response);
+
+    \Drupal::logger('takeda_id')->notice('takeda_id_api_authenticate for ' . $name . ' / <pre><code>' . print_r($data, TRUE) . '</code></pre>');
+
+    return $data;
+
+  } catch (RequestException $e) {
+
+    // Unauthorised / account does not exist
+    if ($e->getCode() === 401) {
+      return false;
+    }
+
+    watchdog_exception('takeda_id', $e);
+  }
+}
+
+function takeda_id_check_user_exists($email, $withData = false){
+  $client = \Drupal::httpClient();
+  $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+
+  try {
+    $email = urlencode($email);
+    $request = $client->get($config->get('api_url') . "/users?filter=profile.email%20eq%20%22" . $email . "%22&limit=1", [
+      "headers" => [
+        "client_id" => $config->get('api_key'),
+        "client_secret" => $config->get('api_secret'),
+        "Content-Type" => "application/json",
+      ]
+    ]);
+    $response = $request->getBody();
+    $data = json_decode($response);
+
+    \Drupal::logger('takeda_id')->notice('takeda_id_check_user_exists for ' . $email . ' / <pre><code>' . print_r($data, TRUE) . '</code></pre>');
+
+    if ($withData && count($data) === 1) {
+      return $data[0];
+    } else {
+      return count($data);
+    }
+  } catch (RequestException $e) {
+
+    // Unauthorised / account does not exist
+    if ($e->getCode() === 401) {
+      return false;
+    }
+
+    watchdog_exception('takeda_id', $e);
+  }
+}
+
+function takeda_id_get_user_info($takedaID)
+{
+  $client = \Drupal::httpClient();
+  $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+
+  try {
+    $request = $client->get($config->get('api_url') . "/user/userId/" . $takedaID, [
+      "headers" => [
+        "client_id" => $config->get('api_key'),
+        "client_secret" => $config->get('api_secret'),
+        "Content-Type" => "application/json",
+      ]
+    ]);
+    $response = $request->getBody();
+    $data = json_decode($response);
+
+    \Drupal::logger('takeda_id')->notice('takeda_id_get_user_info for ' . $takedaID . ' / <pre><code>' . print_r($data, TRUE) . '</code></pre>');
+
+    return $data;
+  } catch (RequestException $e) {
+
+    // Unauthorised / account does not exist
+    if ($e->getCode() === 401) {
+      return false;
+    }
+
+    watchdog_exception('takeda_id', $e);
+  }
+}
+
+function takeda_id_check_user_groups($takedaID)
+{
+  $client = \Drupal::httpClient();
+  $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+
+  try {
+    $request = $client->get($config->get('api_url') . "/group/userId/" . $takedaID, [
+      "headers" => [
+        "client_id" => $config->get('api_key'),
+        "client_secret" => $config->get('api_secret'),
+        "Content-Type" => "application/json",
+      ]
+    ]);
+    $response = $request->getBody();
+    $data = json_decode($response);
+
+    \Drupal::logger('takeda_id')->notice('takeda_id_check_user_groups for ' . $takedaID . ' / <pre><code>' . print_r($data, TRUE) . '</code></pre>');
+
+    return $data;
+  } catch (RequestException $e) {
+
+    // Unauthorised / account does not exist
+    if ($e->getCode() === 401) {
+      return false;
+    }
+
+    watchdog_exception('takeda_id', $e);
+  }
+}
+
+function takeda_id_api_register($account, $password, $crmCountry, $customerId = null)
+{
+
+  $profile = [
+    'login' => $account->mail->value,
+    'firstName' => $account->field_first_name->value,
+    'lastName' => $account->field_last_name->value,
+    'email' => $account->mail->value,
+    'countryCode' => $crmCountry,
+    'preferredLanguage' => $account->preferred_langcode->value
+  ];
+  $credentials = [
+    'password' => [
+      'value' => $password
+    ]
+  ];
+
+  if ($account->field_title && $account->field_title->value) {
+    $profile['title'] = $account->field_title->value;
+  }
+
+  // If Customer ID is supplied, attempt registration as a HCP
+  if ($customerId) {
+    $profile['crm_country'] = $crmCountry;
+    $profile['customer_id'] = $customerId;
+  }
+
+  $client = \Drupal::httpClient();
+  $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+
+  try {
+    $request = $client->post($config->get('api_url') . "/user", [
+      "headers" => [
+        "client_id" => $config->get('api_key'),
+        "client_secret" => $config->get('api_secret'),
+        "Content-Type" => "application/json",
+      ],
+      'json' => [
+        'profile' => $profile,
+        'credentials' => $credentials
+      ]
+    ]);
+    $response = $request->getBody();
+    $data = json_decode($response);
+
+    \Drupal::logger('takeda_id')->notice('takeda_id_api_register for ' . ($customerId ? 'Known HCP ' . $customerId . ' / ' : '') . ' Account ' . $account->id() . ' / <pre><code>' . print_r($data, TRUE) . '</code></pre>');
+
+    return $data;
+  } catch (RequestException $e) {
+
+    // Unauthorised / account does not exist
+    if ($e->getCode() === 401 || $e->getCode() === 404) {
+      \Drupal::logger('takeda_id')->notice('Account creation failed with error ' . $e->getCode() . ' / Returning False');
+      return false;
+    }
+
+    watchdog_exception('takeda_id', $e);
+  }
+}
+
+function takeda_id_hcp_conversion($account, $customerId, $digitalId, $crmCountry)
+{
+  $language_none = \Drupal::languageManager()->getLanguage(LanguageInterface::LANGCODE_NOT_APPLICABLE);
+  $callback_url = Url::fromRoute('takeda_id.lead_callback')
+      ->setAbsolute(true)
+      ->setOption('language', $language_none)
+      ->toString();
+  $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+  $leadSource = \Drupal::config('system.site')->get('name');
+
+  $profile = [
+    'login' => $account->mail->value,
+    'firstName' => $account->field_first_name->value,
+    'lastName' => $account->field_last_name->value,
+    'displayName' => $account->getDisplayName(),
+    'email' => $account->mail->value,
+    'countryCode' => $crmCountry,
+    'crm_country' => $crmCountry,
+    'preferredLanguage' => $account->preferred_langcode->value
+  ];
+
+  if ($account->field_title && $account->field_title->value) {
+    $profile['title'] = $account->field_title->value;
+  }
+
+  if ($account->field_division && $account->field_division->value) {
+    $profile['division'] = $account->field_division->value;
+  }
+  if ($account->field_department && $account->field_department->value) {
+    $profile['department'] = $account->field_department->value;
+  }
+  if ($account->field_cost_center && $account->field_cost_center->value) {
+    $profile['costCenter'] = $account->field_cost_center->value;
+  }
+  if ($account->field_employee_number && $account->field_employee_number->value) {
+    $profile['employeeNumber'] = $account->field_employee_number->value;
+  }
+  if ($account->field_mobile_phone && $account->field_mobile_phone->value) {
+    $profile['mobilePhone'] = $account->field_mobile_phone->value;
+  }
+  if ($account->field_mobile && $account->field_mobile->value) {
+    $profile['mobilePhone'] = $account->field_mobile->value;
+  }
+  if ($account->field_primary_phone && $account->field_primary_phone->value) {
+    $profile['primaryPhone'] = $account->field_primary_phone->value;
+  }
+  if (!$account->field_primary_phone && $account->field_phone && $account->field_phone->value) {
+    $profile['primaryPhone'] = $account->field_phone->value;
+  }
+  if ($account->field_street_address && $account->field_street_address->value) {
+    $profile['streetAddress'] = $account->field_street_address->value;
+  }
+  if ($account->field_city && $account->field_city->value) {
+    $profile['city'] = $account->field_city->value;
+  }
+  if ($account->field_state && $account->field_state->value) {
+    $profile['state'] = $account->field_state->value;
+  }
+  if ($account->field_zip_code && $account->field_zip_code->value) {
+    $profile['zipCode'] = $account->field_zip_code->value;
+  }
+  if ($account->field_post_code && $account->field_post_code->value) {
+    $profile['zipCode'] = $account->field_post_code->value;
+  }
+
+  // Setup Lead object
+  $lead = [
+    'createLead' => true,
+    'matchHCP' => true,
+    'callbackUrl' => $callback_url,
+    'additionalFields' => []
+  ];
+
+  // Add known fields from the form if present
+  if ($account->field_local_id && $account->field_local_id->value) {
+    $lead['additionalFields']['localId'] = $account->field_local_id->value;
+  }
+  if ($account->field_primary_place_of_work && $account->field_primary_place_of_work->value) {
+    $lead['additionalFields']['primaryPlaceOfWork'] = $account->field_primary_place_of_work->value;
+  }
+  if ($account->field_address && $account->field_address->value) {
+    $lead['additionalFields']['address'] = $account->field_address->value;
+  }
+  if ($account->field_speciality && $account->field_speciality->value) {
+    $lead['additionalFields']['speciality'] = $account->field_speciality->value;
+  }
+
+  // Add Additional Info Fields to populate site unique data
+
+  // Use pre-fillable fields as a base, but exclude the items we're already passing through to the main profile
+  $prefillFields = $config->get('prefill_fields');
+  $excludedFields = ['field_first_name', 'field_last_name', 'mail', 'field_title', 'field_customer_id', 'field_local_id', 'field_crm_country'];
+  $availableAdditionalFields = array_diff($prefillFields, $excludedFields);
+
+  // Process fields on the user that match
+  $presentAdditionalFields = [];
+  foreach ($account->getFields() as $fieldName => $fieldItem) {
+    if (in_array($fieldName, $availableAdditionalFields) && $fieldItem->value) {
+      $value = $fieldItem->value;
+
+      // If the field is a list, we want the text of the option, not the key
+      if (strpos($fieldItem->getFieldDefinition()->getType(), 'list') !== false) {
+        $value = $fieldItem->getSetting('allowed_values')[$fieldItem->value];
+      };
+
+      $presentAdditionalFields[$fieldItem->getFieldDefinition()->getLabel()] = $value;
+    }
+  }
+
+  // Format into required structure for the Omnnichannel API
+  $additionalFields = [];
+  array_map(function ($label, $val) use (&$additionalFields) {
+    static $i = 1;
+    if ($i < 4) {
+      $additionalFields['additionalInfo' . $i . '_Label'] = $label;
+      $additionalFields['additionalInfo' . $i . '_Value'] = $val;
+    }
+    $i++;
+    return $val;
+  }, array_keys($presentAdditionalFields), array_values($presentAdditionalFields));
+
+  // Join with the known lead fields
+  $lead['additionalFields'] = array_merge($lead['additionalFields'], $additionalFields);
+
+  // Ensure additional fields are passed in as an object
+  $lead['additionalFields'] = (object) $lead['additionalFields'];
+
+  $client = \Drupal::httpClient();
+  $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+
+  $requestData = [
+    'profile' => $profile,
+    'lead' => $lead
+  ];
+
+  // Log request initiation
+  \Drupal::logger('takeda_id')->notice('initiate takeda_id_hcp_conversion with request data ' . $account->id() . ' / ARRAY <pre><code>' . print_r($requestData, TRUE) . '</code></pre> / JSON <pre><code>' . json_encode($requestData) . '</code></pre> / to URL ' . $config->get('lead_api_url') . "/user/hcpConversion/" . $digitalId);
+
+  // Create a middleware that logs parts of the request.
+  $tapMiddleware = Middleware::tap(function ($request) {
+    \Drupal::logger('takeda_id')->notice('takeda_id_hcp_conversion: Request made');
+    \Drupal::logger('takeda_id')->notice($request->getBody());
+  });
+
+  // Process the request
+  try {
+    $request = $client->put($config->get('lead_api_url') . "/user/hcpConversion/" . $digitalId, [
+      "headers" => [
+        "client_id" => $config->get('api_key'),
+        "client_secret" => $config->get('api_secret'),
+        "Content-Type" => "application/json",
+      ],
+      'json' => $requestData,
+      'timeout' => 600,
+      'handler' => $tapMiddleware($client->getConfig('handler'))
+    ]);
+    $response = $request->getBody();
+    $data = json_decode($response);
+
+    \Drupal::logger('takeda_id')->notice('takeda_id_hcp_conversion for ' . $account->id() . ' / <pre><code>' . print_r($data, TRUE) . '</code></pre>');
+
+    return $data;
+  } catch (RequestException $e) {
+
+    if ($e->getResponse()) {
+      \Drupal::logger('takeda_id')->notice('takeda_id_hcp_conversion error for ' . $account->id() . ' / <pre><code>' . print_r($e->getResponse()->getBody()->getContents(), TRUE) . '</code></pre>');
+    }
+
+    // Unauthorised / account does not exist
+    if ($e->getCode() === 401) {
+      return false;
+    }
+
+    watchdog_exception('takeda_id', $e);
+
+    return false;
+
+  }
+}
+
+function takeda_id_api_verify($token)
+{
+  $client = \Drupal::httpClient();
+  $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+
+  try {
+    $request = $client->post($config->get('api_url') . "/user/verify", [
+      "headers" => [
+        "client_id" => $config->get('api_key'),
+        "client_secret" => $config->get('api_secret'),
+        "Content-Type" => "application/json",
+      ],
+      'json' => [
+        'recoveryToken' => $token
+      ]
+    ]);
+    $response = $request->getBody();
+    $data = json_decode($response);
+
+    \Drupal::logger('takeda_id')->notice('takeda_id_api_verify for ' . $token . ' / <pre><code>' . print_r($data, TRUE) . '</code></pre>');
+
+    return $data;
+  } catch (RequestException $e) {
+
+    // Unauthorised / account does not exist
+    if ($e->getCode() === 401) {
+      return false;
+    }
+
+    watchdog_exception('takeda_id', $e);
+  }
+}
+
+
+function takeda_id_api_get_recovery_token($account)
+{
+  $client = \Drupal::httpClient();
+  $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+
+  try {
+    $request = $client->post($config->get('api_url') . "/user/recoveryPassword", [
+      "headers" => [
+        "client_id" => $config->get('api_key'),
+        "client_secret" => $config->get('api_secret'),
+        "Content-Type" => "application/json",
+      ],
+      'json' => [
+        'username' => $account->mail->value
+      ]
+    ]);
+    $response = $request->getBody();
+    $data = json_decode($response);
+
+    \Drupal::logger('takeda_id')->notice('takeda_id_api_get_recovery_token for ' . $account->mail->value . ' / <pre><code>' . print_r($data, TRUE) . '</code></pre>');
+
+    return $data;
+  } catch (RequestException $e) {
+
+    // Unauthorised / account does not exist
+    if ($e->getCode() === 401 || $e->getCode() === 403) {
+      return false;
+    }
+
+    watchdog_exception('takeda_id', $e);
+  }
+}
+
+function takeda_id_api_verify_recovery_token($token)
+{
+  $client = \Drupal::httpClient();
+  $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+
+  try {
+    $request = $client->post($config->get('api_url') . "/user/verifyToken", [
+      "headers" => [
+        "client_id" => $config->get('api_key'),
+        "client_secret" => $config->get('api_secret'),
+        "Content-Type" => "application/json",
+      ],
+      'json' => [
+        'recoveryToken' => $token
+      ]
+    ]);
+    $response = $request->getBody();
+    $data = json_decode($response);
+
+    \Drupal::logger('takeda_id')->notice('takeda_id_api_verify_recovery_token for ' . $token . ' / <pre><code>' . print_r($data, TRUE) . '</code></pre>');
+
+    return $data;
+  } catch (RequestException $e) {
+
+    // Unauthorised / account does not exist
+    if ($e->getCode() === 401 || $e->getCode() === 403) {
+      return false;
+    }
+
+    watchdog_exception('takeda_id', $e);
+  }
+}
+
+function takeda_id_api_reset_password($stateToken, $password)
+{
+  $client = \Drupal::httpClient();
+  $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+
+  try {
+    $request = $client->post($config->get('api_url') . "/user/resetPassword", [
+      "headers" => [
+        "client_id" => $config->get('api_key'),
+        "client_secret" => $config->get('api_secret'),
+        "Content-Type" => "application/json",
+      ],
+      'json' => [
+        'stateToken' => $stateToken,
+        'newPassword' => $password
+      ]
+    ]);
+    $response = $request->getBody();
+    $data = json_decode($response);
+
+    \Drupal::logger('takeda_id')->notice('takeda_id_api_reset_password for ' . $stateToken . ' / <pre><code>' . print_r($data, TRUE) . '</code></pre>');
+
+    return $data;
+  } catch (RequestException $e) {
+
+    // Unauthorised / account does not exist
+    if ($e->getCode() === 401 || $e->getCode() === 403) {
+      return false;
+    }
+
+    watchdog_exception('takeda_id', $e);
+  }
+}
+
+function takeda_id_api_get_invitation($invitationToken)
+{
+  $client = \Drupal::httpClient();
+  $config = \Drupal::config(TakedaIdInterface::CONFIG_OBJECT_NAME);
+
+  try {
+    $invitationToken = openssl_decrypt(base64_decode($invitationToken), 'DES-ECB', utf8_decode("YEP!s8E4"), OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING , '');
+
+    if (!$invitationToken) {
+      \Drupal::logger('takeda_id')->notice('Get Invitation request failed as we were unable to decrypt/process the provided invitation token');
+      return false;
+    }
+
+    $invitationAPI = $config->get('invitations_api_url');
+
+    $request = $client->get($invitationAPI . "/getInvitationDetails/" . trim($invitationToken) , [
+      "headers" => [
+        "client_id" => $config->get('api_key'),
+        "client_secret" => $config->get('api_secret'),
+        "Content-Type" => "application/json",
+      ]
+    ]);
+    $response = $request->getBody();
+    $data = json_decode($response, true);
+
+    \Drupal::logger('takeda_id')->notice('takeda_id_api_get_invitation for ' . $invitationToken . ' / <pre><code>' . print_r($data, TRUE) . '</code></pre>');
+
+    return $data;
+  } catch (RequestException $e) {
+    watchdog_exception('takeda_id', $e);
+    return false;
+  }
+}
+
+
+/*
+ * --------------------------- ----- Other Drupal Hooks ----- ----------------------
+ */
+
+/**
+ * Implements hook_user_format_name_alter().
+ *
+ * Display the user's Title / First / Lastname instead of email address.
+ */
+function takeda_id_user_format_name_alter(&$name, $account)
+{
+  $elements = [];
+
+  $user = User::load($account->id());
+
+  if ($user->field_title && $user->field_title->value) {
+    $elements[] = $user->field_title->value;
+  }
+
+  if ($user->field_first_name && $user->field_first_name->value) {
+    $elements[] = $user->field_first_name->value;
+  }
+
+  if ($user->field_last_name && $user->field_last_name->value) {
+    $elements[] = $user->field_last_name->value;
+  }
+
+  if (count($elements)) {
+    $name = join(' ', $elements);
+  }
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ *
+ * Update our form_alter hooks to run after other modules have completed.
+ */
+function takeda_id_module_implements_alter(&$implementations, $hook)
+{
+  if ($hook == 'form_alter' && isset($implementations['takeda_id'])) {
+    // Make our form alters come last
+    // (so we act after other modules have already altered).
+    $group = $implementations['takeda_id'];
+    unset($implementations['takeda_id']);
+    $implementations['takeda_id'] = $group;
+  }
+}
+
+/**
+ * Implements hook_element_info_alter().
+ *
+ * Align password confirm suggestions with Takeda ID requirements
+ */
+function takeda_id_element_info_alter(&$type)
+{
+  $type['password_confirm']['#process'][] = 'takeda_id_form_process_password_confirm';
+}
+
+function takeda_id_form_process_password_confirm($element)
+{
+  if (!empty($element) && isset($element['#attached']) && $element['#attached']) {
+    $element['#attached']['drupalSettings']['password']['hasWeaknesses'] = t('For security, your Takeda ID Password should:');
+    $element['#attached']['drupalSettings']['password']['tooShort'] = t('Be 8 characters or longer');
+    $element['#attached']['drupalSettings']['password']['addUpperCase'] = t('Contain a capital letter');
+    $element['#attached']['drupalSettings']['password']['addLowerCase'] = t('Contain a lowercase letter');
+    $element['#attached']['drupalSettings']['password']['addNumbers'] = t('Contain a number');
+    $element['#attached']['drupalSettings']['password']['addPunctuation'] = t('Contain a special character or punctuation symbol');
+  }
+
+  return $element;
+}
+function takeda_id_menu_local_tasks_alter(&$data, $route_name, RefinableCacheableDependencyInterface &$cacheability) {
+
+
+$user = Drupal::currentUser();
+$userStorage = \Drupal::entityTypeManager()->getStorage('user');
+$query = $userStorage->getQuery();
+$uids = $query
+  ->accessCheck(FALSE)
+  ->condition('roles', 'takeda_id_unverified')
+  ->execute();
+$users = $userStorage->loadMultiple($uids);
+$uid = \Drupal::routeMatch()->getRawParameter('user');;
+$i = 0;
+  foreach ($users as $value) {
+    if($value->id() == $uid){
+drupal_flush_all_caches();
+    if ($route_name == 'entity.user.edit_form') {
+      $url = Url::fromRoute('takeda_id.auth_email', ['user' => $value->id()]);
+      $data['tabs'][$i]['takeda_id.auth_email'] = [
+          '#theme' => 'menu_local_task',
+          '#link' => [
+          'title' => t('Authentication Email'),
+          'url' => $url,
+          ],
+      ];
+          $i++;
+  }
+}
+  }
+
+  }
+
+function takeda_id_cron(){
+  $userStorage = \Drupal::entityTypeManager()->getStorage('user');
+    $query = $userStorage->getQuery();
+    $uids = $query
+        ->accessCheck(FALSE)
+        ->condition('roles', 'takeda_id_unverified')
+        ->execute();
+    $users = $userStorage->loadMultiple($uids);
+    $now_date = date('Y-m-d', time());
+    $now_date = new DateTime($now_date);
+    foreach ($users as $user) {
+      $created_date = date('Y-m-d', $user->created->value);
+      $created_date = new DateTime($created_date);
+      $days_diff = $now_date->diff($created_date)->format("%a");
+      if($days_diff <= 3){
+        $verificationMail = \Drupal::service('plugin.manager.mail')->mail($module = 'takeda_id', $key = 'register_confirmation', $user->getEmail(), $user->getPreferredLangcode(), ['account' => $user], $reply = NULL, $send = TRUE);
+
+      }
+    }
+}

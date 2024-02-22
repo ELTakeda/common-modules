@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_adcetris_neuropatia_reduce
+    - node.type.adcietris_calculator
+id: node.adcietris_calculator.field_adcetris_neuropatia_reduce
+field_name: field_adcetris_neuropatia_reduce
+entity_type: node
+bundle: adcietris_calculator
+label: 'Original text: 1 Sensory neuropathy: Reduce dose to 1.2 mg/kg to a maximum of 120 mg every 3 weeks. Motor neuropathy: Discontinue treatment.'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

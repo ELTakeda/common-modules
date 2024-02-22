@@ -1,0 +1,13 @@
+takeda_brightcove.settings:
+  type: config_object
+  label: 'Takeda Brightcove Player Configuration'
+  mapping:
+    account_id:
+      type: text
+      label: 'Brightcove Account ID'
+    policy_key:
+      type: text
+      label: 'The policy key for the player'
+    player_id:
+      type: text
+      label: 'Brightcove Player ID'

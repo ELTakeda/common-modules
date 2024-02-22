@@ -1,0 +1,299 @@
+.ninlaro-calculator .container {
+  font-family: inherit;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: bolder;
+  font-size: large;
+}
+.ninlaro-calculator .containerTable select,
+.ninlaro-calculator .containerTable #age {
+  width: 250px;
+  height: 30px;
+  margin-left: 15px;
+}
+.ninlaro-calculator #cciTable td,
+.ninlaro-calculator #iadlTable td {
+  padding-top: 25px;
+}
+.ninlaro-calculator #adlTable select {
+  margin-top: 25px;
+}
+.ninlaro-calculator h1 {
+  text-align: center;
+  font-size: 21px;
+  margin-top: 60px;
+  margin-bottom: 35px;
+}
+.ninlaro-calculator h4 {
+  text-align: start;
+}
+.ninlaro-calculator h5 {
+  font-weight: normal;
+  font-size: small;
+  text-align: start;
+  margin-bottom: 5px;
+  padding-right: 5px;
+}
+.ninlaro-calculator .containerTable tr td:first-child {
+  width: 300px;
+  text-align: left;
+}
+.ninlaro-calculator .containerTable tr td:last-child {
+  text-align: start;
+}
+.ninlaro-calculator .calculator-navigation {
+  margin: 30px 0;
+}
+.ninlaro-calculator #reference {
+  color: #7e7e7e;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 30px 0;
+}
+.ninlaro-calculator .scoreStyle {
+  margin-bottom: 30px;
+  width: 300px;
+  height: 35px;
+  margin-bottom: 30px;
+}
+.ninlaro-calculator .totalScoreStyle {
+  width: 300px;
+  height: 35px;
+  margin: auto;
+  margin-bottom: 15px;
+}
+.ninlaro-calculator .scoreStyle .h5Style,
+.ninlaro-calculator .totalScoreStyle .h5Style,
+.ninlaro-calculator .finalScoreStyle .h5Style,
+.ninlaro-calculator #final .h5Style {
+  font-size: medium;
+  text-align: center;
+}
+.ninlaro-calculator #finalScore {
+  display: flex;
+  justify-content: center;
+  font-size: 25px;
+}
+.ninlaro-calculator #resultMenu #final {
+  height: 80px;
+}
+.ninlaro-calculator .totalScoreStyle .h5Style {
+  margin-left: 20px;
+}
+.ninlaro-calculator .totalScoreStyle .h5Style,
+.ninlaro-calculator .finalScoreStyle .h5Style {
+  font-weight: bold;
+  color: white;
+}
+.ninlaro-calculator .finalScoreStyle .h5Style {
+  padding: 0;
+  text-align: center;
+}
+.ninlaro-calculator .finalScoreStyle {
+  width: 300px;
+  height: 35px;
+  margin: auto;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.ninlaro-calculator #final {
+  width: 300px;
+  height: 35px;
+  margin: auto;
+  margin-bottom: 15px;
+}
+.ninlaro-calculator #final .h5Style {
+  font-weight: bold;
+  margin-left: 20px;
+}
+.ninlaro-calculator #resultButton,
+.ninlaro-calculator #resultButton p {
+  width: 300px;
+  height: 35px;
+}
+.ninlaro-calculator #resultButton:hover {
+  cursor: pointer;
+}
+.ninlaro-calculator .patientAgeScore {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: 0;
+}
+.ninlaro-calculator .patientAgeScore p {
+  display: flex;
+  justify-content: center;
+}
+.ninlaro-calculator .patientAgeScore #age {
+  width: 242px;
+  height: 25px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+}
+.ninlaro-calculator #age,
+.ninlaro-calculator select {
+  padding-left: 10px;
+}
+.ninlaro-calculator #partButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.ninlaro-calculator .li {
+  background-color: white;
+  border-radius: 25px;
+  border: 3px solid transparent;
+  margin: 0 5px;
+  width: 150px;
+  height: 28px;
+  text-align: center;
+  list-style-type: none;
+}
+.ninlaro-calculator a {
+  text-decoration: none;
+  font-size: bold;
+  width: 150px;
+  height: 25px;
+}
+.ninlaro-calculator #buttonPart1 p,
+.ninlaro-calculator #buttonPart2 p,
+.ninlaro-calculator #buttonPart3 p {
+  text-align: center;
+  font-size: 15px;
+}
+.ninlaro-calculator #footerPart1,
+.ninlaro-calculator #footerPart2,
+.ninlaro-calculator #footerPart3 {
+  margin-top: 35px;
+  margin-bottom: -25px;
+}
+.ninlaro-calculator .li {
+  background: transparent;
+  border: 3px solid #7e7e7e;
+}
+.ninlaro-calculator .activeNavBtnHover {
+  opacity: 1;
+}
+.ninlaro-calculator .activeNavBtnHover:hover {
+  cursor: pointer;
+}
+.ninlaro-calculator .grayHover {
+  border: 3px solid #7e7e7e;
+  opacity: 0.5;
+  cursor: default;
+}
+.ninlaro-calculator .grayHover p {
+  cursor: default;
+}
+.ninlaro-calculator #temporaryFooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.ninlaro-calculator .select2-results ul li,
+.ninlaro-calculator .select2-selection__rendered {
+  font-size: 14px;
+  font-family: inherit;
+}
+.ninlaro-calculator .select2-container *:focus {
+  outline: none;
+}
+.ninlaro-calculator #cciTable,
+.ninlaro-calculator #cciDivTable,
+.ninlaro-calculator #reference {
+  display: block;
+}
+.ninlaro-calculator #adlTable,
+.ninlaro-calculator #adlDivTable {
+  display: none;
+}
+.ninlaro-calculator #iadlTable,
+.ninlaro-calculator #iadlDivTable,
+.ninlaro-calculator #tableFooter,
+.ninlaro-calculator #divAgeScore {
+  display: none;
+}
+.ninlaro-calculator #resultButton,
+.ninlaro-calculator #resultMenu {
+  display: none;
+}
+.ninlaro-calculator .calculator__footer {
+  width: 90%;
+}
+
+@media (max-width: 760px) {
+  .ninlaro-calculator * {
+    justify-content: center;
+  }
+  .ninlaro-calculator .container {
+    width: 95%;
+    font-size: medium;
+    margin: 0 auto;
+  }
+  .ninlaro-calculator .shopping-input {
+    width: 175.5px;
+  }
+  .ninlaro-calculator .containerTable select,
+.ninlaro-calculator .containerTable #age {
+    width: 45vw;
+  }
+  .ninlaro-calculator #cciTable td,
+.ninlaro-calculator #iadlTable td {
+    padding-top: 2vw;
+  }
+  .ninlaro-calculator #partButtons {
+    flex-direction: column;
+  }
+  .ninlaro-calculator .calculator-navigation ul {
+    margin: 5px 0;
+  }
+  .ninlaro-calculator h1 {
+    margin-bottom: 25px;
+  }
+  .ninlaro-calculator .containerTable tr td:first-child {
+    width: 50vw;
+  }
+  .ninlaro-calculator .containerTable {
+    width: 95%;
+  }
+  .ninlaro-calculator #reference {
+    width: 95%;
+    font-size: larger;
+  }
+  .ninlaro-calculator .patientAgeScore {
+    display: flex;
+  }
+  .ninlaro-calculator #age {
+    width: 35vw;
+  }
+  .ninlaro-calculator .patientAgeScore {
+    margin-left: 0;
+  }
+  .ninlaro-calculator .patientAgeScore #age {
+    height: 25px;
+  }
+  .ninlaro-calculator .li {
+    width: 70vw;
+    height: 60px;
+    height: auto;
+  }
+  .ninlaro-calculator #buttonPart1 p,
+.ninlaro-calculator #buttonPart2 p,
+.ninlaro-calculator #buttonPart3 p {
+    font-size: 5vw;
+  }
+  .ninlaro-calculator #finalScore {
+    font-size: 7vw;
+  }
+  .ninlaro-calculator #resultMenu #final {
+    height: 80px;
+  }
+  .ninlaro-calculator .select2-results__option {
+    border: none;
+  }
+}

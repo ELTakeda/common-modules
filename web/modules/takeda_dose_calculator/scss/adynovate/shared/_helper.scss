@@ -1,0 +1,27 @@
+.ad-hidden {
+    display: none !important;
+}
+
+.ad-unscrollable {
+    height: 100% !important;
+    overflow: hidden !important;
+}
+
+.ad-bold{
+    font-weight: 700 !important;
+}
+
+.ad-text-left{
+    text-align: left !important;
+}
+
+.ad-p-margin-bot-16-desktop{
+    p {
+        margin-bottom: 16px;
+    }
+
+    @media screen and (max-width: 1024px){
+        margin-bottom: 0;
+    }
+}
+

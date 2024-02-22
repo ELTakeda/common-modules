@@ -1,0 +1,44 @@
+.event-detail-page .event-title {
+  border-bottom: 1px solid #cccccc;
+  padding-bottom: 15px;
+}
+.event-detail-page .event-detail-right .label {
+  color: red;
+  font-weight: bold;
+}
+.event-detail-page .event-detail-right {
+  border-left: 4px solid red;
+  padding-left: 15px;
+  padding: 10px 15px 10px;
+}
+.event-detail-page .event-title-body img {
+  width: 100%;
+}
+.event-detail-page .modal .modal-title {
+  text-align: left;
+}
+.event-detail-page .modal video {
+  width: 100%;
+}
+.event-detail-page .modal iframe {
+  width: 100%;
+  min-height: 600px;
+}
+.event-action-right {
+  display: inline-block;
+}
+.event-detail-page .btn-event:focus, .event-detail-page .btn-event {
+  padding: 7px;
+  background-color: red;
+  text-decoration: none;
+  color: #fff;
+  margin-top: 10px;
+}
+.event-detail-page .btn-event:hover {
+  text-decoration: underline;
+}
+@media screen and (min-width: 992px){
+  .event-detail-page .modal .modal-dialog {
+    max-width: 850px;
+  }
+}

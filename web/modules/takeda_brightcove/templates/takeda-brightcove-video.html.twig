@@ -1,0 +1,14 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a Brightcove video.
+ *
+ * @ingroup themeable
+ */
+#}
+<div class="takeda_brightcove--video" style="position: relative; display: block;">
+  <div>
+    <video data-account="{{ account }}" id="audio_{{video_id}}" data-player="{{ player }}" data-video-id="{{ video_id }}" data-embed="default" data-application-id class="video-js vjs-fluid" controls {% if digital_id %}data-bc-custom-guid="{{digital_id}}"{% endif %} {% if tracking_id %}data-bc-trackingid="{{tracking_id}}"{% endif %} data-matomo-title="{{ video_name }}"></video>
+    <script src="{{ script_url }}"></script>
+  </div>
+</div>

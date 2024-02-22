@@ -1,0 +1,54 @@
+<?php
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\EntityType;
+function sfmc_theme($existing, $type, $theme, $path){
+    $theme = array();
+    $theme['node__sfmc_connector'] = array(
+      'variables' => [
+        'toto' => "toto", //try one
+      ],
+      'base hook' => 'page',
+      'render element' => 'elements',
+      '#tata' => 'tata', //try two
+    );
+    return $theme; 
+  }
+
+  function sfmc_preprocess_node__sfmc_connector(&$variables)
+{
+  $variables['#cache']['max-age'] = 0;
+  $variables['heading'] = array();
+  $variables['name'] = array();
+  $variables['options'] = array();
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if($variables['page'] == true){
+    $userCurrent = \Drupal::currentUser();
+    $user = \Drupal\user\Entity\User::load($userCurrent->id());
+    $variables['first_name'] = $user->field_first_name->value;
+    $variables['last_name'] = $user->field_last_name->value;
+    $variables['address'] = isset($user->field_address->value) ? $user->field_address->value : '';
+    $variables['city'] = isset($user->field_city->value) ? $user->field_city->value : '';
+    $variables['mobile_phone'] = isset($user->field_mobile_phone->value) ? $user->field_mobile_phone->value : '';
+    $variables['post_code'] = isset($user->field_post_code->value) ? $user->field_post_code->value : '';
+    $variables['state'] = isset($user->field_state->value) ? $user->field_state->value : '';
+    $variables['email'] = $user->mail->value;
+    $variables['background_color'] = $variables['content']['field_sfmc_background_color'];
+    $variables['border_color'] = $variables['content']['field_sfmc_border_color'];
+    $variables['font_size'] = $variables['content']['field_sfmc_font_size'];
+    $variables['logged_in'] = \Drupal::currentUser()->isAuthenticated();
+    $variables['login_url'] = $node->get('field_login_redirect')->getValue();
+    $variables['language'] = $variables['label']['#language'];
+    $variables['node_id'] = $node->id();
+    $variables['url'] = 'http://' . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+    
+    $country_manager = \Drupal::service('country_manager');
+$list = $country_manager->getList();
+$countries = [];
+foreach ($list as $key => $value) {
+  $val = $value->__toString();
+  $countries[$key] = $val;
+}
+$variables['countries'] = $countries;
+  
+}
+}

@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+    config:
+        - field.storage.node.field_ep_lf_future_events
+        - node.type.events_page
+    module:
+        - text
+id: node.events_page.field_ep_lf_future_events
+field_name: field_ep_lf_future_events
+entity_type: node
+bundle: events_page
+label: Filter label - Future events
+description: 'Text for the "Future events" option'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+    display_summary: false
+field_type: string

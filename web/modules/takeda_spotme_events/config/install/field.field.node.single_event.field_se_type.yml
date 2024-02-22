@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_se_type
+    - node.type.single_event
+  module:
+    - options
+id: node.single_event.field_se_type
+field_name: field_se_type
+entity_type: node
+bundle: single_event
+label: 'Event type'
+description: 'Choose if the event is online or not'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

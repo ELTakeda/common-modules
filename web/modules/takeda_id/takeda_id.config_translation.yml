@@ -1,0 +1,13 @@
+takeda_id.configure_form:
+  title: 'Takeda ID'
+  base_route_name: takeda_id.configure_form
+  names:
+    - takeda_id.settings
+
+entity.user.admin_form:
+  title: 'Account settings'
+  base_route_name: entity.user.admin_form
+  names:
+    - user.settings
+    - user.mail
+    - takeda_id.mail

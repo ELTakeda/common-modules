@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_adcetris_calculator_one_co
+    - node.type.adcietris_calculator
+id: node.adcietris_calculator.field_adcetris_calculator_one_co
+field_name: field_adcetris_calculator_one_co
+entity_type: node
+bundle: adcietris_calculator
+label: 'Adcetris calculator one content'
+description: "Original text: The recommended dose in combination with chemotherapy (doxorubicin [A], vinblastine [V] and dacarbazine [D] [AVD]) is 1.2 mg/kg administered by intravenous infusion over 30 minutes on days 1 and 15 of each cycle of 28 days for 6 cycles. Primary prophylaxis with granulocyte colony stimulating factor (G-CSF) is recommended for all patients starting with the first dose.<br/><br/>See package inserts for chemotherapy drugs given in combination with ADCETRIS for more information of these medicines.\r\n"
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

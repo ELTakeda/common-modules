@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+    config:
+        - field.storage.node.field_se_link_external
+        - node.type.single_event
+    module:
+        - text
+id: node.single_event.field_se_link_external
+field_name: field_se_link_external
+entity_type: node
+bundle: single_event
+label: External event link
+description: 'Link which leads to the external event'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+    display_summary: false
+field_type: string

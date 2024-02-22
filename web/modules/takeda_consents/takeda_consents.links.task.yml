@@ -1,0 +1,8 @@
+takeda_consents_purposes.configure_form:
+  route_name: takeda_consents_purposes.configure_form
+  title: Settings
+  base_route: takeda_consents_purposes.configure_form
+takeda_consents_preferences_and_options.configure_form:
+  route_name: takeda_consents_preferences_and_options.configure_form
+  title: Settings
+  base_route: takeda_consents_preferences_and_options.configure_form

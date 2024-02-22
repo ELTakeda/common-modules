@@ -1,0 +1,25 @@
+<?php
+
+// function custom_redirects_form_user_login_form_alter(&$form, &$form_state) {
+//     $form['#submit'][] = '_custom_redirects_deep_links';
+
+//     $tempstore = \Drupal::service('tempstore.private')->get('takedapro');
+//     $redirecttodeeplink = $tempstore->get('redirecttodeeplink');
+
+//     if ($redirecttodeeplink) {
+//         $form['redirecttodeeplink'] = [
+//             '#type' => 'hidden',
+//             '#name' => 'redirecttodeeplink',
+//             '#value' => $redirecttodeeplink,
+//         ];
+//     }
+// }
+  
+// function _custom_redirects_deep_links(&$form, &$form_state) {
+//     $redirecttodeeplinkvalue = $form_state->getValue('redirecttodeeplink');
+
+//     if ($redirecttodeeplinkvalue) {
+//         $tempstore = \Drupal::service('tempstore.private')->get('takedapro');
+//         $tempstore->set('redirecttodeeplink', $redirecttodeeplinkvalue);
+//     }
+// }

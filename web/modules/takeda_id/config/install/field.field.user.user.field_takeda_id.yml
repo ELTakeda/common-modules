@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_takeda_id
+  module:
+    - takeda_id
+    - user
+  enforced:
+    module:
+      - takeda_id
+id: user.user.field_takeda_id
+field_name: field_takeda_id
+entity_type: user
+bundle: user
+label: 'Takeda ID'
+description: 'Unique Takeda ID identifier'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,167 @@
+{# URL logic #}
+
+{% if login_url[0] is empty %}
+{% set button_url = [
+
+url('<front>')|render|trim('/', 'right'),
+
+    'user/login'
+
+    ]|join('/') %}
+
+    {% elseif login_url[0] is not empty %}
+    {% set button_url = [
+
+    url('<front>')|render|trim('/', 'right'),
+
+        login_url[0].value
+
+        ]|join('/') %}
+
+        {% else %}
+
+        {% set button_url = [
+
+        url('<front>')|render|trim('/', 'right'),
+
+            '#'
+
+            ]|join('/') %}
+
+            {% endif %}
+
+
+
+
+            {{ attach_library('sfmc/cf-sfmc-css') }}
+            {{ attach_library('sfmc/cf-sfmc-js') }}
+
+
+            <section class="sfmc-connector">
+                <h2 class="sfmc-connector__title">Contact Us</h2>
+                <div class="sfmc-connector__description">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam laborum eveniet est quod,
+                        consequatur quisquam nulla dolor eaque perspiciatis doloremque ad voluptatibus amet non totam
+                        eos eligendi. Quis, sequi veniam.</p>
+                </div>
+
+
+
+                {% if language in url %}
+                <form class="sfmc-form js-sfmc-form" name="contactForm" id="contactForm" method="POST"
+                    action="{{ url('<front>') }}/sfmc_connector">
+                    {% else %}
+                    <form class="js-sfmc-form" name="contactForm" id="contactForm" method="POST"
+                        action="{{ url('<front>') }}sfmc_connector">
+                        {% endif %}
+
+                        <div class="form__inputs-container">
+                            <div class="sfmc-form__input-pair js-required-input-pair">
+                                <input class="js-sfmc-first-name-input js-sfmc-form-input" type="text" name="FirstName" id="FirstName" placeholder="First name *"
+                                    maxlength="10" title="name" value="{{first_name}}" required>
+                                    <p class="sfmc-form__validation-error">First Name is Required</p>
+                            </div>
+                            <div class="sfmc-form__input-pair js-required-input-pair">
+                                <input class="js-sfmc-last-name-input js-sfmc-form-input" type="text" name="LastName" id="LastName" placeholder="Last name *" maxlength="10"
+                                    title="name" value="{{last_name}}" required>
+                                    <p class="sfmc-form__validation-error ">Last Name is Required</p>
+                            </div>
+                            <div class="sfmc-form__input-pair">
+                                <input type="number" name="Phone" id="Phone" min="" max="" placeholder="Phone number"
+                                    title="" value="{{mobile_phone}}">
+                            </div>
+
+                            <div class="sfmc-form__input-pair js-required-input-pair">
+                                <input type="email" name="Email" id="Email" placeholder="Email*"
+                                    title="Add your hcp email" value="{{email}}" required="" class="js-sfmc-email js-sfmc-form-input">
+                                    <p class="sfmc-form__validation-error">Email is Required</p>
+                                
+                            </div>
+                            <div class="sfmc-form__input-pair js-required-input-pair">
+                                <input type="email" name="ConfirmEmailAddress" id="ConfirmEmailAddress"
+                                    placeholder="Confirm Email*" title="Add your hcp email" value="{{email}}" required=""
+                                    class="js-sfmc-confirm-email js-sfmc-form-input">
+                                    <p class="sfmc-form__validation-error">Emails must match</p>
+                            </div>
+
+                            <div class="sfmc-form__input-pair js-required-input-pair">
+                                <select class="sfmc-form__select js-sfmc-form-input js-sfmc-country-select-input" name="PersonMailingCountry" id="PersonMailingCountry">
+                                    <option value="select">CRM Country *</option>
+                                    {% for key,value in countries %}
+                                    <option value="{{key}}">{{value}}</option>
+                                    {% endfor %}
+                                    <!-- Option just for local testing. Please remove before merge in dev pantheon -->
+                                    <option value="test-hardcoded">test-hardcoded-contry</option>
+                                </select>
+                                <p class="sfmc-form__validation-error">Please Select option</p>
+                            </div>
+                            <div class="sfmc-form__input-pair js-required-input-pair">
+                                <select class="sfmc-form__select js-sfmc-form-input js-sfmc-bu-select-input" name="TK_BU__c" id="TK_BU__c">
+                                    <option value="select">Choose a BU *</option>
+                                    <option value="USBU">USBU</option>
+                                    <option value="OBU">OBU</option>
+                                    <option value="USBU-HAE">USBU-HAE</option>
+                                    <option value="OBU-CML">OBU-CML</option>
+                                    <option value="OBU-CLC">OBU-CLC</option>
+                                    <option value="OBU-MM">OBU-MM</option>
+                                </select>
+                                <p class="sfmc-form__validation-error">Please select option</p>
+                            </div>
+                            <div class="sfmc-form__input-pair small">
+                                <input type="text" name="TK_Address1__c" id="TK_Address1__c" placeholder="Address"
+                                    maxlength="10" title="" value="{{address}}">
+                            </div>
+                            <div class="sfmc-form__input-pair small">
+                                <input type="text" name="TK_Address2__c" id="TK_Address2__c" placeholder="Address 2"
+                                    maxlength="10" title="" value="{{address}}">
+                            </div>
+                            <div class="sfmc-form__input-pair small">
+                                <input type="text" name="TK_City__c" id="TK_City__c" placeholder="City" maxlength="10"
+                                    title="" value="{{city}}">
+                            </div>
+                            <div class="sfmc-form__input-pair">
+                                <input type="text" name="TK_State__c" id="TK_State__c" placeholder="State"
+                                    maxlength="10" title="" value="{{state}}">
+                            </div>
+                            <div class="sfmc-form__input-pair">
+                                <input type="text" name="TK_ZipCode__c" id="TK_ZipCode__c" placeholder="PostalCode"
+                                    maxlength="10" title="" value="{{post_code}}">
+                            </div>
+
+                            <div class="sfmc-form__checkbox-input-container js-required-input-pair">
+                                <input type="checkbox" id="TK_Patient_Consent__c" name="TK_Patient_Consent__c"
+                                    value="Yes"
+                                    class="FormChoice__Input FormChoice__Input--Checkbox state form__checkbox sfmc-form__checkbox-input js-sfmc-concents-checkbox js-sfmc-form-input"
+                                    data-f-datainput="" id="sfmc-concent-checkbox">
+                                <label for="TK_Patient_Consent__c" class="sfmc-form__checkbox-label" for="sfmc-concent-checkbox">I have read and accepted
+                                    the
+                                <div title="TK_Patient_Consent__c" id="TK_Patient_Consent__c">
+                                    <p><a href="https://www.takeda.com/privacy-notice/" target="_blank"
+                                            rel="noopener">Privacy
+                                                notice </a> and <a
+                                            href="https://www.takeda.com/terms-of-use/">Terms of use</a>
+                                    </p>
+                                </div>
+                            </label>
+                            </div>
+
+                            {% if logged_in == true %}
+                            <button type="submit" class='sfmc-form__submit-btn js-sfmc-submit-btn'>Submit</button>
+                            {% else %}
+                            <a href="{{ button_url }}" class="sfmc-form__submit-btn">Please
+                                log in</a>
+                            {% endif %}
+                            <input type="hidden" id="nodeId" name="nodeId" value="{{node_id}}">
+                            <input type="hidden" id="url" name="url" value="{{url}}">
+                            <input type="hidden" id="connection" name="connection" value="{{connection}}">
+                    </form>
+                    {% if logged_in %}
+
+                    <a href="{{ button_url }}" class="js-event-cta-btn" data-eventId="{{ field_se_event_id }}"
+                        data-btnRegisteredText="{{ field_se_btn_label_going }}" data-btnType="{{ event_type_data }}">{{
+                        btn_label }}</a>
+
+                    {% else %}
+                    {% endif %}
+
+            </section>

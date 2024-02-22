@@ -1,0 +1,6 @@
+datalayer:
+  js:
+    js/takeda_datalayer.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

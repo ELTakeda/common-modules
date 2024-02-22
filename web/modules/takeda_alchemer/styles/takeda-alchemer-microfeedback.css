@@ -1,0 +1,21 @@
+.microfeedback.iframe-container html{
+    overflow: hidden;
+}
+
+.microfeedback.iframe-container{
+    padding-bottom: 56.25%;
+    position: relative;
+    display: block;
+    width: 100%;
+
+}
+
+.tak-hidden {
+    display: none !important;
+}
+
+@media screen and (max-width: 768px){
+    .microfeedback.iframe-container {
+        padding-bottom: 100%;
+    }
+}

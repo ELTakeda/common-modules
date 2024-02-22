@@ -1,0 +1,440 @@
+.ad-calculator {
+    width: 100%;
+    max-width: 1120px;
+    margin: 50px auto;
+    background-color: transparent;
+    font-family: $font-rubik--regular;
+    color: $color-primary;
+
+    // Header
+    &__header-title {
+        font-size: 32px;
+        text-transform: uppercase;
+        padding-left: 15px;
+        margin-bottom: 15px;
+        border-left: 4px solid $color-secondary;
+
+        sup {
+            font-weight: 400;
+            font-size: 17px;
+        }
+    }
+
+    &__header-text {
+        font-size: 24px;
+        line-height: 33px;
+    }
+
+    &__header-button {
+        width: fit-content;
+        display: block;
+        color: $color-primary;
+        margin: 30px 0;
+        border: 2px solid $color-primary;
+        border-radius: 50px;
+        padding: 8px 13px;
+        transition: all 0.15s ease-in-out;
+        background-color: $color-white;
+        font-family: $font-rubik--bold;
+        font-size: 14px;
+
+        &:hover {
+            cursor: pointer;
+            color: $color-secondary;
+            border: 2px solid $color-secondary;
+        }
+    }
+
+    &__header-formula {
+        padding: 42px 56px;
+        margin-top: 30px;
+        margin-bottom: 48px;
+        text-align: center;
+        color: $color-tertiary;
+        font-size: 28px;
+        line-height: 24px;
+        font-family: $font-rubik--bold;
+        border: 3px solid $color-tertiary;
+        border-radius: 15px;
+    }
+
+    // Information
+    &__information {
+        margin-top: 80px;
+
+        &--with-bg {
+            padding: 28px;
+            background-color: $color-information-bg;
+            border-radius: 15px;
+
+            ul {
+                list-style: none;
+
+                li {
+                    margin-bottom: 20px;
+                    position: relative;
+                    height: auto;
+                    padding-left: 10px;
+
+                    &:before {
+                        content: "";
+                        display: block;
+                        width: 5px;
+                        height: 5px;
+                        position: absolute;
+                        top: 9px;
+                        left: 0;
+                        background-color: $color-tertiary;
+                        border-radius: 50%;
+                    }
+                }
+            }
+        }
+    }
+
+    &__information-text {
+        color: $color-primary;
+        font-family: $font-rubik--regular;
+        font-size: 18px;
+        text-align: left;
+
+        sup {
+            font-size: 13px;
+        }
+    }
+
+    &__information-title {
+        font-size: 28px;
+        color: $color-tertiary;
+        text-align: center;
+        font-family: $font-rubik--bold;
+        margin-bottom: 10px;
+        margin-bottom: 10px;
+    }
+
+    &__information-image {
+        margin-top: 18px;
+        width: 100%;
+        height: auto;
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    // Calculator
+    &__calculator-container {
+        width: 100%;
+        margin: 40px auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__alert {
+        width: 500px;
+        border-radius: 10px;
+        background-color: $color-alert-bg;
+        padding: 15px 30px;
+        position: relative;
+        margin-bottom: 20px;
+        opacity: 0;
+        display: none;
+
+        &.ad-visible {
+            display: block;
+            animation-name: fadeIn;
+            animation-duration: 1s;
+            opacity: 1;
+        }
+    }
+
+    &__alert-close-button {
+        width: 24px;
+        height: 24px;
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        font-weight: 900;
+        text-align: center;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &__calculator {
+        width: 100%;
+        height: auto;
+        border-radius: 15px;
+        background-color: $color-tertiary;
+        margin-top: 20px;
+    }
+
+    &__inputs-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    &__input-pair {
+        width: 27%;
+        display: flex;
+        flex-direction: column;
+        margin: 27px;
+        position: relative;
+    }
+
+    &__input {
+        width: 174px;
+        height: 85px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 75px 0 0;
+        border: none;
+        border-radius: 15px;
+        outline: none;
+        background-color: $color-white;
+        color: $color-tertiary;
+        font-family: inherit;
+        font-size: 22px;
+        font-weight: 700;
+        text-align: right;
+        margin: 27px;
+
+        &::placeholder {
+            color: $color-tertiary;
+        }
+    }
+
+    &__input-placeholder {
+        position: absolute;
+        top: 55px;
+        right: 145px;
+        font-family: inherit;
+        font-size: 22px;
+        color: $color-tertiary;
+
+        &--wider {
+            top: 56px;
+            right: 110px;
+        }
+    }
+
+    &__input-label {
+        color: $color-white;
+        text-align: center;
+    }
+
+    &__buttons-container {
+        display: flex;
+        justify-content: space-around;
+        margin: 30px 0;
+    }
+
+    &__button {
+        height: 65px;
+        border: 1px solid $color-white;
+        border-radius: 50px;
+        text-transform: uppercase;
+        font-size: 22px;
+        font-family: $font-rubik--bold;
+
+        &--calculate {
+            width: 275px;
+            background-color: $color-secondary;
+            border: none;
+            color: $color-white;
+        }
+
+        &--reset {
+            width: 375px;
+            background-color: transparent;
+            color: $color-white;
+
+            svg {
+                transform: translateY(5px);
+            }
+        }
+
+        &:hover {
+            cursor: pointer;
+            opacity: 0.8;
+        }
+    }
+
+    &__results-container {
+        padding: 20px 0;
+        text-align: center;
+        color: $color-white;
+        font-size: 32px;
+        font-family: $font-rubik--bold;
+    }
+
+    &__result {
+        margin-bottom: 20px;
+        font-size: 16px;
+        width: 90%;
+        margin: 0 auto;
+
+        &--ui {
+            font-size: 48px;
+        }
+    }
+
+    // More Information
+    &__more-information {
+        margin: 100px 0;
+        width: 100%;
+        height: 100px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    &__email-link,
+    &__product-link {
+        width: fit-content;
+        display: block;
+        margin: 30px 0;
+        border-radius: 50px;
+        text-transform: uppercase;
+        transition: all 0.15s ease-in-out;
+    }
+
+    &__email-link {
+        font-size: 16px;
+        color: $color-white;
+        border: 2px solid $color-primary;
+        background-color: $color-primary;
+        padding: 12px 16px;
+
+        &:hover {
+            background-color: $color-white;
+            color: $color-primary;
+        }
+    }
+
+    &__product-link {
+        color: $color-primary;
+        border: 2px solid $color-primary;
+        font-size: 14px;
+        padding: 8px 13px;
+
+        &:hover {
+            color: $color-secondary;
+            border: 2px solid $color-secondary;
+        }
+    }
+
+    //Footer
+    &__footer {
+        width: 100%;
+        padding: 80px 55px;
+    }
+
+    &__footer-title {
+        font-size: 18px;
+        font-family: $font-rubik--bold;
+        margin-bottom: 30px;
+    }
+
+    &__footer-content {
+        font-size: 16px;
+        font-family: $font-rubik--regular;
+    }
+}
+
+@media screen and (max-width: 1124px) {
+    .ad-calculator {
+        width: 95%;
+
+        //Header
+        &__header-formula {
+            font-size: 20px;
+            padding: 30px 40px;
+        }
+
+        &__header-text {
+            font-size: 16px;
+            line-height: 20px;
+        }
+
+        //Information
+
+        &__information {
+            margin-top: 30px;
+        }
+
+        &__information-text {
+            font-size: 16px;
+        }
+
+        // Calculator
+        &__calculator {
+            width: 100%;
+        }
+
+        &__inputs-container {
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        &__input-pair {
+            width: 80%;
+        }
+
+        &__input {
+            width: 100%;
+            margin: 0;
+            padding-right: 50%;
+        }
+
+        &__input-placeholder {
+            top: 29px;
+            right: 40%;
+
+            &--wider {
+                top: 29px;
+                right: 35%;
+            }
+        }
+
+        &__input-label {
+            margin-top: 5px;
+        }
+
+        &__buttons-container {
+            flex-direction: column;
+        }
+
+        &__button {
+            font-size: 14px;
+
+            &--calculate,
+            &--reset {
+                width: 70%;
+                margin: 10px auto;
+            }
+        }
+
+        //More Information
+        &__more-information {
+            margin: 50px 0;
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .ad-calculator {
+        &__input-placeholder {
+            &--wider {
+                right: 30%;
+            }
+        }
+    }
+}

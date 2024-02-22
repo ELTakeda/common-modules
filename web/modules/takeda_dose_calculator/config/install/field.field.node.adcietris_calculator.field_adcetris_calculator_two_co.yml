@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_adcetris_calculator_two_co
+    - node.type.adcietris_calculator
+id: node.adcietris_calculator.field_adcetris_calculator_two_co
+field_name: field_adcetris_calculator_two_co
+entity_type: node
+bundle: adcietris_calculator
+label: 'Adcetris calculator two content'
+description: "Original text: THE RECOMMENDED DOSE IS 1.8 MG/KG GIVEN AS AN INTRAVENOUS INFUSION OVER 30 MINUTES EVERY 3 WEEKS. PATIENTS WITH RECURRENT OR REFRACTORY LH OR WITH LAGCS WHO PRESENT A STABLE OR IMPROVING DISEASE SHOULD RECEIVE A MINIMUM OF 8 DOSES AND UP TO A MAXIMUM OF 16 CYCLES (APPROXIMATELY 1 YEAR) PER COURSE OF TREATMENT.\r\n"
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

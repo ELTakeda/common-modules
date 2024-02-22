@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_se_date_time_formats
+    - node.type.single_event
+  module:
+    - options
+id: node.single_event.field_se_date_time_formats
+field_name: field_se_date_time_formats
+entity_type: node
+bundle: single_event
+label: 'Date time formats'
+description: 'Choose the format in which the date will be displayed'
+required: false
+translatable: false
+default_value:
+  -
+    value: dmy_hm
+default_value_callback: ''
+settings: {  }
+field_type: list_string

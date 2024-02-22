@@ -1,0 +1,7 @@
+services:
+  takeda_alchemer.helper:
+    class: '\Drupal\takeda_alchemer\Service\Helper'
+  takeda_alchemer.tags_helper:
+    class: '\Drupal\takeda_alchemer\Service\TagsConfigHelper'
+  takeda_alchemer.form_builder:
+    class: '\Drupal\takeda_alchemer\Service\FormBuilder'

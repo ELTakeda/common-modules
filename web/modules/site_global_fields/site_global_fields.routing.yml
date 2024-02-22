@@ -1,0 +1,7 @@
+site_global_fields.configure_form:
+  path: '/admin/config/system/site_global_fields'
+  defaults:
+    _form: '\Drupal\site_global_fields\Form\SiteGlobalFieldsConfigureForm'
+    _title: 'Site Confirmation Modal'
+  requirements:
+    _permission: 'administer site configuration'

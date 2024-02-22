@@ -1,0 +1,10 @@
+takeda_datalayer.get_session:
+  path: '/takeda-datalayer/session'
+  defaults:
+    _controller: '\Drupal\takeda_datalayer\Controller\TakedaDatalayerIdController::index'
+    _title: 'DataLayer Session'
+  methods:  [GET]
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE

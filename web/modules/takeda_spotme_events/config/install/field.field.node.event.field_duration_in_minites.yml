@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_duration_in_minites
+    - node.type.event
+id: node.event.field_duration_in_minites
+field_name: field_duration_in_minites
+entity_type: node
+bundle: event
+label: 'Duration in minites'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 1
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

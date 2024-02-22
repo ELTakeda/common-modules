@@ -1,0 +1,8 @@
+{{ attach_library('dose_calculator/dose-calculator-feiba-css') }}
+{{ attach_library('dose_calculator/dose-calculator-feiba-js') }}
+    <title>{{ 'Calculator Module - Feiba'|t }}</title>
+        <section class="calculators-module" style="font-size: 14px">
+            <div class="calculators-module__inner-wrapper">
+                {% include '@dose_calculator/template-parts/feibaCalculator.html.twig' %}
+            </div>
+        </section>

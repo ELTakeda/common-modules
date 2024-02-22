@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - spotme_events # module name
+name: 'Events page'
+type: events_page
+description: 'Page for all events'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true

@@ -1,0 +1,26 @@
+// --- Colors ---
+$color-white: white;
+$color-primary: #34373F;
+$color-secondary: #BD120A;
+$color-secondary--hover: #891515;
+$color-border: #A1A4AC;
+$color-event-bg-live: #ABB436;
+$color-event-bg-past: #DA5283;
+$color-event-bg-future: #EBA800;
+
+// --- Fonts ---
+$font-light: "Open Sans Light", sans-serif;
+$font-regular: "Open Sans Regular", sans-serif;
+$font-medium: "Open Sans Medium", sans-serif;
+$font-regular-italic: "Open Sans Regular Italic", sans-serif;
+$font-semi-bold: "Open Sans SemiBold", sans-serif;
+$font-bold: "Open Sans Bold", sans-serif;
+$font-extra-bold: "Open Sans Extra Bold", sans-serif;
+
+//  --- Breakpoints
+$breakpoint-tablet--big: 1024px;
+$breakpoint-tablet--small: 769px;
+$breakpoint-phone: 480px;
+
+// --- Other ---
+$max-module-width: 400px;

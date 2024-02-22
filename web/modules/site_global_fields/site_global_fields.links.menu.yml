@@ -1,0 +1,6 @@
+site_global_fields.configure_form:
+  title: Site Global Fields
+  description: Input fields and URLs for the site global fields.
+  parent: user.admin_index
+  route_name: site_global_fields.configure_form
+  weight: 100

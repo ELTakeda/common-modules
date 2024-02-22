@@ -1,0 +1,32 @@
+takeda_consents_purposes.configure_form:
+  path: '/admin/config/people/takeda_consents_purposes'
+  defaults:
+    _form: '\Drupal\takeda_consents\Form\TakedaConsentsPurposesConfigureForm'
+    _title: 'Takeda Consents - Purposes'
+  requirements:
+    _permission: 'administer site configuration'
+takeda_consents_preferences_and_options.configure_form:
+  path: '/admin/config/people/takeda_consents_preferences_and_options'
+  defaults:
+    _form: '\Drupal\takeda_consents\Form\TakedaConsentsPreferencesAndOptionsConfigureForm'
+    _title: 'Takeda Consents - Preferences and Options'
+  requirements:
+    _permission: 'administer site configuration'
+takeda_consents_configure.configure_form:
+  path: '/admin/config/people/takeda_consents_configure'
+  defaults:
+    _form: '\Drupal\takeda_consents\Form\TakedaConsentsConfigureForm'
+    _title: 'Takeda Consents - Reporting'
+  requirements:
+    _permission: 'administer site configuration'
+takeda_consents.send_consents:
+  path: '/send_consents'
+  defaults:
+    _controller: '\Drupal\takeda_consents\Controller\TakedaConsentsController::sendUserConsents'
+    _title: 'Send the passed consent data'
+  requirements:
+    _access: 'TRUE'
+  methods: [ POST ]
+  options:
+    _maintenance_access: TRUE
+    no_cache: TRUE

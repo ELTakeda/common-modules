@@ -1,0 +1,4 @@
+spotme_events.configure_form:
+  route_name: spotme_events.configure_form
+  title: Settings
+  base_route: spotme_events.configure_form

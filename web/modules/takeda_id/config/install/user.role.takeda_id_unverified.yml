@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - takeda_id
+  enforced:
+    module:
+      - takeda_id
+id: takeda_id_unverified
+label: 'Takeda ID: Unverified Email'
+weight: 4
+is_admin: false
+permissions: {  }

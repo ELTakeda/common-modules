@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+    config:
+        - field.storage.node.field_se_label_when
+        - node.type.single_event
+    module:
+        - text
+id: node.single_event.field_se_label_when
+field_name: field_se_label_when
+entity_type: node
+bundle: single_event
+label: Label - When
+description: 'Text label for the start of the event'
+required: true
+translatable: true
+default_value: When
+default_value_callback: ''
+settings:
+    display_summary: false
+field_type: string

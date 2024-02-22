@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+    config:
+        - field.storage.node.field_se_label_reg_close
+        - node.type.single_event
+    module:
+        - text
+id: node.single_event.field_se_label_reg_close
+field_name: field_se_label_reg_close
+entity_type: node
+bundle: single_event
+label: Label - Registration closes
+description: 'Text label for "Registration closes in" under "Closing Date"'
+required: true
+translatable: true
+default_value: Registration closes
+default_value_callback: ''
+settings:
+    display_summary: false
+field_type: string

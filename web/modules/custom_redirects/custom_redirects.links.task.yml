@@ -1,0 +1,4 @@
+custom_redirects.configure_form:
+  route_name: custom_redirects.configure_form
+  title: Settings
+  base_route: custom_redirects.configure_form

@@ -1,0 +1,18 @@
+sfmc.name:
+  path: '/sfmc_connector'
+  defaults:
+    _controller: '\Drupal\sfmc\Controller\SfmcFormValidation::FormValidation'
+    _title: 'test'
+  requirements:
+    _access: 'TRUE'
+  methods: [ POST ]
+  options:
+    _maintenance_access: TRUE
+    no_cache: TRUE
+sfmc.sfmc_configure_form:
+  path: '/admin/config/system/sfmc'
+  defaults:
+    _form: '\Drupal\sfmc\Form\SfmcConfigurationForm'
+    _title: 'SFMC configuration'
+  requirements:
+    _permission: 'administer site configuration'

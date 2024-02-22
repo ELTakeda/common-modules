@@ -1,0 +1,43 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.event.body
+    - field.field.node.event.field_duration_in_minites
+    - field.field.node.event.field_event_id
+    - field.field.node.event.field_event_thumbnail
+    - field.field.node.event.field_spot_me_event
+    - field.field.node.event.field_start_at
+    - field.field.node.event.field_video_event
+    - field.field.node.event.field_video_event_url
+    - node.type.event
+  module:
+    - text
+    - user
+id: node.event.teaser
+targetEntityType: node
+bundle: event
+mode: teaser
+content:
+  body:
+    type: text_summary_or_trimmed
+    label: hidden
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_duration_in_minites: true
+  field_event_id: true
+  field_event_thumbnail: true
+  field_spot_me_event: true
+  field_start_at: true
+  field_video_event: true
+  field_video_event_url: true

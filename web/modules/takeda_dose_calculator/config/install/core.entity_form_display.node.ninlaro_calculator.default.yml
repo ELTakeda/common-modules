@@ -1,0 +1,263 @@
+langcode: bg
+status: true
+dependencies:
+  config:
+    - field.field.node.ninlaro_calculator.field_nc_background_color
+    - field.field.node.ninlaro_calculator.field_ninlaro_age_background_col
+    - field.field.node.ninlaro_calculator.field_ninlaro_age_border_color
+    - field.field.node.ninlaro_calculator.field_ninlaro_age_text_color
+    - field.field.node.ninlaro_calculator.field_ninlaro_back_to_top_button
+    - field.field.node.ninlaro_calculator.field_ninlaro_calculator_text_co
+    - field.field.node.ninlaro_calculator.field_ninlaro_dropdowns_border_c
+    - field.field.node.ninlaro_calculator.field_ninlaro_dropdowns_text_col
+    - field.field.node.ninlaro_calculator.field_ninlaro_final_score_border
+    - field.field.node.ninlaro_calculator.field_ninlaro_navigation_bgc
+    - field.field.node.ninlaro_calculator.field_ninlaro_navigation_bgc_hov
+    - field.field.node.ninlaro_calculator.field_ninlaro_navigation_borderc
+    - field.field.node.ninlaro_calculator.field_ninlaro_reference_link
+    - field.field.node.ninlaro_calculator.field_ninlaro_result_button_bgc
+    - field.field.node.ninlaro_calculator.field_ninlaro_result_button_bord
+    - field.field.node.ninlaro_calculator.field_ninlaro_result_button_text
+    - field.field.node.ninlaro_calculator.field_ninlaro_result_button_txtc
+    - field.field.node.ninlaro_calculator.field_ninlaro_title_color
+    - field.field.node.ninlaro_calculator.field_ninlaro_total_score_bc
+    - field.field.node.ninlaro_calculator.field_ninlaro_total_score_bgc
+    - field.field.node.ninlaro_calculator.field_ninlaro_total_score_text_c
+    - node.type.ninlaro_calculator
+  module:
+    - path
+    - text
+_core:
+  default_config_hash: l5lQTa8EE0Jnk7afsOASMiQYiFsc9io-RJxIK_tEdmU
+id: node.ninlaro_calculator.default
+targetEntityType: node
+bundle: ninlaro_calculator
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_nc_background_color:
+    type: string_textfield
+    weight: 121
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ninlaro_age_background_col:
+    type: string_textfield
+    weight: 126
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ninlaro_age_border_color:
+    type: string_textfield
+    weight: 125
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ninlaro_age_text_color:
+    type: string_textfield
+    weight: 127
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ninlaro_back_to_top_button:
+    type: string_textfield
+    weight: 143
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ninlaro_calculator_text_co:
+    type: string_textfield
+    weight: 122
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ninlaro_dropdowns_border_c:
+    type: string_textfield
+    weight: 123
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ninlaro_dropdowns_text_col:
+    type: string_textfield
+    weight: 124
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ninlaro_final_score_border:
+    type: string_textfield
+    weight: 135
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ninlaro_navigation_bgc:
+    type: string_textfield
+    weight: 137
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ninlaro_navigation_bgc_hov:
+    type: string_textfield
+    weight: 138
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ninlaro_navigation_borderc:
+    type: string_textfield
+    weight: 136
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ninlaro_reference_link:
+    type: text_textarea
+    weight: 144
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_ninlaro_result_button_bgc:
+    type: string_textfield
+    weight: 133
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ninlaro_result_button_bord:
+    type: string_textfield
+    weight: 131
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ninlaro_result_button_text:
+    type: string_textfield
+    weight: 132
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ninlaro_result_button_txtc:
+    type: string_textfield
+    weight: 134
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ninlaro_title_color:
+    type: string_textfield
+    weight: 141
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ninlaro_total_score_bc:
+    type: string_textfield
+    weight: 128
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ninlaro_total_score_bgc:
+    type: string_textfield
+    weight: 129
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ninlaro_total_score_text_c:
+    type: string_textfield
+    weight: 130
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    weight: 15
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 120
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    weight: 16
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

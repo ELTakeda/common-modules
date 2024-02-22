@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_adcetris_calculator_five_c
+    - node.type.adcietris_calculator
+id: node.adcietris_calculator.field_adcetris_calculator_five_c
+field_name: field_adcetris_calculator_five_c
+entity_type: node
+bundle: adcietris_calculator
+label: 'Adcetris calculator five content'
+description: 'Original text: The recommended dose is 1.8 mg/kg given as an intravenous infusion over 30 minutes every 3 weeks. Patients with relapsed or refractory HL or with CLAGs who have stable or improving disease should receive a minimum of 8 doses and up to a maximum of 16 cycles (approximately 1 year) per course of treatment.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

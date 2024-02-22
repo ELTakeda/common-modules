@@ -1,0 +1,120 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.events_page.field_ep_lb_next
+    - field.field.node.events_page.field_ep_lb_previous
+    - field.field.node.events_page.field_ep_lf_all_events
+    - field.field.node.events_page.field_ep_lf_future_events
+    - field.field.node.events_page.field_ep_lf_live_events
+    - field.field.node.events_page.field_ep_lf_my_events
+    - field.field.node.events_page.field_ep_lf_offline
+    - field.field.node.events_page.field_ep_lf_online
+    - field.field.node.events_page.field_ep_lf_online_offline
+    - field.field.node.events_page.field_ep_lf_past_events
+    - field.field.node.events_page.field_ep_subtitle
+    - node.type.events_page
+  module:
+    - text
+    - user
+_core:
+  default_config_hash: cds0D9piv9nYub2_O5BH-NFRK0q4pkEXaf9XtJ86jFw
+id: node.events_page.default
+targetEntityType: node
+bundle: events_page
+mode: default
+content:
+  field_ep_lb_next:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_ep_lb_previous:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 11
+    region: content
+  field_ep_lf_all_events:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_ep_lf_future_events:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_ep_lf_live_events:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_ep_lf_my_events:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  field_ep_lf_offline:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_ep_lf_online:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_ep_lf_online_offline:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_ep_lf_past_events:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_ep_subtitle:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  langcode: true

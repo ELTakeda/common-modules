@@ -1,0 +1,135 @@
+{% set front_path = [ url('<front>')|render|trim('/', 'right'), active_theme_path(), ]|join('/') %}
+
+    <!-- Hero Banner -->
+    <section class="tcm-hero-banner" style="background-image: url('{{ front_path }}/assets/images/banner-bg.jpg');">
+        <div class="tcm-hero-banner__content-container">
+            <p class="tcm-hero-banner__top-text">{{ content.field_hp_banner_top_text.0 }}</p>
+            <h1 class="tcm-hero-banner__title">{{ content.field_hp_banner_title.0 }}</h1>
+            <div class="tcm-hero-banner__text">
+                <p>{{ content.field_hp_banner_text.0 }}</p>
+            </div>
+            <a href="{{ content.field_hp_banner_request_button.0['#url'] }}" class="tcm-hero-banner__cta-button">
+                {{ content.field_hp_banner_request_button.0['#title'] }}
+            </a>
+            <small class="tcm-hero-banner__footnote">
+                {{ content.field_hp_baner_footer_note.0 }}	
+                <a href="{{ content.field_hp_banner_footer_guidance.0['#url'] }}"
+                    class="tcm-page-form__forgotten-pass-link">
+                    {{ content.field_hp_banner_footer_guidance.0['#title'] }}
+                </a>.
+            </small>
+        </div>
+    </section>
+
+    <!-- Calculators section -->
+    <section class="tcm-calculators tcm-main-content-wrapper">
+        <div class="tcm-title-block">
+            <h3 class="tcm-title-block__title">{{ content.field_hp_calculators_title.0 }}</h3>
+            <div class="tcm-title-block__text">
+                <p>{{ content.field_hp_calculators_description.0 }}</p>
+            </div>
+        </div>
+        <div class="tcm-calculators__gallery">
+            {% for calculator_item in content.field_hp_calculators %}
+                {% set calculator = calculator_item['#paragraph'] %}
+                {% if calculator.field_calculator_title.0.value is not empty and calculator.field_calculator_description.0.value is not empty %}
+                    <article class="tcm-calculator-card">
+                        <div class="tcm-calculator-card__content-container">
+                            <div class="tcm-calculator-card__icon">
+                                <img src="{{ front_path }}/assets/icons/cards/card-icon.svg" alt="">
+                            </div>
+                            <h4 class="tcm-calculator-card__title">{{ calculator.field_calculator_title.0.value }}</h4>
+                            <div class="tcm-calculator-card__description">
+                                <p>{{ calculator.field_calculator_description.0.value }}</p>
+                            </div>
+                            {% set calculator_title_slug = calculator.field_calculator_title.0.value|lower|replace({' ': '-'}) %}
+                            <a href="{{ path('<front>') }}calculator/{{ calculator_title_slug }}"
+                               class="tcm-calculator-card__cta">
+                                See more
+                            </a>
+                        </div>
+                    </article>
+                {% endif %}
+            {% endfor %}
+            <!-- The last card is always different -->
+            <article class="tcm-calculator-card tcm-calculator-card--only-img">
+                <div class="tcm-calculator-card__content-container">            
+                    <img src="{{ front_path }}/assets/images/card-image.svg" alt="">
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- BrightCove Section video-->
+    <section class="tcm-brightcove-block tcm-main-content-wrapper">
+        <div class="tcm-title-block">
+            <h3 class="tcm-title-block__title">{{ content.field_hp_video_section_title.0 }}</h3>
+            <div class="tcm-title-block__text">
+                <p>{{ content.field_hp_video_section_text.0 }}</p>
+            </div>
+        </div>
+        <div class="tcm-brightcove-block__iframe-container">
+            {{ content.field_hp_brightcove_video.0 }}
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section class="tcm-events tcm-main-content-wrapper">
+        <div class="tcm-title-block">
+            <h3 class="tcm-title-block__title">{{ content.field_hp_events_title.0 }}</h3>
+            <div class="tcm-title-block__text">
+                <p>{{ content.field_hp_events_description.0 }}</p>
+            </div>
+        </div>
+        <div class="tcm-events__gallery">
+            {% for event_item in content.field_homepage_events %}
+                {% set event = event_item['#paragraph'] %}
+                {% if event.field_event_title.0.value is not empty and event.field_event_description.0.value is not empty %}
+                    <article class="tcm-event-card">
+                        <div class="tcm-event-card__label">
+                            <p class="tcm-event-card__label-text">{{ event.field_event_title.0.value }}</p>
+                        </div>
+                        <div class="tcm-event-card__content-container">
+                            <div class="tcm-event-card__content-left">
+                                <div class="tcm-event-card__text">
+                                    <p>{{ event.field_event_description.0.value }}</p>
+                                </div>
+                                {% set event_title_slug = event.field_event_title.0.value|lower|replace({' ': '-'}) %}
+                                <a href="{{ path('<front>') }}event/{{ event_title_slug }}" class="tcm-event-card__cta">
+                                    <span>{{ event.field_event_title.0.value }}</span>
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M10.8649 10.8332L7.13759 14.5605L7.03152 14.6666L7.13759 14.7726L7.72759 15.3626L7.83365 15.4687L7.93972 15.3626L12.3631 10.9393L12.4691 10.8332L12.3631 10.7272L7.93972 6.30385L7.83365 6.19778L7.72759 6.30385L7.13759 6.89385L7.03152 6.99991L7.13759 7.10598L10.8649 10.8332Z" fill="currentColor" stroke="#currentColor" stroke-width="0.3" />
+                                    </svg>
+                                </a>
+                            </div>
+                            <div class="tcm-event-card__image">
+                                <img src="{{ file_url(event.field_event_image.0.entity.uri.value) }}" alt="{{ event.field_event_image.0.entity.alt }}">
+                            </div>
+                        </div>
+                    </article>
+                {% endif %}
+            {% endfor %}     
+        </div>
+    </section>
+
+    <!-- BrightCove Section Podcast-->
+    <section class="tcm-brightcove-block tcm-main-content-wrapper">
+        <div class="tcm-brightcove-block__iframe-container">
+            {{content.field_field_hp_brightcove_podcas.0}}
+        </div>
+    </section>
+<div class="all-events__events-container all-events__events-container--teasers">
+    <div class="all-events__top">
+        <div class="all-events__headings">
+            <h2>Events</h2>
+            <p>We've added some events that you might like</p>
+        </div>
+        <div class="all-events__more">
+            <a href="{{ url('<front>')|render|trim('/', 'right') }}/event/spotme-anywhere-events" class="js-event-cta-btn all-events__more-btn">More events <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.8649 10.8332L7.13759 14.5605L7.03152 14.6666L7.13759 14.7726L7.72759 15.3626L7.83365 15.4687L7.93972 15.3626L12.3631 10.9393L12.4691 10.8332L12.3631 10.7272L7.93972 6.30385L7.83365 6.19778L7.72759 6.30385L7.13759 6.89385L7.03152 6.99991L7.13759 7.10598L10.8649 10.8332Z" fill="currentColor" stroke="#currentColor" stroke-width="0.3"></path>
+            </svg></a>
+        </div>
+    </div>
+    
+    {{home_page_em_events_view}}
+</div>

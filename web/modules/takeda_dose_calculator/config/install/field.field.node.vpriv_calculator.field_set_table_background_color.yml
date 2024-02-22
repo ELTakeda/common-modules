@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_set_table_background_color
+    - node.type.vpriv_calculator
+third_party_settings:
+  tmgmt_content:
+    excluded: false
+id: node.vpriv_calculator.field_set_table_background_color
+field_name: field_set_table_background_color
+entity_type: node
+bundle: vpriv_calculator
+label: 'Set table background color'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: pink
+default_value_callback: ''
+settings: {  }
+field_type: string

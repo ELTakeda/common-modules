@@ -1,0 +1,21 @@
+services:
+  takeda_id.event_subscriber:
+    class: Drupal\takeda_id\EventSubscriber\TakedaIdSubscriber
+    tags:
+      - {name: event_subscriber}
+  takeda_id.route_subscriber:
+    class: Drupal\takeda_id\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }
+  takeda_id.access_checker:
+      class: Drupal\takeda_id\Access\ResetPassAccessCheck
+      tags:
+        - { name: access_check }
+  takeda_id.invitation_middleware:
+      class: Drupal\takeda_id\Middleware\Invitation
+      tags:
+        - { name: http_middleware }
+  http_middleware.takeda_id:
+    class: Drupal\takeda_id\Middleware\Redirect
+    tags:
+      - { name: http_middleware }

@@ -1,0 +1,5 @@
+{% if data.microfeedback_active %}
+<div class = "microfeedback iframe-container js-microfeedback-iframe-container tak-hidden" data-iframe-class = "{{ data.iframe_container_class }}" >
+    <iframe style = "position: absolute;" src="{{ data.src }}" width="100%" height="100%" frameborder="0" ></iframe>
+</div>
+{% endif %}

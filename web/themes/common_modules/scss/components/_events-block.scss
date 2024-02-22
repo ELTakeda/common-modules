@@ -1,0 +1,108 @@
+.tcm-events {
+    @include content-block-padding;
+
+    &__gallery {
+        display: flex;
+        width: 100%;
+        margin-top: 40px;
+        justify-content: space-between;
+    }
+}
+
+.tcm-event-card {
+    width: 49%;
+    min-height: 200px;
+    box-shadow: $shadow-card;
+    padding: 24px 0;
+    overflow: hidden;
+
+    &__label {
+        width: fit-content;
+        padding: 10px 40px 10px 24px;
+        background-color: $color-dark-red;
+        color: $color-white;
+        font-family: $font-open-sans--semi-bold;
+        font-weight: 600;
+        font-size: 14px;
+        border-radius: 0 27px 27px 0;
+    }
+
+    &__content-container {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        padding: 0 24px;
+    }
+
+    &__content-left {
+        width: 100%;
+        max-width: 370px;
+    }
+
+    &__text {
+        margin-top: 24px;
+        font-family: $font-open-sans--regular;
+        font-weight: 400;
+        font-size: 14px;
+        color: $color-dark-gray;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    &__cta {
+        font-family: $font-open-sans--medium;
+        font-weight: 500;
+        font-size: 15px;
+        position: relative;
+        color: $color-dark-red;
+        margin-top: 20px;
+        position: relative;
+        width: fit-content;
+        display: flex;
+
+        span {
+            margin-right: 0;
+            transition: all .2s ease-out;
+        }
+
+        &:hover {
+            color: $color-azuki-maroon;
+        }
+    }
+
+    &__cta:hover span {
+        margin-right: 5px;
+    }
+
+    &__image {
+        width: 110px;
+        height: 110px;
+        position: absolute;
+        right: 0;
+        top: 0;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+@media screen and (max-width: $breakpoint-tablet--big) {
+    .tcm-events {
+        &__gallery {
+            flex-direction: column;
+        }
+    }
+
+    .tcm-event-card {
+        width: 100%;
+        margin-bottom: 40px;
+
+        &:last-of-type {
+            margin-bottom: 0
+        }
+    }
+}

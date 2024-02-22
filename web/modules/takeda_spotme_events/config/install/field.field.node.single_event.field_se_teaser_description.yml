@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+    config:
+        - field.storage.node.field_se_teaser_description
+        - node.type.single_event
+    module:
+        - text
+id: node.single_event.field_se_teaser_description
+field_name: field_se_teaser_description
+entity_type: node
+bundle: single_event
+label: Teaser Description
+description: 'Description of teaser card'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

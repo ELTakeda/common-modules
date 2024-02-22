@@ -1,0 +1,15 @@
+name: Common Modules Takeda
+type: theme
+description: 'The theme required for the Common Modules project.'
+core_version_requirement: ^9 || ^10
+libraries:
+  - common_modules/global-css
+  - common_modules/global-js
+base theme: false
+regions:
+  header: 'Header'
+  main_navigation: 'Main Navigation'
+  content: 'Content'
+  footer: 'Footer'
+  footer_text: 'Footer text'
+  disabled: 'Disabled sections'

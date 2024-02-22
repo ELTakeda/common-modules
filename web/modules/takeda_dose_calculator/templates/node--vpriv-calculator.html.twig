@@ -1,0 +1,119 @@
+{{ attach_library('dose_calculator/dose-calculator-vpriv-css') }}
+{{ attach_library('dose_calculator/dose-calculator-vpriv-js') }}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ "Vpriv Calculator" |t}}</title>
+</head>
+
+<body>
+    <section class="vp-calculator">
+        <div class="vp-calculator__header">
+            <h1>{{ "Vpriv Dose Calculator"|t }}</h1>
+            <p>
+                {{ "The purpose of this tool? help healthcare professionals to practically visualize Vpriv information
+                for the treatment of their patients, with guidance on dosage for each indication. For additional
+                information, see the medicine leaflet at the end of this page."|t }}
+            </p>
+        </div>
+        <div class="vp-calculator__formula">
+            <h3 class="vp-calculator__formula-title">{{ "Calculation"|t }}</h3>
+            <div class="vp-calculator__formula-content">
+                <div class="vp-calculator__formula-center-text">
+                    <p>{{ "Dosage U/kg x Weight (kg)"|t }}</p>
+                    <hr />
+                    <p>400</p>
+                </div>
+                <p class="vp-calculator__formula-result"><span>=</span> {{ "Number of vials"|t }}</p>
+            </div>
+
+        </div>
+
+        <div class="vp-calculator__body">
+            <div class="vp-calculator__input-container">
+                <input class="vp-calculator__input js-vp-weight-input" id="kg" data-max_length="3" name="kg"
+                    type="number" />
+                <label class="vp-calculator__input-label" for="kg">{{ "(insert value here)"|t }}</label>
+                <p class="vp-calculator__input-placeholder">kg</p>
+            </div>
+            <table class="vp-calculator__table">
+                <tbody>
+                    <tr>
+                        <td>{{ "Dose"|t }}</td>
+                        <td class="vp-table-dose">15</td>
+                        <td class="vp-table-dose">30</td>
+                        <td class="vp-table-dose">60</td>
+                    </tr>
+                    <tr>
+                        <td>{{ "Vials"|t }}</td>
+                        <td class="vp-text-center">
+                            <input disabled="disabled" id="vials15" type="number" />
+                        </td>
+                        <td class="vp-text-center">
+                            <input disabled="disabled" id="vials30" type="number" />
+                        </td>
+                        <td class="vp-text-center">
+                            <input disabled="disabled" id="vials60" type="number" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{ "UR/mes"|t }}</td>
+                        <td class="vp-text-center">
+                            <input disabled="disabled" id="ur15" type="number" />
+                        </td>
+                        <td class="vp-text-center">
+                            <input disabled="disabled" id="ur30" type="number" />
+                        </td>
+                        <td class="vp-text-center">
+                            <input disabled="disabled" id="ur60" type="number" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="vp-calculator__info">
+                <p> <span class="vp-calculator__info-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
+                            <path
+                                d="M9.0013 16.8333C7.35313 16.8333 5.74196 16.3446 4.37155 15.4289C3.00114 14.5132 1.93304 13.2117 1.30231 11.689C0.671579 10.1663 0.506552 8.49075 0.828095 6.87424C1.14964 5.25773 1.94331 3.77287 3.10875 2.60744C4.27419 1.442 5.75904 0.648326 7.37555 0.326783C8.99206 0.00523944 10.6676 0.170267 12.1903 0.800997C13.713 1.43173 15.0145 2.49983 15.9302 3.87024C16.8459 5.24065 17.3346 6.85181 17.3346 8.49999C17.3326 10.7095 16.454 12.8279 14.8916 14.3903C13.3292 15.9526 11.2108 16.8313 9.0013 16.8333ZM9.0013 1.32945C7.5831 1.32945 6.19675 1.75 5.01756 2.5379C3.83838 3.32581 2.91931 4.4457 2.37659 5.75594C1.83387 7.06619 1.69187 8.50795 1.96854 9.89889C2.24522 11.2898 2.92815 12.5675 3.93097 13.5703C4.93378 14.5731 6.21145 15.2561 7.6024 15.5328C8.99335 15.8094 10.4351 15.6674 11.7453 15.1247C13.0556 14.582 14.1755 13.6629 14.9634 12.4837C15.7513 11.3045 16.1718 9.91819 16.1718 8.49999C16.1698 6.59888 15.4137 4.77621 14.0694 3.43192C12.7251 2.08763 10.9024 1.3315 9.0013 1.32945Z"
+                                fill="#34373F" />
+                            <path
+                                d="M9.77631 12.9573H8.22593C8.07173 12.9573 7.92385 12.8961 7.81482 12.787C7.70579 12.678 7.64453 12.5301 7.64453 12.3759C7.64453 12.2217 7.70579 12.0739 7.81482 11.9648C7.92385 11.8558 8.07173 11.7945 8.22593 11.7945H9.77631C9.93051 11.7945 10.0784 11.8558 10.1874 11.9648C10.2965 12.0739 10.3577 12.2217 10.3577 12.3759C10.3577 12.5301 10.2965 12.678 10.1874 12.787C10.0784 12.8961 9.93051 12.9573 9.77631 12.9573Z"
+                                fill="#34373F" />
+                            <path
+                                d="M9.00096 12.9574C8.84739 12.9554 8.70067 12.8935 8.59207 12.7849C8.48347 12.6763 8.42157 12.5296 8.41956 12.376V7.50001C8.28862 7.45547 8.17784 7.36571 8.10713 7.24684C8.03641 7.12798 8.01039 6.98779 8.03373 6.85146C8.05708 6.71514 8.12826 6.5916 8.23449 6.50303C8.34073 6.41446 8.47506 6.36667 8.61336 6.36823H9.00096C9.15453 6.37024 9.30124 6.43214 9.40985 6.54074C9.51845 6.64934 9.58034 6.79606 9.58235 6.94963V12.376C9.58034 12.5296 9.51845 12.6763 9.40985 12.7849C9.30124 12.8935 9.15453 12.9554 9.00096 12.9574Z"
+                                fill="#34373F" />
+                            <path
+                                d="M9.00176 5.39917C9.42988 5.39917 9.77695 5.05211 9.77695 4.62398C9.77695 4.19585 9.42988 3.84879 9.00176 3.84879C8.57363 3.84879 8.22656 4.19585 8.22656 4.62398C8.22656 5.05211 8.57363 5.39917 9.00176 5.39917Z"
+                                fill="#34373F" />
+                        </svg>
+                    </span> 1 {{"month"|t }} = <span class="bold">4.3452</span> {{"weeks"|t}}</p>
+                <div class="vp-calculator__reset js-vp-reset-button">
+                    <span class="vp-calculator__reset-icon"></span>
+                    <p>
+                        <span class="vp-calculator__reset-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="19" viewBox="0 0 14 19"
+                                fill="none">
+                                <g clip-path="url(#clip0_196_1566)">
+                                    <path
+                                        d="M7 4.25V0.75L2.625 5.125L7 9.5V6C8.03835 6 9.05339 6.30791 9.91674 6.88478C10.7801 7.46166 11.453 8.2816 11.8504 9.24091C12.2477 10.2002 12.3517 11.2558 12.1491 12.2742C11.9466 13.2926 11.4465 14.2281 10.7123 14.9623C9.97808 15.6965 9.04263 16.1965 8.02422 16.3991C7.00582 16.6017 5.95022 16.4977 4.99091 16.1004C4.0316 15.703 3.21166 15.0301 2.63478 14.1667C2.05791 13.3034 1.75 12.2884 1.75 11.25H0C0 12.6345 0.410543 13.9878 1.17971 15.139C1.94888 16.2901 3.04213 17.1873 4.32122 17.7172C5.6003 18.247 7.00777 18.3856 8.36563 18.1155C9.7235 17.8454 10.9708 17.1787 11.9497 16.1997C12.9287 15.2208 13.5954 13.9735 13.8655 12.6156C14.1356 11.2578 13.997 9.8503 13.4672 8.57122C12.9373 7.29213 12.0401 6.19888 10.889 5.42971C9.73785 4.66054 8.38447 4.25 7 4.25Z"
+                                        fill="#34373F" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_196_1566">
+                                        <rect width="14" height="17.5" fill="white" transform="translate(0 0.75)" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </span>
+                        {{ "Reset Calculation"|t }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+</body>

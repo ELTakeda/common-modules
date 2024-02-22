@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+    config:
+        - field.storage.node.field_se_speaker_name
+        - node.type.single_event
+    module:
+        - text
+id: node.single_event.field_se_speaker_name
+field_name: field_se_speaker_name
+entity_type: node
+bundle: single_event
+label: Speaker name
+description: 'Name of the speaker for the event'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+    display_summary: false
+field_type: string

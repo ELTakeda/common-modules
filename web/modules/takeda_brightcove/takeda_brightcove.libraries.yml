@@ -1,0 +1,6 @@
+audio-player:
+  css:
+    component:
+      css/embed-brightcove-audio-player.css: {}
+  js:
+    js/embed-brightcove-audio-player.js: {}

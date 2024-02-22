@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - spotme_events # module name
+name: 'Single event'
+type: single_event
+description: 'Content type for a single event'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true

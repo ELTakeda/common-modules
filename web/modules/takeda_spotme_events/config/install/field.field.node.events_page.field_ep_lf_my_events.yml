@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+    config:
+        - field.storage.node.field_ep_lf_my_events
+        - node.type.events_page
+    module:
+        - text
+id: node.events_page.field_ep_lf_my_events
+field_name: field_ep_lf_my_events
+entity_type: node
+bundle: events_page
+label: 'Filter label - Only my events'
+description: 'Text for the "Select only my events" checkbox option'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

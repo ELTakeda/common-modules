@@ -1,0 +1,86 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function takeda_consents_schema() {
+  // Creates a table called takeda_consents_storage on module installation
+  $schema['takeda_consents_storage'] = [
+    'description' => 'Used to store user consent data on registration before the lead is qualified.',
+    'fields' => [
+      'uid' => [
+        'description' => 'The site user id',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'email' => [
+        'description' => 'The registered user e-mail',
+        'type' => 'varchar_ascii',
+        'length' => DRUPAL_EXTENSION_NAME_MAX_LENGTH,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'page_language' => [
+        'description' => 'The page language and country code on registration',
+        'type' => 'varchar_ascii',
+        'length' => DRUPAL_EXTENSION_NAME_MAX_LENGTH,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'language' => [
+        'description' => 'The page language on registration',
+        'type' => 'varchar_ascii',
+        'length' => DRUPAL_EXTENSION_NAME_MAX_LENGTH,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'countryCode' => [
+        'description' => 'The selected country code on registration',
+        'type' => 'varchar_ascii',
+        'length' => DRUPAL_EXTENSION_NAME_MAX_LENGTH,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'firstName' => [
+        'description' => 'The first name of the user on registration',
+        'type' => 'varchar_ascii',
+        'length' => DRUPAL_EXTENSION_NAME_MAX_LENGTH,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'lastName' => [
+        'description' => 'The last name of the user on registration',
+        'type' => 'varchar_ascii',
+        'length' => DRUPAL_EXTENSION_NAME_MAX_LENGTH,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'consentDate' => [
+        'description' => 'The consent date of the user on registration',
+        'type' => 'varchar_ascii',
+        'length' => DRUPAL_EXTENSION_NAME_MAX_LENGTH,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'purposes' => [
+        'description' => 'The selected purposes of the user on registration',
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => TRUE,
+        'default' => '',
+      ]
+    ],
+    'primary key' => ['uid', 'email'],
+    'indexes' => [
+      'uid' => [
+        'uid',
+      ],
+      'email' => [
+        'email',
+      ],
+    ],
+  ];
+
+  return $schema;
+}

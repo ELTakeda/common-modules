@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_video_event
+    - media.type.video
+    - node.type.event
+_core:
+  default_config_hash: lk_Jmp9WBLvfg8LMQQhttB6ewa9bZ86eZm4gaBtJuls
+id: node.event.field_video_event
+field_name: field_video_event
+entity_type: node
+bundle: event
+label: 'Video past event'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      video: video
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+field_type: entity_reference

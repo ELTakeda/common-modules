@@ -1,0 +1,63 @@
+dose-calculator-advante-css:
+  css:
+    theme:
+      styles/calc-type-a/main.css: {}
+dose-calculator-feiba-css:
+  css:
+    theme:
+      styles/calc-type-a/main.css: {}
+dose-calculator-adcetris-css:
+  css:
+    theme:
+      styles/adcetris/adcetrisDoseCalculator.css: {}
+dose-calculator-ninlaro-css:
+  css:
+    theme:
+      styles/ninlaro/main.css: {}
+dose-calculator-vpriv-css:
+  css:
+    theme:
+      styles/vpriv/main.css: {}
+dose-calculator-prothromplex-css:
+  css:
+    theme:
+      styles/calc-type-a/main.css: {}
+dose-calculator-adynovate-css:
+  css:
+    theme:
+      styles/calc-type-a/main.css: {}
+dose-calculator-advante-js:
+  js:
+    js/pages/advanteCalculator.js: {}
+  dependencies:
+    - core/jquery
+dose-calculator-adcetris-js:
+  js:
+    js/pages/adcetrisCalculator.js: {}
+  dependencies:
+    - core/jquery
+dose-calculator-feiba-js:
+  js:
+    js/pages/feibaCalculator.js: {}
+  dependencies:
+    - core/jquery
+dose-calculator-ninlaro-js:
+  js:
+    js/pages/ninlaroCalculator.js: {}
+  dependencies:
+    - core/jquery
+dose-calculator-vpriv-js:
+  js:
+    js/pages/vpriv-calculator.js: {}
+  dependencies:
+    - core/jquery
+dose-calculator-prothromplex-js:
+  js:
+    js/pages/prothromplex-calculator.js: {}
+  dependencies:
+    - core/jquery
+dose-calculator-adynovate-js:
+  js:
+    js/pages/adynovate-calculator.js: {}
+  dependencies:
+    - core/jquery

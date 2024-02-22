@@ -1,0 +1,222 @@
+.vp-calculator {
+    width: 95%;
+    max-width: $max-module-width;
+    margin: 0 auto;
+    padding: 25px 12px;
+    font-family: $font-regular;
+    color: $color-primary;
+    background-color: transparent;
+    overflow: hidden;
+
+    &__header {
+        h1 {
+            color: $color-secondary;
+            font-size: 26px;
+            font-family: $font-semi-bold;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 14px;
+            color: $color-primary;
+            font-family: $font-regular;
+            font-weight: 400;
+            margin-top: 12px;
+            line-height: 150%;
+        }
+    }
+
+    &__formula {
+        display: flex;
+        flex-direction: column;
+        margin-top: 24px;
+
+        &-title {
+            font-size: 18px;
+            font-family: $font-semi-bold;
+            font-weight: 600;
+            color: $color-primary;
+        }
+
+        &-center-text,
+        p {
+            text-align: center;
+            font-size: 16px;
+            font-family: $font-medium;
+            font-weight: 500;
+            color: $color-secondary;
+        }
+
+        &__formula-result {
+            transform: translateY(5px);
+
+            span {
+                margin-right: 15px;
+                color: $color-primary;
+            }
+        }
+
+        hr {
+            border-color: $color-primary;
+            margin-top: 12px;
+        }
+
+        &-center-text {
+            margin-right: 16px;
+        }
+    }
+
+    &__formula-content {
+        display: flex;
+        align-items: center;
+        margin-top: 15px;
+    }
+
+    &__body {
+        margin: 44px auto 0px;
+        padding: 50px 40px 55px;
+    }
+
+    &__input-container {
+        display: flex;
+        flex-direction: column;
+        width: 140px;
+        position: relative;
+        margin: 0 auto;
+        transform: translateX(0) translateY(0);
+    }
+
+    &__input,
+    &__input-placeholder {
+        font-family: $font-semi-bold;
+        font-weight: 600;
+        font-size: 18px;
+        color: $color-black;
+    }
+
+    &__input {
+        width: 100%;
+        height: 60px;
+        text-align: center;
+        padding: 15px 50px;
+        background-color: $color-input-background;
+        border: none;
+        border-radius: 4px;
+        outline: none;
+    }
+
+    &__input-label {
+        font-family: $font-regular;
+        font-weight: 400;
+        font-size: 12px;
+        color: $color-primary;
+        margin-top: 5px;
+        text-align: center;
+    }
+
+    &__input-placeholder {
+        position: absolute;
+        right: 30px;
+        top: 16px;
+    }
+
+    &__table {
+        width: 100%;
+        padding: 0px 30px;
+        border-collapse: separate;
+        border-spacing: 0px 30px;
+
+        td {
+            color: $color-primary;
+            font-family: $font-regular;
+            font-weight: 400;
+            font-size: 16px;
+            padding: 0px;
+        }
+
+        td input {
+            width: 140px;
+            height: 40px;
+            border: 1px solid $color-border;
+            border-radius: 4px;
+            background-color: transparent;
+            color: $color-black;
+            text-align: center;
+            font-family: $font-semi-bold;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        td.vp-table-dose {
+            font-family: $font-semi-bold;
+            font-weight: 600;
+            font-size: 18px;
+            color: $color-secondary;
+            text-align: center;
+        }
+    }
+
+    &__info {
+        padding-left: 30px;
+        font-family: $font-regular;
+        font-weight: 400;
+        font-size: 14px;
+
+        .bold {
+            font-weight: bold;
+        }
+    }
+
+    &__info-icon {
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+        transform: translateY(3px);
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    &__reset {
+        width: fit-content;
+        margin: 0 auto;
+        font-family: $font-medium;
+        font-weight: 500;
+        font-size: 14px;
+        color: $color-primary;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &__reset-icon {
+        width: 14px;
+        height: 14px;
+        display: inline-block;
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+
+}
+
+@media screen and (max-width: $breakpoint-tablet--small) {
+    .vp-calculator {
+        &__body,
+        &__table {
+            padding: 0
+        }
+
+        &__table {
+           td input {
+            width: 100%;
+           }
+        }
+    }
+}

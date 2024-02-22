@@ -1,0 +1,9 @@
+takeda-alchemer:
+  css:
+    component:
+      styles/takeda-alchemer-microfeedback.css: {}
+
+  js:
+    scripts/takeda-alchemer-microfeedback.js: {}
+  dependencies:
+    - core/jquery

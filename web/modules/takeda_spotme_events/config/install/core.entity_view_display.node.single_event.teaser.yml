@@ -1,0 +1,235 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.single_event.field_se_banner_img
+    - field.field.node.single_event.field_se_btn_label_going
+    - field.field.node.single_event.field_se_btn_label_join
+    - field.field.node.single_event.field_se_btn_label_register
+    - field.field.node.single_event.field_se_button_functionality
+    - field.field.node.single_event.field_se_closing_date
+    - field.field.node.single_event.field_se_country_code
+    - field.field.node.single_event.field_se_date_time_formats
+    - field.field.node.single_event.field_se_description
+    - field.field.node.single_event.field_se_end_date
+    - field.field.node.single_event.field_se_event_id
+    - field.field.node.single_event.field_se_event_tags
+    - field.field.node.single_event.field_se_label_closing_date
+    - field.field.node.single_event.field_se_label_download_ics
+    - field.field.node.single_event.field_se_label_read_more
+    - field.field.node.single_event.field_se_label_reg_close
+    - field.field.node.single_event.field_se_label_run_time
+    - field.field.node.single_event.field_se_label_when
+    - field.field.node.single_event.field_se_label_where
+    - field.field.node.single_event.field_se_link_external
+    - field.field.node.single_event.field_se_place
+    - field.field.node.single_event.field_se_speaker_name
+    - field.field.node.single_event.field_se_start_date
+    - field.field.node.single_event.field_se_teaser_description
+    - field.field.node.single_event.field_se_type
+    - node.type.single_event
+  module:
+    - datetime
+    - image
+    - options
+    - text
+    - user
+_core:
+  default_config_hash: 5zp8_bl2FI4mkshIPjA5r1VXjCxO7P4SxVWO7dkfRik
+id: node.single_event.teaser
+targetEntityType: node
+bundle: single_event
+mode: teaser
+content:
+  field_se_banner_img:
+    type: image_url
+    label: hidden
+    settings:
+      image_style: ''
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_se_btn_label_going:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_se_btn_label_join:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_se_btn_label_register:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_se_button_functionality:
+    type: list_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 13
+    region: content
+  field_se_closing_date:
+    type: datetime_default
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 14
+    region: content
+  field_se_country_code:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_se_date_time_formats:
+    type: list_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 15
+    region: content
+  field_se_description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_se_end_date:
+    type: datetime_default
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_se_event_id:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_se_event_tags:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 16
+    region: content
+  field_se_label_closing_date:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 18
+    region: content
+  field_se_label_reg_close:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 19
+    region: content
+  field_se_label_run_time:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 20
+    region: content
+  field_se_label_when:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 21
+    region: content
+  field_se_label_where:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 22
+    region: content
+  field_se_link_external:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 17
+    region: content
+  field_se_place:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  field_se_speaker_name:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_se_start_date:
+    type: datetime_default
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 11
+    region: content
+  field_se_teaser_description:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 23
+    region: content
+  field_se_type:
+    type: list_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 12
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_se_label_download_ics: true
+  field_se_label_read_more: true
+  langcode: true

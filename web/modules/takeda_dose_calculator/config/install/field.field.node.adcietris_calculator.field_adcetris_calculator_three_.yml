@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_adcetris_calculator_three_
+    - node.type.adcietris_calculator
+id: node.adcietris_calculator.field_adcetris_calculator_three_
+field_name: field_adcetris_calculator_three_
+entity_type: node
+bundle: adcietris_calculator
+label: 'Adcetris calculator three content'
+description: 'Original text: The recommended dose is 1.8 mg/kg given as an intravenous infusion over 30 minutes every 3 weeks. For HL patients at increased risk of relapse or progression after TACT, ADCETRIS treatment should begin after TACT recovery based on medical judgment. These patients should receive up to 16 cycles.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

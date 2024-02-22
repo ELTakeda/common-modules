@@ -1,0 +1,22 @@
+api_url: 'https://api-us-np.takeda.com/dev/security-takedaid-api/v1'
+lead_api_url: 'https://api-us-aws-dev.takeda.com/dev/gcc-omnichannel-api/v1'
+invitations_api_url: 'https://api-us-aws-dev2.takeda.com/dev/gcc-sendInvitations-api/v1'
+multichannel_api_url: 'https://api-us-aws-dev2.takeda.com/dev/gcc-multichannelactivity-api/v1'
+api_key: ''
+api_secret: ''
+okta_url: 'https://takedaext.oktapreview.com/oauth2/default/v1'
+okta_client_id: ''
+okta_client_secret: ''
+first_login_redirect:
+subsequent_login_redirect:
+prefill_fields: ['field_first_name', 'field_last_name', 'mail', 'field_title', 'field_customer_id', 'field_local_id', 'field_crm_country']
+require_hcp_match_to_activate: true
+hide_password_policy_table: true
+registration: 'default'
+default_country: 'aq'
+langcode: 'en'
+block_rejected_leads: true
+restrict_country_access: false
+enable_takeda_id_consent: false
+invitations_can_edit: true
+multichannel_can_edit: false

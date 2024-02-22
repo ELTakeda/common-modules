@@ -1,0 +1,1034 @@
+# $Id$
+#
+# LANGUAGE translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  takeda_id.module: n/a
+#  src/Controller/TakedaIdController.php: n/a
+#  takeda_id.info.yml: n/a
+#  takeda_id.links.menu.yml: n/a
+#  takeda_id.routing.yml: n/a
+#  config/install/password_policy.password_policy.takeda_id.yml: n/a
+#  takeda_id.links.task.yml: n/a
+#  config/schema/takeda_id.schema.yml: n/a
+#  src/Form/TakedaIdConfigureForm.php: n/a
+#  src/Access/ResetPassAccessCheck.php: n/a
+#  src/Controller/User.php: n/a
+#  config/install/takeda_id.mail.yml: n/a
+#  config/install/takeda_id.settings.yml: n/a
+#  config/optional/field.field.user.user.field_first_name.yml: n/a
+#  config/optional/field.field.user.user.field_last_name.yml: n/a
+#  config/optional/field.field.user.user.field_title.yml: n/a
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2022-05-19 18:37+1000\n"
+"PO-Revision-Date: 2022-05-19 18:40+1000\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.1\n"
+"Last-Translator: \n"
+"Language: en\n"
+
+#: takeda_id.module:130
+msgid "This email address is managed by Takeda ID and may not be changed."
+msgstr "This email address is managed by Takeda ID and may not be changed."
+
+#: takeda_id.module:133
+msgid "This username is linked to an email address and may not be changed."
+msgstr "This username is linked to an email address and may not be changed."
+
+#: takeda_id.module:143
+msgid "Manage or Reset your password via Takeda ID"
+msgstr "Manage or Reset your password via Takeda ID"
+
+#: takeda_id.module:149
+msgid "Update Password"
+msgstr "Update Password"
+
+#: takeda_id.module:195;367
+msgid "Email Address"
+msgstr "Email Address"
+
+#: takeda_id.module:196;368
+msgid "Enter your Takeda ID Email Address"
+msgstr "Enter your Takeda ID Email Address"
+
+#: takeda_id.module:199
+msgid "Enter your Takeda ID Password"
+msgstr "Enter your Takeda ID Password"
+
+#: takeda_id.module:260
+msgid "Unable to connect to Takeda ID."
+msgstr "Unable to connect to Takeda ID."
+
+#: takeda_id.module:272
+msgid ""
+"<h2>Sorry, the activation of your account could not be processed as we have "
+"not been able to identify you as a registered healthcare professional. "
+"Please contact Takeda if you require further assistance.</h2>"
+msgstr ""
+"<h2>Sorry, the activation of your account could not be processed as we have "
+"not been able to identify you as a registered healthcare professional. "
+"Please contact Takeda if you require further assistance.</h2>"
+
+#: takeda_id.module:274 src/Controller/TakedaIdController.php:225
+msgid ""
+"<h2>Your account is currently pending verification.</h2><p>You will receive "
+"an email once your account has been verified.</p><p>You may be contacted by "
+"someone from Takeda to confirm your details.</p>"
+msgstr ""
+"<h2>Your account is currently pending verification.</h2><p>You will receive "
+"an email once your account has been verified.</p><p>You may be contacted by "
+"someone from Takeda to confirm your details.</p>"
+
+#: takeda_id.module:276
+msgid ""
+"<h2>Your email address is currently pending validation.</h2><p>Please check "
+"your email and follow the instructions.</p>"
+msgstr ""
+"<h2>Your email address is currently pending validation.</h2><p>Please check "
+"your email and follow the instructions.</p>"
+
+#: takeda_id.module:328
+msgid "Unrecognized Takeda ID email or password."
+msgstr "Unrecognized Takeda ID email or password."
+
+#: takeda_id.module:410
+msgid ""
+"If %identifier is a valid account, please follow the instructions sent to "
+"your email to reset your password."
+msgstr ""
+"If %identifier is a valid account, please follow the instructions sent to "
+"your email to reset your password."
+
+#: takeda_id.module:422
+msgid "The changes have been saved."
+msgstr "The changes have been saved."
+
+#: takeda_id.module:466
+msgid ""
+"Sorry, your password reset request has failed or timed out. Please try again."
+msgstr ""
+"Sorry, your password reset request has failed or timed out. Please try again."
+
+#: takeda_id.module:474
+msgid "Password reset for Takeda ID User @name"
+msgstr "Password reset for Takeda ID User @name"
+
+#: takeda_id.module:476
+msgid ""
+"Your password has been reset and you may now login with your new details."
+msgstr ""
+"Your password has been reset and you may now login with your new details."
+
+#: takeda_id.module:577
+msgid ""
+"Your email address is already registered with Takeda ID. You can login to "
+"this site using your Takeda ID email address and password."
+msgstr ""
+"Your email address is already registered with Takeda ID. You can login to "
+"this site using your Takeda ID email address and password."
+
+#: takeda_id.module:696
+msgid ""
+"Thank you for applying for an account. Your account is currently pending "
+"approval by the site administrator.<br />In the meantime, a welcome message "
+"with further instructions has been sent to your email address."
+msgstr ""
+"Thank you for applying for an account. Your account is currently pending "
+"approval by the site administrator.<br />In the meantime, a welcome message "
+"with further instructions has been sent to your email address."
+
+#: takeda_id.module:706
+msgid ""
+"Thank you for registering with Takeda ID. To complete your account setup, "
+"please check your email and follow the instructions to verify your account."
+msgstr ""
+"Thank you for registering with Takeda ID. To complete your account setup, "
+"please check your email and follow the instructions to verify your account."
+
+#: takeda_id.module:728
+msgid "Require email verification when a visitor creates an account"
+msgstr "Require email verification when a visitor creates an account"
+
+#: takeda_id.module:730
+msgid ""
+"Do not require a verification email, and let users set their password on the "
+"registration form."
+msgstr ""
+"Do not require a verification email, and let users set their password on the "
+"registration form."
+
+#: takeda_id.module:731
+msgid ""
+"Require a verification email, but wait for the approval email to let users "
+"set their password."
+msgstr ""
+"Require a verification email, but wait for the approval email to let users "
+"set their password."
+
+#: takeda_id.module:732
+msgid ""
+"Use the Takeda ID Email Validation Workflow, allowing users to set their "
+"Takeda ID password during registration."
+msgstr ""
+"Use the Takeda ID Email Validation Workflow, allowing users to set their "
+"Takeda ID password during registration."
+
+#: takeda_id.module:741
+msgid ""
+"Available variables are: [site:name], [site:url], [user:display-name], [user:"
+"account-name], [user:mail], [site:login-url], [site:url-brief], [user:edit-"
+"url], [user:cancel-url], [user:takeda-id-verification-url]."
+msgstr ""
+"Available variables are: [site:name], [site:url], [user:display-name], [user:"
+"account-name], [user:mail], [site:login-url], [site:url-brief], [user:edit-"
+"url], [user:cancel-url], [user:takeda-id-verification-url]."
+
+#: takeda_id.module:742
+msgid ""
+"Available variables are: [site:name], [site:url], [user:display-name], [user:"
+"account-name], [user:mail], [site:login-url], [site:url-brief], [user:edit-"
+"url], [user:one-time-login-url], [user:cancel-url]"
+msgstr ""
+"Available variables are: [site:name], [site:url], [user:display-name], [user:"
+"account-name], [user:mail], [site:login-url], [site:url-brief], [user:edit-"
+"url], [user:one-time-login-url], [user:cancel-url]"
+
+#: takeda_id.module:747
+msgid "Takeda ID: Registration"
+msgstr "Takeda ID: Registration"
+
+#: takeda_id.module:750
+msgid ""
+"Edit the welcome email messages sent to new members upon registering, when "
+"awaiting Takeda ID email validation."
+msgstr ""
+"Edit the welcome email messages sent to new members upon registering, when "
+"awaiting Takeda ID email validation."
+
+#: takeda_id.module:756;777;798;819
+msgid "Subject"
+msgstr "Subject"
+
+#: takeda_id.module:762;783;804;825
+msgid "Body"
+msgstr "Body"
+
+#: takeda_id.module:769
+msgid "Takeda ID: Forgot Password"
+msgstr "Takeda ID: Forgot Password"
+
+#: takeda_id.module:772
+msgid ""
+"Edit the email messages sent to users who request a new Takeda ID password."
+msgstr ""
+"Edit the email messages sent to users who request a new Takeda ID password."
+
+#: takeda_id.module:790
+msgid "Takeda ID: Lead accepted"
+msgstr "Takeda ID: Lead accepted"
+
+#: takeda_id.module:793
+msgid ""
+"Edit the welcome email messages sent to users once their Takeda ID Account "
+"Lead has been accepted. "
+msgstr ""
+"Edit the welcome email messages sent to users once their Takeda ID Account "
+"Lead has been accepted. "
+
+#: takeda_id.module:811
+msgid "Takeda ID: Lead rejected"
+msgstr "Takeda ID: Lead rejected"
+
+#: takeda_id.module:814
+msgid ""
+"Edit the welcome email messages sent to users once their Takeda ID Account "
+"Lead has been rejected. "
+msgstr ""
+"Edit the welcome email messages sent to users once their Takeda ID Account "
+"Lead has been rejected. "
+
+#: takeda_id.module:1722
+msgid "For security, your Takeda ID Password should:"
+msgstr "For security, your Takeda ID Password should:"
+
+#: takeda_id.module:1723
+msgid "Be 8 characters or longer"
+msgstr "Be 8 characters or longer"
+
+#: takeda_id.module:1724
+msgid "Contain a capital letter"
+msgstr "Contain a capital letter"
+
+#: takeda_id.module:1725
+msgid "Contain a lowercase letter"
+msgstr "Contain a lowercase letter"
+
+#: takeda_id.module:1726
+msgid "Contain a number"
+msgstr "Contain a number"
+
+#: takeda_id.module:1727
+msgid "Contain a special character or punctuation symbol"
+msgstr "Contain a special character or punctuation symbol"
+
+#: takeda_id.module:400
+msgid "Password reset instructions mailed to %name at %email."
+msgstr "Password reset instructions mailed to %name at %email."
+
+#: takeda_id.module:407
+msgid ""
+"Password reset form was submitted with an unknown or inactive account: %name."
+msgstr ""
+"Password reset form was submitted with an unknown or inactive account: %name."
+
+#: takeda_id.module:1407
+msgid "takeda_id_hcp_conversion: Request made"
+msgstr "takeda_id_hcp_conversion: Request made"
+
+#: takeda_id.info.yml:0 takeda_id.links.menu.yml:0 takeda_id.routing.yml:0
+#: config/install/password_policy.password_policy.takeda_id.yml:0
+msgid "Takeda ID"
+msgstr "Takeda ID"
+
+#: takeda_id.info.yml:0
+msgid "Provides support for Takeda ID login and lead generation"
+msgstr "Provides support for Takeda ID login and lead generation"
+
+#: takeda_id.info.yml:0
+msgid "User authentication"
+msgstr "User authentication"
+
+#: takeda_id.links.menu.yml:0
+msgid "Configure Takeda ID authentication and registration."
+msgstr "Configure Takeda ID authentication and registration."
+
+#: takeda_id.links.task.yml:0
+msgid "Settings"
+msgstr "Settings"
+
+#: takeda_id.routing.yml:0
+msgid "Lead Callback"
+msgstr "Lead Callback"
+
+#: takeda_id.routing.yml:0
+msgid "Post Login"
+msgstr "Post Login"
+
+#: takeda_id.routing.yml:0
+msgid "Verify User"
+msgstr "Verify User"
+
+#: config/schema/takeda_id.schema.yml:0
+msgid "Takeda ID Settings"
+msgstr "Takeda ID Settings"
+
+#: config/schema/takeda_id.schema.yml:0
+msgid "API URL"
+msgstr "API URL"
+
+#: config/schema/takeda_id.schema.yml:0
+msgid "Lead Experience URL"
+msgstr "Lead Experience URL"
+
+#: config/schema/takeda_id.schema.yml:0
+msgid "API Key"
+msgstr "API Key"
+
+#: config/schema/takeda_id.schema.yml:0
+msgid "API Secret"
+msgstr "API Secret"
+
+#: config/schema/takeda_id.schema.yml:0
+msgid "Okta URL"
+msgstr "Okta URL"
+
+#: config/schema/takeda_id.schema.yml:0 src/Form/TakedaIdConfigureForm.php:139
+msgid "Okta Client ID"
+msgstr "Okta Client ID"
+
+#: config/schema/takeda_id.schema.yml:0 src/Form/TakedaIdConfigureForm.php:175
+msgid "First Login"
+msgstr "First Login"
+
+#: config/schema/takeda_id.schema.yml:0 src/Form/TakedaIdConfigureForm.php:187
+msgid "Subsequent Login"
+msgstr "Subsequent Login"
+
+#: config/schema/takeda_id.schema.yml:0
+msgid "User registration method"
+msgstr "User registration method"
+
+#: config/schema/takeda_id.schema.yml:0 src/Form/TakedaIdConfigureForm.php:220
+msgid "Default Country"
+msgstr "Default Country"
+
+#: config/schema/takeda_id.schema.yml:0 src/Form/TakedaIdConfigureForm.php:241
+msgid "Pre-fillable Fields"
+msgstr "Pre-fillable Fields"
+
+#: config/schema/takeda_id.schema.yml:0 src/Form/TakedaIdConfigureForm.php:255
+msgid "Require valid HCP match before user is activated"
+msgstr "Require valid HCP match before user is activated"
+
+#: config/schema/takeda_id.schema.yml:0
+msgid "Hide the password policy table"
+msgstr "Hide the password policy table"
+
+#: config/schema/takeda_id.schema.yml:0
+msgid "Takeda ID email settings"
+msgstr "Takeda ID email settings"
+
+#: config/schema/takeda_id.schema.yml:0
+msgid "Takeda ID Registration Email"
+msgstr "Takeda ID Registration Email"
+
+#: config/schema/takeda_id.schema.yml:0
+msgid "Takeda ID Password Reset Email"
+msgstr "Takeda ID Password Reset Email"
+
+#: config/schema/takeda_id.schema.yml:0
+msgid "Lead Accepted Email"
+msgstr "Lead Accepted Email"
+
+#: config/schema/takeda_id.schema.yml:0
+msgid "Lead Rejected Email"
+msgstr "Lead Rejected Email"
+
+#: src/Access/ResetPassAccessCheck.php:37
+msgid ""
+"Another user (%other_user) is already logged into the site on this computer, "
+"but you tried to use a one-time link for user %resetting_user. Please <a "
+"href=\":logout\">log out</a> and try using the link again."
+msgstr ""
+"Another user (%other_user) is already logged into the site on this computer, "
+"but you tried to use a one-time link for user %resetting_user. Please <a "
+"href=\":logout\">log out</a> and try using the link again."
+
+#: src/Access/ResetPassAccessCheck.php:52
+msgid ""
+"You have tried to use a one-time login link that has expired. Please request "
+"a new one using the <a href=\":link\">link</a>."
+msgstr ""
+"You have tried to use a one-time login link that has expired. Please request "
+"a new one using the <a href=\":link\">link</a>."
+
+#: src/Controller/TakedaIdController.php:223
+msgid ""
+"<h2>Sorry, the activation of your account could not be processed as we have "
+"not been able to identify you as a registered healthcare professional.</h2>"
+msgstr ""
+"<h2>Sorry, the activation of your account could not be processed as we have "
+"not been able to identify you as a registered healthcare professional.</h2>"
+
+#: src/Controller/TakedaIdController.php:288
+msgid "You are currently authenticated as user %user."
+msgstr "You are currently authenticated as user %user."
+
+#: src/Controller/TakedaIdController.php:298
+msgid ""
+"Another user (%other_user) is already logged in, but you tried to use a one-"
+"time link for user %resetting_user. Please <a href=\":logout\">log out</a> "
+"and try using the link again."
+msgstr ""
+"Another user (%other_user) is already logged in, but you tried to use a one-"
+"time link for user %resetting_user. Please <a href=\":logout\">log out</a> "
+"and try using the link again."
+
+#: src/Controller/TakedaIdController.php:308
+msgid ""
+"You have tried to use a one-time login link that has either been used or is "
+"no longer valid. Please request a new one using the form below."
+msgstr ""
+"You have tried to use a one-time login link that has either been used or is "
+"no longer valid. Please request a new one using the form below."
+
+#: src/Controller/TakedaIdController.php:333
+msgid ""
+"You have tried to use a one-time login link that has either been used or is "
+"no longer valid."
+msgstr ""
+"You have tried to use a one-time login link that has either been used or is "
+"no longer valid."
+
+#: src/Controller/TakedaIdController.php:415
+msgid "Your account has been activated and you may now login."
+msgstr "Your account has been activated and you may now login."
+
+#: src/Controller/TakedaIdController.php:425
+msgid ""
+"Your email address has been confirmed, however Takeda needs to verify your "
+"details to complete your enrollment. You will recieve an email once your "
+"account has been activated."
+msgstr ""
+"Your email address has been confirmed, however Takeda needs to verify your "
+"details to complete your enrollment. You will recieve an email once your "
+"account has been activated."
+
+#: src/Controller/TakedaIdController.php:427
+msgid ""
+"Your account has been activated. Takeda will verify your details to complete "
+"your enrollment."
+msgstr ""
+"Your account has been activated. Takeda will verify your details to complete "
+"your enrollment."
+
+#: src/Controller/TakedaIdController.php:435;441
+msgid ""
+"Sorry, we were unable to confirm your Takeda ID registration. Please try "
+"again or contact Takeda for further assistance."
+msgstr ""
+"Sorry, we were unable to confirm your Takeda ID registration. Please try "
+"again or contact Takeda for further assistance."
+
+#: src/Controller/TakedaIdController.php:448
+msgid ""
+"Unable to verify with Takeda ID. You may have tried to use a verification "
+"code that has already been used or is no longer valid."
+msgstr ""
+"Unable to verify with Takeda ID. You may have tried to use a verification "
+"code that has already been used or is no longer valid."
+
+#: src/Controller/TakedaIdController.php:453
+msgid ""
+"You have tried to use a verification code that has either been used or is no "
+"longer valid."
+msgstr ""
+"You have tried to use a verification code that has either been used or is no "
+"longer valid."
+
+#: src/Controller/TakedaIdController.php:461
+msgid ""
+"You have tried to use a verification code that has either been used or is no "
+"longer valid. Please try to login with your account."
+msgstr ""
+"You have tried to use a verification code that has either been used or is no "
+"longer valid. Please try to login with your account."
+
+#: src/Controller/TakedaIdController.php:341
+msgid "User %name used one-time login link at time %timestamp."
+msgstr "User %name used one-time login link at time %timestamp."
+
+#: src/Controller/TakedaIdController.php:362
+msgid "User %name activated because require_hcp_match_to_activate is false."
+msgstr "User %name activated because require_hcp_match_to_activate is false."
+
+#: src/Controller/User.php:62;74
+msgid "Sorry, your password reset request has timed out. Please try again."
+msgstr "Sorry, your password reset request has timed out. Please try again."
+
+#: src/Form/TakedaIdConfigureForm.php:66
+msgid "Takeda ID & Omnichannel API Settings"
+msgstr "Takeda ID & Omnichannel API Settings"
+
+#: src/Form/TakedaIdConfigureForm.php:72
+msgid "Takeda ID API URL"
+msgstr "Takeda ID API URL"
+
+#: src/Form/TakedaIdConfigureForm.php:73
+msgid "Takeda ID (Mulesoft) API URL"
+msgstr "Takeda ID (Mulesoft) API URL"
+
+#: src/Form/TakedaIdConfigureForm.php:82
+msgid "Lead API URL"
+msgstr "Lead API URL"
+
+#: src/Form/TakedaIdConfigureForm.php:83
+msgid "Omnichannel (Mulesoft) Lead / HCP Conversion API URL"
+msgstr "Omnichannel (Mulesoft) Lead / HCP Conversion API URL"
+
+#: src/Form/TakedaIdConfigureForm.php:92
+msgid "Omnichannel API Key"
+msgstr "Omnichannel API Key"
+
+#: src/Form/TakedaIdConfigureForm.php:101
+msgid "Omnichannel API Secret"
+msgstr "Omnichannel API Secret"
+
+#: src/Form/TakedaIdConfigureForm.php:112
+msgid "Omnichannel Callback URL"
+msgstr "Omnichannel Callback URL"
+
+#: src/Form/TakedaIdConfigureForm.php:113
+msgid ""
+"Your Omnichannel Callback URL for this site. Ensure this is configured by "
+"Takeda and accessible on your site without authentication."
+msgstr ""
+"Your Omnichannel Callback URL for this site. Ensure this is configured by "
+"Takeda and accessible on your site without authentication."
+
+#: src/Form/TakedaIdConfigureForm.php:123
+msgid "Okta API Settings"
+msgstr "Okta API Settings"
+
+#: src/Form/TakedaIdConfigureForm.php:129
+msgid "Okta API URL"
+msgstr "Okta API URL"
+
+#: src/Form/TakedaIdConfigureForm.php:130
+msgid "Okta API URL. No trailing slash. Used to register with Single Sign-on"
+msgstr "Okta API URL. No trailing slash. Used to register with Single Sign-on"
+
+#: src/Form/TakedaIdConfigureForm.php:148
+msgid "Okta Callback URL"
+msgstr "Okta Callback URL"
+
+#: src/Form/TakedaIdConfigureForm.php:149
+msgid ""
+"Your Takeda ID / Okta Callback URL for this site. Ensure this is configured "
+"by Takeda and accessible on your site without authentication."
+msgstr ""
+"Your Takeda ID / Okta Callback URL for this site. Ensure this is configured "
+"by Takeda and accessible on your site without authentication."
+
+#: src/Form/TakedaIdConfigureForm.php:160
+msgid "Takeda ID Redirects"
+msgstr "Takeda ID Redirects"
+
+#: src/Form/TakedaIdConfigureForm.php:177
+msgid ""
+"URL to redirect to on a user's first login. For example, you may wish to "
+"redirect to an Edit Profile page to complete registration / setup."
+msgstr ""
+"URL to redirect to on a user's first login. For example, you may wish to "
+"redirect to an Edit Profile page to complete registration / setup."
+
+#: src/Form/TakedaIdConfigureForm.php:189
+msgid ""
+"URL to redirect to on a user's subsequent logins. For example, your homepage."
+msgstr ""
+"URL to redirect to on a user's subsequent logins. For example, your homepage."
+
+#: src/Form/TakedaIdConfigureForm.php:199
+msgid "Takeda ID Account Registration"
+msgstr "Takeda ID Account Registration"
+
+#: src/Form/TakedaIdConfigureForm.php:221
+msgid ""
+"Takeda ID requires country information to support lead matching. <br/>If "
+"your registration form does not explicitly display the "
+"<em>field_crm_country</em> field, this default will be used."
+msgstr ""
+"Takeda ID requires country information to support lead matching. <br/>If "
+"your registration form does not explicitly display the "
+"<em>field_crm_country</em> field, this default will be used."
+
+#: src/Form/TakedaIdConfigureForm.php:242
+msgid ""
+"The selected fields on the registration form will be available to pre-"
+"prepopulate by using the field name as a query parameter (eg. /user/register?"
+"field_first_name=Test&field_last_name=User&mail=test@example.com). Ensure "
+"your desired fields have been added to the form in the Drupal configuration. "
+"Custom items checked here will also be passed as additional fields to a "
+"Takeda ID generated HCP Lead."
+msgstr ""
+"The selected fields on the registration form will be available to pre-"
+"prepopulate by using the field name as a query parameter (eg. /user/register?"
+"field_first_name=Test&field_last_name=User&mail=test@example.com). Ensure "
+"your desired fields have been added to the form in the Drupal configuration. "
+"Custom items checked here will also be passed as additional fields to a "
+"Takeda ID generated HCP Lead."
+
+#: src/Form/TakedaIdConfigureForm.php:249
+msgid "Takeda ID Lead Matching Behaviour"
+msgstr "Takeda ID Lead Matching Behaviour"
+
+#: src/Form/TakedaIdConfigureForm.php:256
+msgid ""
+"If enabled, users will not be \"activated\" in Drupal (and therefore unable "
+"to login) until the Takeda ID lead generation process is complete and "
+"they've been matched to a valid HCP. <br/>Disable if you wish to customise "
+"access for active users with the takeda_id_non_hcp role."
+msgstr ""
+"If enabled, users will not be \"activated\" in Drupal (and therefore unable "
+"to login) until the Takeda ID lead generation process is complete and "
+"they've been matched to a valid HCP. <br/>Disable if you wish to customise "
+"access for active users with the takeda_id_non_hcp role."
+
+#: src/Form/TakedaIdConfigureForm.php:263
+msgid "Password Management"
+msgstr "Password Management"
+
+#: src/Form/TakedaIdConfigureForm.php:269
+msgid "Hide Password Policy Table"
+msgstr "Hide Password Policy Table"
+
+#: src/Form/TakedaIdConfigureForm.php:270
+msgid ""
+"Hide the Password Policy details table on registration / reset password "
+"pages. Disable if you wish to style this via your theme or a custom module."
+msgstr ""
+"Hide the Password Policy details table on registration / reset password "
+"pages. Disable if you wish to style this via your theme or a custom module."
+
+#: src/Form/TakedaIdConfigureForm.php:276
+msgid "Takeda Consent Reporting"
+msgstr "Takeda Consent Reporting"
+
+#: src/Form/TakedaIdConfigureForm.php:304
+msgid "Enable Takeda ID Consent Reporting"
+msgstr "Enable Takeda ID Consent Reporting"
+
+#: src/Form/TakedaIdConfigureForm.php:305
+msgid ""
+"When enabled, user consent will be captured at registration and submitted to "
+"the Takeda CRM on successful account activation."
+msgstr ""
+"When enabled, user consent will be captured at registration and submitted to "
+"the Takeda CRM on successful account activation."
+
+#: src/Form/TakedaIdConfigureForm.php:312
+msgid "Consent Capture Field"
+msgstr "Consent Capture Field"
+
+#: src/Form/TakedaIdConfigureForm.php:313
+msgid ""
+"The checkbox field used to capture user consent during registration. "
+"Configure this in the <a href=\"/admin/config/people/accounts/fields"
+"\">Account Fields settings</a>."
+msgstr ""
+"The checkbox field used to capture user consent during registration. "
+"Configure this in the <a href=\"/admin/config/people/accounts/fields"
+"\">Account Fields settings</a>."
+
+#: src/Form/TakedaIdConfigureForm.php:326
+msgid "Marketing Email"
+msgstr "Marketing Email"
+
+#: src/Form/TakedaIdConfigureForm.php:327
+msgid "Text/SMS"
+msgstr "Text/SMS"
+
+#: src/Form/TakedaIdConfigureForm.php:332
+msgid "Consent Channels"
+msgstr "Consent Channels"
+
+#: src/Form/TakedaIdConfigureForm.php:333
+msgid ""
+"Depending on local requirements, consent may need to be captured in the CRM "
+"for Email, Phone/Text, or both. Select the desired consent channels for your "
+"requirements."
+msgstr ""
+"Depending on local requirements, consent may need to be captured in the CRM "
+"for Email, Phone/Text, or both. Select the desired consent channels for your "
+"requirements."
+
+#: src/Form/TakedaIdConfigureForm.php:346
+msgid "Phone Number Field"
+msgstr "Phone Number Field"
+
+#: src/Form/TakedaIdConfigureForm.php:347
+msgid ""
+"The field used to capture the user's phone number. Enable the core Drupal "
+"Telephone module and configure a Telephone field in the <a href=\"/admin/"
+"config/people/accounts/fields\">Account Fields settings</a> for best results."
+msgstr ""
+"The field used to capture the user's phone number. Enable the core Drupal "
+"Telephone module and configure a Telephone field in the <a href=\"/admin/"
+"config/people/accounts/fields\">Account Fields settings</a> for best results."
+
+#: src/Form/TakedaIdConfigureForm.php:362
+msgid "Enable Takeda Consent Reporting"
+msgstr "Enable Takeda Consent Reporting"
+
+#: src/Form/TakedaIdConfigureForm.php:363;399
+msgid ""
+"Takeda Consent Reporting requires a boolean checkbox configured to capture "
+"your consent."
+msgstr ""
+"Takeda Consent Reporting requires a boolean checkbox configured to capture "
+"your consent."
+
+#: src/Form/TakedaIdConfigureForm.php:364
+msgid "Configure Account Fields"
+msgstr "Configure Account Fields"
+
+#: src/Form/TakedaIdConfigureForm.php:381
+msgid "Save Settings"
+msgstr "Save Settings"
+
+#: src/Form/TakedaIdConfigureForm.php:402
+msgid ""
+"Takeda Consent Reporting requires at least one Consent Channel to be "
+"selected."
+msgstr ""
+"Takeda Consent Reporting requires at least one Consent Channel to be "
+"selected."
+
+#: config/install/takeda_id.mail.yml:0
+msgid ""
+"<h3>Dear [user:display-name],</h3>\n"
+"<p class=\"p1\">We have received a request to register your TakedaID account:"
+"</p>\n"
+"<p style=\"text-align: center; font-size: 16px;\">&nbsp;<a href=\"mailto:"
+"[user:mail]\">[user:mail]</a></p>\n"
+"<p class=\"p1\">Click the button below to confirm your registration</p>\n"
+"<table class=\"btn btn-primary\" style=\"width: 454px;\" role=\"presentation"
+"\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n"
+"<tbody>\n"
+"<tr>\n"
+"<td style=\"width: 452px;\" align=\"left\">\n"
+"<table style=\"height: 18px; width: 780px;\" role=\"presentation\" border="
+"\"0\" width=\"260\" cellspacing=\"0\" cellpadding=\"10\">\n"
+"<tbody>\n"
+"<tr style=\"height: 18px;\">\n"
+"<td style=\"width: 213px; height: 18px;\">&nbsp;</td>\n"
+"<td style=\"background-color: #1fc61f; color: white; height: 18px; width: "
+"296px;\" align=\"center\"><a style=\"color: white; text-decoration: none;\" "
+"href=\"[user:takeda-id-verification-url]\">ACTIVATE YOUR REGISTRATION</a></"
+"td>\n"
+"<td style=\"width: 203px; height: 18px;\">&nbsp;</td>\n"
+"</tr>\n"
+"</tbody>\n"
+"</table>\n"
+"</td>\n"
+"</tr>\n"
+"</tbody>\n"
+"</table>\n"
+"<p>If you have trouble accessing the link, please copy this URL and paste it "
+"into your browser to activate your registration.</p>\n"
+"<p><span style=\"color: black !important; text-decoration: none !important;"
+"\">[user:takeda-id-verification-url]</span></p>\n"
+"<p class=\"p1\">Activation must be done within the next 24 hours or you must "
+"re-register</p>\n"
+"<p>Takeda</p>"
+msgstr ""
+"<h3>Dear [user:display-name],</h3>\n"
+"<p class=\"p1\">We have received a request to register your TakedaID account:"
+"</p>\n"
+"<p style=\"text-align: center; font-size: 16px;\">&nbsp;<a href=\"mailto:"
+"[user:mail]\">[user:mail]</a></p>\n"
+"<p class=\"p1\">Click the button below to confirm your registration</p>\n"
+"<table class=\"btn btn-primary\" style=\"width: 454px;\" role=\"presentation"
+"\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n"
+"<tbody>\n"
+"<tr>\n"
+"<td style=\"width: 452px;\" align=\"left\">\n"
+"<table style=\"height: 18px; width: 780px;\" role=\"presentation\" border="
+"\"0\" width=\"260\" cellspacing=\"0\" cellpadding=\"10\">\n"
+"<tbody>\n"
+"<tr style=\"height: 18px;\">\n"
+"<td style=\"width: 213px; height: 18px;\">&nbsp;</td>\n"
+"<td style=\"background-color: #1fc61f; color: white; height: 18px; width: "
+"296px;\" align=\"center\"><a style=\"color: white; text-decoration: none;\" "
+"href=\"[user:takeda-id-verification-url]\">ACTIVATE YOUR REGISTRATION</a></"
+"td>\n"
+"<td style=\"width: 203px; height: 18px;\">&nbsp;</td>\n"
+"</tr>\n"
+"</tbody>\n"
+"</table>\n"
+"</td>\n"
+"</tr>\n"
+"</tbody>\n"
+"</table>\n"
+"<p>If you have trouble accessing the link, please copy this URL and paste it "
+"into your browser to activate your registration.</p>\n"
+"<p><span style=\"color: black !important; text-decoration: none !important;"
+"\">[user:takeda-id-verification-url]</span></p>\n"
+"<p class=\"p1\">Activation must be done within the next 24 hours or you must "
+"re-register</p>\n"
+"<p>Takeda</p>"
+
+#: config/install/takeda_id.mail.yml:0
+msgid "Verify your Takeda ID Registration for [site:name]"
+msgstr "Verify your Takeda ID Registration for [site:name]"
+
+#: config/install/takeda_id.mail.yml:0
+msgid ""
+"<h3>Dear [user:display-name],</h3>\n"
+"<p class=\"p1\">We have received a request to reset your TakedaID account "
+"password:</p>\n"
+"<p style=\"text-align: center; font-size: 16px;\"><a href=\"mailto:[user:"
+"mail]\">[user:mail]</a></p>\n"
+"<p class=\"p1\">Please reset your password by clicking the button below:</"
+"p>\n"
+"<table class=\"btn btn-primary\" role=\"presentation\" border=\"0\" "
+"cellspacing=\"0\" cellpadding=\"0\">\n"
+"<tbody>\n"
+"<tr>\n"
+"<td style=\"width: 452px;\" align=\"left\">\n"
+"<table style=\"height: 18px; width: 780px;\" role=\"presentation\" border="
+"\"0\" width=\"260\" cellspacing=\"0\" cellpadding=\"10\">\n"
+"<tbody>\n"
+"<tr>\n"
+"<td style=\"width: 75px;\">&nbsp;</td>\n"
+"<td style=\"background-color: #1fc61f; color: white; height: 18px; width: "
+"100px;\" align=\"center\"><a style=\"color: white; text-decoration: none;\" "
+"href=\"[user:one-time-login-url]\">RESET PASSWORD</a></td>\n"
+"<td style=\"width: 70px;\">&nbsp;</td>\n"
+"</tr>\n"
+"</tbody>\n"
+"</table>\n"
+"</td>\n"
+"</tr>\n"
+"</tbody>\n"
+"</table>\n"
+"<p>If you have trouble accessing the link, please copy this URL and paste it "
+"into your browser to reset your password.</p>\n"
+"<p><span style=\"color: black !important; text-decoration: none !important;"
+"\">[user:one-time-login-url]</span></p>\n"
+"<p>Takeda</p>"
+msgstr ""
+"<h3>Dear [user:display-name],</h3>\n"
+"<p class=\"p1\">We have received a request to reset your TakedaID account "
+"password:</p>\n"
+"<p style=\"text-align: center; font-size: 16px;\"><a href=\"mailto:[user:"
+"mail]\">[user:mail]</a></p>\n"
+"<p class=\"p1\">Please reset your password by clicking the button below:</"
+"p>\n"
+"<table class=\"btn btn-primary\" role=\"presentation\" border=\"0\" "
+"cellspacing=\"0\" cellpadding=\"0\">\n"
+"<tbody>\n"
+"<tr>\n"
+"<td style=\"width: 452px;\" align=\"left\">\n"
+"<table style=\"height: 18px; width: 780px;\" role=\"presentation\" border="
+"\"0\" width=\"260\" cellspacing=\"0\" cellpadding=\"10\">\n"
+"<tbody>\n"
+"<tr>\n"
+"<td style=\"width: 75px;\">&nbsp;</td>\n"
+"<td style=\"background-color: #1fc61f; color: white; height: 18px; width: "
+"100px;\" align=\"center\"><a style=\"color: white; text-decoration: none;\" "
+"href=\"[user:one-time-login-url]\">RESET PASSWORD</a></td>\n"
+"<td style=\"width: 70px;\">&nbsp;</td>\n"
+"</tr>\n"
+"</tbody>\n"
+"</table>\n"
+"</td>\n"
+"</tr>\n"
+"</tbody>\n"
+"</table>\n"
+"<p>If you have trouble accessing the link, please copy this URL and paste it "
+"into your browser to reset your password.</p>\n"
+"<p><span style=\"color: black !important; text-decoration: none !important;"
+"\">[user:one-time-login-url]</span></p>\n"
+"<p>Takeda</p>"
+
+#: config/install/takeda_id.mail.yml:0
+msgid "Your Takeda ID Reset Password request for [site:name]"
+msgstr "Your Takeda ID Reset Password request for [site:name]"
+
+#: config/install/takeda_id.mail.yml:0
+msgid ""
+"<h3>Dear [user:display-name],</h3>\n"
+"<p class=\"p1\">Your account has been approved, you can log in to the [site:"
+"name] website using your TakedaID credentials.</p>\n"
+"<p style=\"text-align: center; font-size: 16px;\">&nbsp;<a href=\"mailto:"
+"[user:mail]\">[user:mail]</a></p>\n"
+"<table class=\"btn btn-primary\" style=\"width: 454px;\" role=\"presentation"
+"\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n"
+"<tbody>\n"
+"<tr>\n"
+"<td style=\"width: 452px;\" align=\"left\">\n"
+"<table style=\"height: 18px; width: 780px;\" role=\"presentation\" border="
+"\"0\" width=\"260\" cellspacing=\"0\" cellpadding=\"10\">\n"
+"<tbody>\n"
+"<tr style=\"height: 18px;\">\n"
+"<td style=\"width: 213px; height: 18px;\">&nbsp;</td>\n"
+"<td style=\"background-color: #1fc61f; color: white; height: 18px; width: "
+"296px;\" align=\"center\"><a style=\"color: white; text-decoration: none;\" "
+"href=\"[site:url]\" target=\"_blank\" rel=\"noopener\">LOG IN</a></td>\n"
+"<td style=\"width: 203px; height: 18px;\">&nbsp;</td>\n"
+"</tr>\n"
+"</tbody>\n"
+"</table>\n"
+"</td>\n"
+"</tr>\n"
+"</tbody>\n"
+"</table>\n"
+"<p>If you have trouble accessing the link, please copy this URL and paste it "
+"into your browser to enter the website.</p>\n"
+"<p><span style=\"color: black !important; text-decoration: none !important;"
+"\">[site:url]</span></p>\n"
+"<p>Takeda</p>"
+msgstr ""
+"<h3>Dear [user:display-name],</h3>\n"
+"<p class=\"p1\">Your account has been approved, you can log in to the [site:"
+"name] website using your TakedaID credentials.</p>\n"
+"<p style=\"text-align: center; font-size: 16px;\">&nbsp;<a href=\"mailto:"
+"[user:mail]\">[user:mail]</a></p>\n"
+"<table class=\"btn btn-primary\" style=\"width: 454px;\" role=\"presentation"
+"\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n"
+"<tbody>\n"
+"<tr>\n"
+"<td style=\"width: 452px;\" align=\"left\">\n"
+"<table style=\"height: 18px; width: 780px;\" role=\"presentation\" border="
+"\"0\" width=\"260\" cellspacing=\"0\" cellpadding=\"10\">\n"
+"<tbody>\n"
+"<tr style=\"height: 18px;\">\n"
+"<td style=\"width: 213px; height: 18px;\">&nbsp;</td>\n"
+"<td style=\"background-color: #1fc61f; color: white; height: 18px; width: "
+"296px;\" align=\"center\"><a style=\"color: white; text-decoration: none;\" "
+"href=\"[site:url]\" target=\"_blank\" rel=\"noopener\">LOG IN</a></td>\n"
+"<td style=\"width: 203px; height: 18px;\">&nbsp;</td>\n"
+"</tr>\n"
+"</tbody>\n"
+"</table>\n"
+"</td>\n"
+"</tr>\n"
+"</tbody>\n"
+"</table>\n"
+"<p>If you have trouble accessing the link, please copy this URL and paste it "
+"into your browser to enter the website.</p>\n"
+"<p><span style=\"color: black !important; text-decoration: none !important;"
+"\">[site:url]</span></p>\n"
+"<p>Takeda</p>"
+
+#: config/install/takeda_id.mail.yml:0
+msgid "Your Takeda ID account has been approved"
+msgstr "Your Takeda ID account has been approved"
+
+#: config/install/takeda_id.mail.yml:0
+msgid ""
+"<h3>Dear [user:display-name],</h3>\n"
+"<p class=\"p1\">We're sorry, the activation of your account has been "
+"rejected as we were not able to validate you as a healthcare professional. "
+"Please contact Takeda for further assistance.</p>\n"
+"<p style=\"text-align: center; font-size: 16px;\"><a href=\"mailto:"
+"[username]\">[username]</a></p>\n"
+"<p>Takeda</p>"
+msgstr ""
+"<h3>Dear [user:display-name],</h3>\n"
+"<p class=\"p1\">We're sorry, the activation of your account has been "
+"rejected as we were not able to validate you as a healthcare professional. "
+"Please contact Takeda for further assistance.</p>\n"
+"<p style=\"text-align: center; font-size: 16px;\"><a href=\"mailto:"
+"[username]\">[username]</a></p>\n"
+"<p>Takeda</p>"
+
+#: config/install/takeda_id.mail.yml:0
+msgid "Sorry, we were unable to activate your account"
+msgstr "Sorry, we were unable to activate your account"
+
+#: config/install/takeda_id.settings.yml:0
+msgid "https://api-us-np.takeda.com/dev/security-takedaid-api/v1"
+msgstr "https://api-us-np.takeda.com/dev/security-takedaid-api/v1"
+
+#: config/install/takeda_id.settings.yml:0
+msgid "https://api-us-aws-dev.takeda.com/dev/gcc-omnichannel-api/v1"
+msgstr "https://api-us-aws-dev.takeda.com/dev/gcc-omnichannel-api/v1"
+
+#: config/install/takeda_id.settings.yml:0
+msgid "https://takedaext.oktapreview.com/oauth2/default/v1"
+msgstr "https://takedaext.oktapreview.com/oauth2/default/v1"
+
+#: config/install/takeda_id.settings.yml:0
+msgid "AU"
+msgstr "AU"
+
+#: config/optional/field.field.user.user.field_first_name.yml:0
+msgid "First Name"
+msgstr "First Name"
+
+#: config/optional/field.field.user.user.field_last_name.yml:0
+msgid "Last Name"
+msgstr "Last Name"
+
+#: config/optional/field.field.user.user.field_title.yml:0
+msgid "Title"
+msgstr "Title"

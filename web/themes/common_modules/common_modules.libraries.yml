@@ -1,0 +1,29 @@
+global-css:
+  css:
+    theme:
+      libs/select2/select2.min.css: {}
+      styles/main.css: {}
+
+global-js:
+  js:
+    libs/select2/select2.min.js: {}
+    scripts/main.js: {}
+  dependencies:
+    - core/jquery
+
+login-page-js:
+  js:
+    scripts/pages/login-page.js: {}   
+
+registration-page-js:
+  js:
+    scripts/pages/register-page.js: {}
+
+forgot-password-page-js:
+  js:
+    scripts/pages/forgot-password-page.js: {}
+
+reset-password-page-js:
+  js:
+    scripts/pages/reset-password-page.js: {}
+    

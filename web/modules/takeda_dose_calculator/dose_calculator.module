@@ -1,0 +1,324 @@
+<?php
+use Drupal\user\Entity\User;
+/**
+ * Implements hook_theme().
+ */
+function dose_calculator_theme($existing, $type, $theme, $path)
+{
+    $theme = array();
+    $theme['node__advante_calculator'] = array(
+        'variables' => [
+            'toto' => "toto", //try one
+        ],
+        'base hook' => 'page',
+        'render element' => 'elements',
+        '#tata' => 'tata', //try two
+    );
+    $theme['node__feiba_calculator'] = array(
+        'variables' => [
+            'toto' => "toto", //try one
+        ],
+        'base hook' => 'page',
+        'render element' => 'elements',
+        '#tata' => 'tata', //try two
+    );
+    $theme['node__ninlaro_calculator'] = array(
+        'variables' => [
+            'toto' => "toto", //try one
+        ],
+        'base hook' => 'page',
+        'render element' => 'elements',
+        '#tata' => 'tata', //try two
+    );
+    $theme['node__adcietris_calculator'] = array(
+        'variables' => [
+            'toto' => "toto", //try one
+        ],
+        'base hook' => 'page',
+        'render element' => 'elements',
+        '#tata' => 'tata', //try two
+    );
+    $theme['node__vpriv_calculator'] = array(
+        'variables' => [
+            'toto' => "toto", //try one
+        ],
+        'base hook' => 'page',
+        'render element' => 'elements',
+        '#tata' => 'tata', //try two
+    );
+    $theme['node__prothromplex_calculator'] = array(
+        'variables' => [
+            'toto' => "toto", //try one
+        ],
+        'base hook' => 'page',
+        'render element' => 'elements',
+        '#tata' => 'tata', //try two
+    );
+    $theme['node__adynovate_calculator'] = array(
+        'variables' => [
+            'toto' => "toto", //try one
+        ],
+        'base hook' => 'page',
+        'render element' => 'elements',
+        '#tata' => 'tata', //try two
+    );
+    return $theme;
+}
+
+function dose_calculator_preprocess_node__advante_calculator(&$variables)
+{
+    $node = \Drupal::routeMatch()->getParameter('node');
+    global $base_url;
+    $module_handler = \Drupal::service('module_handler');
+    $module_path = $module_handler->getModule('dose_calculator')->getPath();
+    if ($node instanceof \Drupal\node\NodeInterface) {
+    $default_url = $base_url . '/' . $module_path;
+    $variables['back_to_top_color'] = $variables['content']['field_advante_back_to_top_color'];
+    $variables['advante_table'] = $default_url . '/assets/advante/images/advante.svg';
+    $variables['subheader_background_color'] = $variables['content']['field_advante_table_subheader_ba'];
+    $variables['subheader_text_color'] = $variables['content']['field_advante_table_subheader_te'];
+    $variables['calculate_button_background_color'] = $variables['content']['field_advante_calculate_button_b'];
+    $variables['calculate_button_text_color'] = $variables['content']['field_advante_calculate_button_t'];
+    $variables['calculate_button_text'] = $variables['content']['field_advante_calculate_text'];
+    $variables['calculate_button_background_color_hover'] = $variables['content']['field_advante_calculate_backhov'];
+    $variables['calculate_button_text_color_hover'] = $variables['content']['field_advante_calculate_texthov'];
+    $variables['even_rows_background_color'] = $variables['content']['field_advante_even_rows_backgrou'];
+    $variables['even_rows_text_color'] = $variables['content']['field_advante_even_rows_text_col'];
+    $variables['inputs_background_color'] = $variables['content']['field_advante_inputs_background_'];
+    $variables['inputs_text_color'] = $variables['content']['field_advante_inputs_text_color'];
+    $variables['labels_color'] = $variables['content']['field_advante_labels_'];
+    $variables['odd_rows_background_color'] = $variables['content']['field_advante_odd_rows_backgroun'];
+    $variables['odd_rows_text_color'] = $variables['content']['field_advante_odd_rows_text_colo'];
+    $variables['placeholders_color'] = $variables['content']['field_advante_placeholder_color'];
+    $variables['reset_button_background_color'] = $variables['content']['field_advante_reset_button_backg'];
+    $variables['reset_button_background_color_hover'] = $variables['content']['field_advante_reset_button_bc_ho'];
+    $variables['reset_button_text'] = $variables['content']['field_advante_reset_button_txt'];
+    $variables['reset_button_text_color'] = $variables['content']['field_advante_reset_button_text_'];
+    $variables['reset_button_text_color_hover'] = $variables['content']['field_advante_reset_button_txtho'];
+    $variables['title_color'] = $variables['content']['field_advante_title_color'];
+    $variables['table_header_text_color'] = $variables['content']['field_advante_table_header_text_'];
+    $variables['table_header_background_color'] = $variables['content']['field_advante_table_header_backg'];
+    $variables['reference_links'] = $node->get('field_reference_link')->getValue();
+    $recommendations = array();
+    for ($i = 0; $i < count($node->get('field_recommendations')->getValue()); $i++) {
+        $paragraph = $node->get('field_recommendations')->getValue()[$i];
+        $arr = \Drupal\paragraphs\Entity\Paragraph::load($paragraph['target_id']);
+        $recommendations_value = array(
+            'desired_serum_activity' => $arr->field_desired_serum_activity->value,
+            'patient_chart' => $arr->field_patient_chart->value,
+            'recommendations' => $arr->field_recommendations->value,
+        );
+        array_push($recommendations, $recommendations_value);
+    }
+    $variables['recommendations'] = $recommendations;
+    } else {
+        return;
+    }
+
+}
+
+function dose_calculator_preprocess_node__feiba_calculator(&$variables)
+{
+    $node = \Drupal::routeMatch()->getParameter('node');
+    global $base_url;
+    $module_handler = \Drupal::service('module_handler');
+    $module_path = $module_handler->getModule('dose_calculator')->getPath();
+    if ($node instanceof \Drupal\node\NodeInterface) {
+    $default_url = $base_url . '/' . $module_path;
+    $variables['feiba_table'] = $default_url . '/assets/feiba/images/feiba.svg';
+    $variables['even_rows_background_color'] = $variables['content']['field_feiba_even_rows_background'];
+    $variables['odd_rows_background_color'] = $variables['content']['field_feiba_odd_rows_background'];
+    $variables['even_rows_text_color'] = $variables['content']['field_feiba_even_rows_text_color'];
+    $variables['odd_rows_text_color'] = $variables['content']['field_feiba_odd_rows_text_color'];
+    $variables['inputs_background_color'] = $variables['content']['field_feiba_inputs_background'];
+    $variables['inputs_text_color'] = $variables['content']['field_feiba_inputs_text_color'];
+    $variables['placeholders_color'] = $variables['content']['field_feiba_placeholder_color'];
+    $variables['labels_color'] = $variables['content']['field_feiba_labels_color'];
+    $variables['calculate_button_background_color'] = $variables['content']['field_feiba_calculate_button_bac'];
+    $variables['calculate_button_text_color'] = $variables['content']['field_feiba_calculate_text_color'];
+    $variables['calculate_button_background_color_hover'] = $variables['content']['field_feiba_calculate_button_hov'];
+    $variables['calculate_button_text_color_hover'] = $variables['content']['field_feiba_calculate_text_hover'];
+    $variables['reset_button_background_color'] = $variables['content']['field_feiba_reset_button_backgro'];
+    $variables['reset_button_text_color'] = $variables['content']['field_feiba_reset_button_text_co'];
+    $variables['reset_button_background_color_hover'] = $variables['content']['field_feiba_reset_button_back_ho'];
+    $variables['reset_button_text_color_hover'] = $variables['content']['field_feiba_reset_button_text_ho'];
+    $variables['back_to_top_color'] = $variables['content']['field_feiba_back_to_top_color'];
+    $variables['calculate_button_text'] = $variables['content']['field_feiba_calculate_button_tex'];
+    $variables['reset_button_text'] = $variables['content']['field_feiba_reset_button_text'];
+    $variables['title_color'] = $variables['content']['field_feiba_title_color'];
+    $variables['reference_links'] = $node->get('field_feiba_reference_link')->getValue();
+    $recommendations = array();
+    for ($i = 0; $i < count($node->get('field_recommendations_feiba')->getValue()); $i++) {
+        $paragraph = $node->get('field_recommendations_feiba')->getValue()[$i];
+        $arr = \Drupal\paragraphs\Entity\Paragraph::load($paragraph['target_id']);
+        $recommendations_value = array(
+            'desired_serum_activity' => $arr->field_desired_serum_activity->value,
+            'patient_chart' => $arr->field_patient_chart->value,
+            'recommendations' => $arr->field_recommendations->value,
+        );
+        array_push($recommendations, $recommendations_value);
+    }
+    $variables['recommendations'] = $recommendations;
+    $variables['table_header_text_color'] = $variables['content']['field_feiba_table_header_text_co'];
+    $variables['table_header_background_color'] = $variables['content']['field_feiba_table_header_backgro'];
+    } else {
+        return;
+    }
+
+}
+
+function dose_calculator_preprocess_node__ninlaro_calculator(&$variables)
+{
+    global $base_url;
+    $node = \Drupal::routeMatch()->getParameter('node');
+    if ($node instanceof \Drupal\node\NodeInterface) {
+    $module_handler = \Drupal::service('module_handler');
+    $module_path = $module_handler->getModule('dose_calculator')->getPath();
+    $default_url = $base_url . '/' . $module_path;
+    $variables['pagination_check'] = $default_url . '/assets/ninlaro/icons/check.svg';
+    $variables['back_to_top_color'] = $variables['content']['field_ninlaro_back_to_top_button'];
+    $variables['calculator_background_color'] = $variables['content']['field_nc_background_color'];
+    $variables['calculator_text_color'] = $variables['content']['field_ninlaro_calculator_text_co'];
+    $variables['age_border_color'] = $variables['content']['field_ninlaro_age_border_color'];
+    $variables['age_background_color'] = $variables['content']['field_ninlaro_age_background_col'];
+    $variables['age_text_color'] = $variables['content']['field_ninlaro_age_text_color'];
+    $variables['total_score_border_color'] = $variables['content']['field_ninlaro_total_score_bc'];
+    $variables['total_score_background_color'] = $variables['content']['field_ninlaro_total_score_bgc'];
+    $variables['total_score_text_color'] = $variables['content']['field_ninlaro_total_score_text_c'];
+    $variables['result_button_border_color'] = $variables['content']['field_ninlaro_result_button_bord'];
+    $variables['result_button_text'] = $variables['content']['field_ninlaro_result_button_text'];
+    $variables['result_button_background_color'] = $variables['content']['field_ninlaro_result_button_bgc'];
+    $variables['result_button_text_color'] = $variables['content']['field_ninlaro_result_button_txtc'];
+    $variables['final_score_border_color'] = $variables['content']['field_ninlaro_final_score_border'];
+    $variables['navigation_button_border_color'] = $variables['content']['field_ninlaro_navigation_borderc'];
+    $variables['navigation_button_background_color'] = $variables['content']['field_ninlaro_navigation_bgc'];
+    $variables['navigation_button_background_color_hover'] = $variables['content']['field_ninlaro_navigation_bgc_hov'];
+    $variables['title_color'] = $variables['content']['field_ninlaro_title_color'];
+    $variables['dropdowns_border_color'] = $variables['content']['field_ninlaro_dropdowns_border_c'];
+    $variables['dropdowns_text_color'] = $variables['content']['field_ninlaro_dropdowns_text_col'];
+    $variables['reference_links'] = $node->get('field_ninlaro_reference_link')->getValue();
+    } else {
+        return;
+    }
+
+}
+function dose_calculator_preprocess_node__adcietris_calculator(&$variables)
+{
+    global $base_url;
+    $module_handler = \Drupal::service('module_handler');
+    $module_path = $module_handler->getModule('dose_calculator')->getPath();
+    $default_url = $base_url . '/' . $module_path;
+    $variables['dc_echelon1'] = $default_url . '/images/pile-bottle.svg';
+    $variables['dc_ajuste_dose'] = $default_url . '/images/dose-adjust.svg';
+    $variables['dc_grupo_343'] = $default_url . '/images/Grupo 343.png';
+    $variables['dc_grupo_346'] = $default_url . '/images/Grupo 346.png';
+    $variables['dc_pessoa'] = $default_url . '/images/person.svg';
+    $variables['dc_porta'] = $default_url . '/images/weight-counter.svg';
+    $variables['dc_regua'] = $default_url . '/images/height-meter.svg';
+    $variables['dc_repeat'] = $default_url . '/images/repeat.png';
+    $variables['result_box_background_color'] = $variables['content']['field_adcetris_result_box_backgr'];
+    $variables['first_background_color'] = $variables['content']['field_adcetris_first_background_'];
+    $variables['second_background_color'] = $variables['content']['field_adcetris_second_background'];
+    $variables['third_background_color'] = $variables['content']['field_adcetris_third_background_'];
+    $variables['fourth_background_color'] = $variables['content']['field_adcetris_fourth_background'];
+    $variables['back_to_top_button_color'] = $variables['content']['field_adcetris_back_to_top_butto'];
+    $variables['calculator_one_content'] = $variables['content']['field_adcetris_calculator_one_co'];
+    $variables['calculator_two_content'] = $variables['content']['field_adcetris_calculator_two_co'];
+    $variables['calculator_three_content'] = $variables['content']['field_adcetris_calculator_three_'];
+    $variables['calculator_four_content'] = $variables['content']['field_adcetris_calculator_four_c'];
+    $variables['calculator_five_content'] = $variables['content']['field_adcetris_calculator_five_c'];
+    $variables['calculator_six_content'] = $variables['content']['field_adcetris_calculator_six_co'];
+    $variables['suspend_dose_grade_1'] = $variables['content']['field_adcetris_suspend_dose_grad'];
+    $variables['suspend_dose_grade_2'] = $variables['content']['field_adcetris_suspend_dose_gra2'];
+    $variables['nauropatia_sensory_continue_dose'] = $variables['content']['field_adcetris_nauropatia_sensor'];
+    $variables['nauropatia_sensory_reduce_dose'] = $variables['content']['field_adcetris_neuropatia_reduce'];
+    $variables['continue_dose_and_scheme'] = $variables['content']['field_adcetris_continue_dose_and'];
+    $variables['reduce_dose_every_2_weeks'] = $variables['content']['field_adcetris_reduce_dose_every'];
+    $variables['adcetris_suspend_dose_grade_2'] = $variables['content']['field_adcetris_adcetris_suspend_'];
+    $variables['discontinue_treatment'] = $variables['content']['field_adcetris_discontinue_treat'];
+    $variables['recommended_prophylaxis'] = $variables['content']['field_adcetris_recommended_proph'];
+    $variables['cycle_info'] = $variables['content']['field_adcetris_cycle_info'];
+    $variables['refer_to_leaflets'] = $variables['content']['field_adcetris_refer_to_leaflets'];
+
+}
+
+function dose_calculator_preprocess_node__vpriv_calculator(&$variables){
+    $variables['field_set_text_color'] = $variables['content']['field_set_text_color'];
+    $variables['field_set_heading_color'] = $variables['content']['field_set_heading_color'];
+    $variables['field_set_border_color'] = $variables['content']['field_set_border_color'];
+    $variables['field_set_secon'] = $variables['content']['field_set_secon'];
+    $variables['field_set_leaflet_color'] = $variables['content']['field_set_leaflet_color'];
+    $variables['field_set_leaflet_background_col'] = $variables['content']['field_set_leaflet_background_col'];
+    $variables['field_set_footnote_link_color'] = $variables['content']['field_set_footnote_link_color'];
+    $variables['field_set_secondary_color_for_ta'] = $variables['content']['field_set_secondary_color_for_ta'];
+    $variables['field_set_table_background_color'] = $variables['content']['field_set_table_background_color'];
+    $variables['field_set_table_input_color'] = $variables['content']['field_set_table_input_color'];
+    $variables['field_leaflet_url'] = $variables['content']['field_leaflet_url'];
+    $variables['field_rdc_96_2008_link'] = $variables['content']['field_rdc_96_2008_link'];
+}
+function dose_calculator_preprocess_node__prothromplex_calculator(&$variables){
+    global $base_url;
+    $node = \Drupal::routeMatch()->getParameter('node');
+    if ($node instanceof \Drupal\node\NodeInterface) {
+
+    $url = $_SERVER['HTTP_HOST'];
+    $module_handler = \Drupal::service('module_handler');
+    $module_path = $module_handler->getModule('dose_calculator')->getPath();
+    $default_url = $base_url . '/' . $module_path;
+    $variables['prothromplex_table1'] = $default_url . '/assets/prothromplex/images/prothromplex01.svg';
+    $variables['prothromplex_table2'] = $default_url . '/assets/prothromplex/images/prothromplex02.svg';
+    $variables['field_prothromplex_primary_color'] = $variables['content']['field_prothromplex_primary_color'];
+    $variables['field_prothromp_osecondary_color'] = $variables['content']['field_prothromp_osecondary_color'];
+    $variables['field_prothromplex_product_link'] = $variables['content']['field_prothromplex_product_link'];
+    $variables['field_mail_to'] = $variables['content']['field_mail_to'];
+    $variables['field_subject'] = $variables['content']['field_subject'];
+
+    $links = $node->get('field_external_links')->getValue();
+    
+    $external_links_arr = [];
+    array_push($external_links_arr, $url);
+    $i=0;
+    foreach ($links as $key => $value) {
+        array_push($external_links_arr, $links[$i]['value']);
+        $i++;
+
+    }
+   $variables['external_urls'] = implode(", ", $external_links_arr);
+   } else {
+        return;
+   }
+   
+}
+
+function dose_calculator_preprocess_node__adynovate_calculator(&$variables){
+    global $base_url;
+    $node = \Drupal::routeMatch()->getParameter('node');
+    if ($node instanceof \Drupal\node\NodeInterface) {
+    $url = $_SERVER['HTTP_HOST'];
+    $module_handler = \Drupal::service('module_handler');
+    $module_path = $module_handler->getModule('dose_calculator')->getPath();
+    $default_url = $base_url . '/' . $module_path;
+    $variables['table1'] = $default_url . '/assets/adynovate/images/adynovate01.svg';
+    $variables['table2'] = $default_url . '/assets/adynovate/images/adynovate02.svg';
+    $variables['field_adynovate_primary_color'] = $variables['content']['field_adynovate_primary_color'];
+    $variables['field_adynovate_secondary_color'] = $variables['content']['field_adynovate_secondary_color'];
+    $variables['field_adynovate_tertiary_color'] = $variables['content']['field_adynovate_tertiary_color'];
+    $variables['field_adynovate_mail_to'] = $variables['content']['field_adynovate_mail_to'];
+    $variables['field_adynovate_subject'] = $variables['content']['field_adynovate_subject'];
+    $variables['field_adynovate_product_link'] = $variables['content']['field_adynovate_product_link'];
+    $links = $node->get('field_adynovate_external_links')->getValue();
+    
+    $external_links_arr = [];
+    array_push($external_links_arr, $url);
+    $i=0;
+    foreach ($links as $key => $value) {
+        array_push($external_links_arr, $links[$i]['value']);
+        $i++;
+
+    }
+   $variables['external_urls'] = implode(", ", $external_links_arr);
+   } else {
+        return;
+   }
+
+}

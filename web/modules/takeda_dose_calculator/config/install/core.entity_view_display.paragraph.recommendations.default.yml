@@ -1,0 +1,38 @@
+langcode: bg
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.recommendations.field_desired_serum_activity
+    - field.field.paragraph.recommendations.field_patient_chart
+    - field.field.paragraph.recommendations.field_recommendations
+    - paragraphs.paragraphs_type.recommendations
+id: paragraph.recommendations.default
+targetEntityType: paragraph
+bundle: recommendations
+mode: default
+content:
+  field_desired_serum_activity:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_patient_chart:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_recommendations:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden: {  }

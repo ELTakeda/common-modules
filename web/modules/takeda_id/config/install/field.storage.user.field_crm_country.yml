@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+    - takeda_id
+  enforced:
+    module:
+        - takeda_id
+id: user.field_crm_country
+field_name: field_crm_country
+entity_type: user
+type: list_string
+settings:
+  allowed_values: {  }
+  allowed_values_function: 'takeda_id_allowed_country_values_function'
+module: options
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

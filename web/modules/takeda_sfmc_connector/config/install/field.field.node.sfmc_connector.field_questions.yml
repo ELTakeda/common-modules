@@ -1,0 +1,42 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_questions
+    - node.type.sfmc_connector
+    - paragraphs.paragraphs_type.radio
+  module:
+    - entity_reference_revisions
+id: node.sfmc_connector.field_questions
+field_name: field_questions
+entity_type: node
+bundle: sfmc_connector
+label: questions
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      radio: radio
+    negate: 0
+    target_bundles_drag_drop:
+      adverse_effects_reporting:
+        weight: 6
+        enabled: false
+      contact_medical_information:
+        weight: 7
+        enabled: false
+      international_advisory:
+        weight: 8
+        enabled: false
+      radio:
+        weight: 9
+        enabled: true
+      request_sponsorship:
+        weight: 10
+        enabled: false
+field_type: entity_reference_revisions

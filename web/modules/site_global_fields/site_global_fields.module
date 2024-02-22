@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * Implements hook_preprocess().
+ */
+function site_global_fields_preprocess(&$variables)
+{
+    // Get the data for the field labels
+    $config = \Drupal::config('site_global_fields.settings');
+    $site_global_fields_values = $config->get('site_global_fields_values') ?: []; // Blank array if no data so that it can be countable
+    
+    // Set the variable data
+    $variables['site_global_fields_values'] = $site_global_fields_values;
+}

@@ -1,0 +1,18 @@
+takeda_consents_reporting.configure_form:
+  title: 'Takeda Consents - Reporting'
+  description: 'Consent reporting configuration.'
+  parent: user.admin_index
+  route_name: takeda_consents_configure.configure_form
+  weight: 44
+takeda_consents_purposes.configure_form:
+  title: 'Takeda Consents - Purposes'
+  description: 'Allows adding and configuring consents - purposes for the current site.'
+  parent: user.admin_index
+  route_name: takeda_consents_purposes.configure_form
+  weight: 45
+takeda_consents_preferences_and_options.configure_form:
+  title: 'Takeda Consents - Preferences and Options'
+  description: 'Allows adding and configuring consents - preferences and options for the current site.'
+  parent: user.admin_index
+  route_name: takeda_consents_preferences_and_options.configure_form
+  weight: 46
