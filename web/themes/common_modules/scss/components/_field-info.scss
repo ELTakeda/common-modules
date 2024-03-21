@@ -99,12 +99,52 @@
         text-align: center;
         cursor: pointer;
         padding: 15px 0;
+        display: flex;
+        justify-content: center;
+        & p{
+            & a{ 
+                display: contents;
+                text-decoration: none;
+            }
+        }
+        
         &:nth-child(2){
             background-color:rgba(189, 18, 10, 0.15) ;
             border: 1px solid #BD120A;
             color: $color-black;
             height: 60px;
         }
+    }
+}
+
+.deep-page{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &__content{
+        display: flex;
+        flex-direction: column;
+        
+        width: 100%;
+        max-width: 800px;
+        font-family: $font-open-sans--regular;
+        & p{
+            font-size: 24px;
+            margin-bottom: 30px;
+           & strong{
+            font-size: 26px;
+           }
+        }
+    }
+    &:nth-child(2){
+        width: 200px;
+        height: 40px;
+        background-color:$color-dark-red;
+        color: $color-white;
+        font-family: $font-open-sans--bold;
+        border-radius: 4px;
+        text-align: center;
     }
 }
 

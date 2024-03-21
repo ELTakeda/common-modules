@@ -10,8 +10,23 @@
     }
     &__content{
         width: 100%;
-        max-width: 600px;
+        max-width: 800px;
         margin: 32px 0;
        
+    }
+}
+
+.deeplink-pg{
+    width: 100%;
+    height: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 0;
+    &__content{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }
