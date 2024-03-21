@@ -1,0 +1,17 @@
+.module-info{
+    width: 100%;
+    
+    display: flex;
+    justify-content: center;
+    &__title{
+        font-size: 26px;
+        font-family: $font-open-sans--semi-bold;
+        color:$color-dark-red;
+    }
+    &__content{
+        width: 100%;
+        max-width: 600px;
+        margin: 32px 0;
+       
+    }
+}
