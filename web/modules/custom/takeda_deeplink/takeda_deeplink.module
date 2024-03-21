@@ -1,0 +1,118 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\Entity\Node;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Drupal\takeda_deeplink\Form\TakedaDeeplinkForm;
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter() for \Drupal\node\NodeForm.
+ *
+ * Adds alchemer item fields to the node form.
+ *
+ * @see takeda_alchemer_form_node_form_submit()
+ */
+function takeda_deeplink_form_node_form_alter(&$form, FormStateInterface $form_state)
+{
+    $table = TakedaDeeplinkForm::DEEPLINK_TABLE;
+
+    $node = $form_state->getFormObject()->getEntity();
+    $result = getDbData($table, $node->id());
+
+    if ($node) {
+
+        $config = \Drupal::config('takeda_deeplink.settings');
+
+        //define microfeedback section
+        $form['takeda-deeplink-menu'] = [
+            '#type' => 'details',
+            '#title' => t('Takeda Deeplink'),
+            '#group' => 'advanced',
+            '#tree' => true,
+            '#weight' => 3,
+        ];
+
+        $form['takeda-deeplink-menu']['takeda-deeplink-enabled'] = [
+            '#type' => 'checkbox',
+            '#title' => t('Unauthorize users access'),
+            '#description' => t('This allows users which are not authenticated but present CRM id in the url to have access to this page.'),
+            '#default_value' => $result['is_deeplink_auth_active'],
+        ];
+        
+        foreach (array_keys($form['actions']) as $action) {
+            if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+                $form['actions'][$action]['#submit'][] = 'takeda_deeplink_form_submit';
+            }
+        }
+
+        return $form;
+    }
+}
+
+function takeda_deeplink_form_submit(&$form, &$form_state)
+{
+    $connection = \Drupal::database();
+    $table = TakedaDeeplinkForm::DEEPLINK_TABLE;
+    $fields = [];
+    $fields['nid'] = $form_state->getValue('nid');
+    $fields['is_deeplink_auth_active'] = $form_state->getValue('takeda-deeplink-menu')['takeda-deeplink-enabled'];
+
+    $upsert = $connection->upsert($table)
+        ->fields(array_keys($fields))
+        ->key('nid');
+    $upsert->values($fields);
+    $upsert->execute();
+}
+
+function takeda_deeplink_preprocess(&$variables)
+{
+    \Drupal::service('page_cache_kill_switch')->trigger();
+    $client = \Drupal::httpClient();
+    $table = TakedaDeeplinkForm::DEEPLINK_TABLE;
+    $config = \Drupal::config('takeda_deeplink.settings');
+    $client_id = $config->get('client_id');
+    $client_secret = $config->get('client_secret');
+    $node = \Drupal::routeMatch()->getParameter('node');
+    
+    if ($node) {
+        $result = getDbData($table, $node->get('nid')->value);
+        $checkCustomerId = [];
+        $customer_id = \Drupal::request()->query->get('customer_id');
+        //print_r($customer_id);
+        if ($customer_id) {
+            $checkCustomerId = checkValidCustomerId($client, $config->get('request_url'), \Drupal::request()->query->get('customer_id'), $client_id, $client_secret);
+        }
+        
+        $current_user = \Drupal::currentUser();
+        if (!$current_user->id() && $result['is_deeplink_auth_active'] == 1 && empty($checkCustomerId)) {
+            $url = $config->get('redirect_url');
+            $response = new RedirectResponse($url);
+            $response->send();
+            return;
+        }
+}
+}
+
+function getDbData($table, $nid)
+{
+    $connection = \Drupal::database();
+    $select = $connection->select($table, 't')
+        ->condition('nid', $nid, '=')
+        ->fields('t', ['nid', 'is_deeplink_auth_active']);
+    $result = $select->execute();
+    $result = $result->fetchAssoc();
+    return $result;
+}
+
+function checkValidCustomerId($client, $urlToSend, $customer_id, $client_id, $client_secret)
+{
+    $request = $client->request('GET', $urlToSend . '?search=profile.customer_id%20sw%20"' . $customer_id . '"', [
+        "headers" => [
+            "client_id" => $client_id,
+            "client_secret" => $client_secret,
+            "Content-Type" => "application/json",
+        ],
+    ]);
+    $result = json_decode($request->getBody());
+    return $result;
+}

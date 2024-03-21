@@ -1,0 +1,6 @@
+takeda_deeplink.settings_form:
+  title: 'Takeda Deeplink'
+  description: 'Takeda Deeplink Node configuration'
+  parent: user.admin_index
+  route_name: takeda_deeplink.settings_form
+  weight: 101
