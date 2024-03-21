@@ -30,7 +30,8 @@
         "drupal/mailsystem": " ^4.4",
         "drupal/key": "1.17",
         "drupal/easy_breadcrumb": "*",
-        "drupal/cookiepro": "2.1"
+        "drupal/cookiepro": "2.1",
+        "drupal/twig_field_value": "^2.0"
     },
     "require-dev": {
         "drupal/core-dev": "^10.2.2"
