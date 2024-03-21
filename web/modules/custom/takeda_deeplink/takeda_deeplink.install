@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function takeda_deeplink_schema() {
+  $database = \Drupal::database();
+  $schema = $database->schema();
+
+  if (!$schema->tableExists('takeda_deeplink')) {
+    $fields = [
+        'description' => 'Takeda deeplink data',
+        'fields' => [
+          'nid' => [
+            'type' => 'int',
+            'unsigned' => TRUE,
+            'not null' => TRUE,
+            'default' => 0,
+            'description' => 'Node ID',
+          ],
+          'is_deeplink_auth_active' => [
+            'type' => 'int',
+            'length' => 11,
+            'default' => 0,
+            'description' => 'Is deeplink checkbox checked',
+          ],
+        ],
+        'unique keys' => [
+          'nid' => ['nid'],
+        ],
+      ];
+    $schema->createTable('takeda_deeplink', $fields);
+  }
+}

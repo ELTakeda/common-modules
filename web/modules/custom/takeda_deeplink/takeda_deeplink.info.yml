@@ -1,0 +1,6 @@
+name: 'Takeda Deeplink'
+type: module
+description: 'Deeplink giving access for unauthorize users to have access to restricted content'
+package: Custom
+core_version_requirement: ^8 || ^9 || ^10
+version: 1.0

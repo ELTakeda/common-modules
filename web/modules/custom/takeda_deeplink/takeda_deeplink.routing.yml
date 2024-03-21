@@ -1,0 +1,7 @@
+takeda_deeplink.settings_form:
+  path: '/admin/config/takeda_deeplink'
+  defaults:
+    _form: '\Drupal\takeda_deeplink\Form\TakedaDeeplinkForm'
+    _title: 'Takeda Deeplink Node configuration'
+  requirements:
+    _permission: 'administer site configuration'
