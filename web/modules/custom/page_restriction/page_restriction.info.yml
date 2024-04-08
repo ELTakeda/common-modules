@@ -1,0 +1,8 @@
+name: 'Access Code Redirect'
+type: module
+description: 'Provides functionality to restrict pages to non-logged in users'
+package: Custom
+core_version_requirement: ^8 || ^9 || ^10
+version: 1.0
+dependencies:
+  - access_code:access_code

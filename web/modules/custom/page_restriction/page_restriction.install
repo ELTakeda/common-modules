@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function page_restriction_schema() {
+  $database = \Drupal::database();
+  $schema = $database->schema();
+
+  if (!$schema->tableExists('page_restriction')) {
+    $fields = [
+        'description' => 'Page restriction data',
+        'fields' => [
+          'nid' => [
+            'type' => 'int',
+            'unsigned' => TRUE,
+            'not null' => TRUE,
+            'default' => 0,
+            'description' => 'Node ID',
+          ],
+          'is_page_restriction_active' => [
+            'type' => 'int',
+            'length' => 11,
+            'default' => 0,
+            'description' => 'Is page restriction checkbox checked',
+          ],
+        ],
+        'unique keys' => [
+          'nid' => ['nid'],
+        ],
+      ];
+    $schema->createTable('page_restriction', $fields);
+  }
+}
