@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "785d8f42f4a2588618a7d3a66bd97096",
+    "content-hash": "2b7e2c4830e07f7e811687b9c5e5104f",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1193,6 +1193,50 @@
                 }
             ],
             "time": "2024-02-05T11:35:39+00:00"
+        },
+        {
+            "name": "drupal/access_code",
+            "version": "2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/access_code.git",
+                "reference": "2.0.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/access_code-2.0.3.zip",
+                "reference": "2.0.3",
+                "shasum": "6352565bb8089685b506c19f0ccac3df8306f9b7"
+            },
+            "require": {
+                "drupal/core": "^9 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.3",
+                    "datestamp": "1711127956",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "glekli",
+                    "homepage": "https://www.drupal.org/user/930940"
+                }
+            ],
+            "description": "Allows users to log in with an access code.",
+            "homepage": "https://www.drupal.org/project/access_code",
+            "support": {
+                "source": "https://git.drupalcode.org/project/access_code"
+            }
         },
         {
             "name": "drupal/cookiepro",
@@ -12780,7 +12824,7 @@
     "platform": [],
     "platform-dev": [],
     "platform-overrides": {
-        "php": "8.1.13"
+        "php": "8.2.0"
     },
     "plugin-api-version": "2.3.0"
 }
