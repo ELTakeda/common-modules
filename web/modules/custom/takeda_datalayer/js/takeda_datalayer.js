@@ -16,7 +16,7 @@
 			                  'customerId': gaData.customerId
                     });
                 }
-                if (isGuid(gaData.digitalId)) {
+                if (gaData.mtm && isGuid(gaData.digitalId)) {
                     window._mtm = window._mtm || [];
                     window._mtm.push({
                         'digitalID': gaData.digitalId,
