@@ -30,12 +30,13 @@
         "drupal/mailsystem": " ^4.4",
         "drupal/key": "1.17",
         "drupal/easy_breadcrumb": "*",
-        "drupal/cookiepro": "2.1",
+        "drupal/cookiepro": "^2.1",
         "drupal/twig_field_value": "^2.0",
         "drupal/webform": "^6.2",
         "drupal/access_code": "^2.0",
         "drupal/matomo": "^1.23",
-        "drupal/google_tag": "^2.0"
+        "drupal/google_tag": "^2.0",
+        "drupal/cookiepro_plus": "^1.0"
     },
     "require-dev": {
         "drupal/core-dev": "^10.2.2"

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "250339500533f13c052fdb51c2b69854",
+    "content-hash": "906697bc92ee88ebe55160bd1f841633",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1240,17 +1240,17 @@
         },
         {
             "name": "drupal/cookiepro",
-            "version": "2.1.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/cookiepro.git",
-                "reference": "2.1.0"
+                "reference": "2.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/cookiepro-2.1.0.zip",
-                "reference": "2.1.0",
-                "shasum": "09d9b3ea12e9f4ac5c03ce847ff1cc074f634692"
+                "url": "https://ftp.drupal.org/files/projects/cookiepro-2.1.1.zip",
+                "reference": "2.1.1",
+                "shasum": "c2fc7c687c9f1eeb20d273ce95b763bc603e5df9"
             },
             "require": {
                 "drupal/core": "^8.8 || ^9 || ^10"
@@ -1258,8 +1258,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.1.0",
-                    "datestamp": "1701436408",
+                    "version": "2.1.1",
+                    "datestamp": "1701437393",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -1284,6 +1284,62 @@
             "homepage": "https://www.drupal.org/project/cookiepro",
             "support": {
                 "source": "https://git.drupalcode.org/project/cookiepro"
+            }
+        },
+        {
+            "name": "drupal/cookiepro_plus",
+            "version": "1.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/cookiepro_plus.git",
+                "reference": "1.0.8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/cookiepro_plus-1.0.8.zip",
+                "reference": "1.0.8",
+                "shasum": "f41812df3ab9c5174095cbf2c319c1a3268b485e"
+            },
+            "require": {
+                "drupal/core": "^9 || ^10"
+            },
+            "suggest": {
+                "drupal/consent_support": "Block content in render time for unblocking by CookiePro on consent.",
+                "drupal/google_tag": "Integrate with Google Tag Manager (GTM).",
+                "drupal/token_filter": "Required to expose tokens in CKEditor."
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.0.8",
+                    "datestamp": "1713987780",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas De Rijcke (andreasderijcke)",
+                    "homepage": "https://www.drupal.org/u/andreasderijcke",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Integrate CookiePro (by OneTrust)",
+            "homepage": "http://drupal.org/project/cookiepro_plus",
+            "keywords": [
+                "Cookie",
+                "Drupal",
+                "GDPR"
+            ],
+            "support": {
+                "source": "https://git.drupalcode.org/project/cookiepro_plus",
+                "issues": "https://www.drupal.org/project/issues/cookiepro_plus"
             }
         },
         {
