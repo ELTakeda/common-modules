@@ -34,9 +34,9 @@
         "drupal/twig_field_value": "^2.0",
         "drupal/webform": "^6.2",
         "drupal/access_code": "^2.0",
-        "drupal/matomo": "^1.23",
         "drupal/google_tag": "^2.0",
-        "drupal/cookiepro_plus": "^1.0"
+        "drupal/cookiepro_plus": "^1.0",
+        "drupal/matomo": "^1.23"
     },
     "require-dev": {
         "drupal/core-dev": "^10.2.2"
@@ -74,7 +74,12 @@
         "patchLevel": {
             "drupal/core": "-p2"
         },
-        "enable-patching": true
+        "enable-patching": true,
+        "patches": {
+            "drupal/matomo": {
+                "PHP 8.3 Deprecated: Using ${var} in strings is deprecated, use {$var} instead": "https://www.drupal.org/files/issues/2024-04-16/3441281-3-deprecated-fix.patch"
+            }
+        }
     },
     "autoload": {
         "classmap": ["upstream-configuration/scripts/ComposerScripts.php"]
