@@ -1,0 +1,108 @@
+<?php
+use Drupal\node\Entity\NodeType;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
+
+/**
+ * Implements hook_install().
+ */
+function pdf_viewer_install() {
+  // create folder on installation
+  if (!file_exists('pdf_files')) {
+    mkdir('pdf_files', 0777, true);
+}
+  // Create the 'pdf_content' content type.
+  $node_type = NodeType::create([
+    'type' => 'pdf_content',
+    'name' => 'PDF Content',
+  ]);
+  $node_type->save();
+
+  // Create the 'field_pdf_file' field storage for file uploads.
+  $field_storage = FieldStorageConfig::create([
+    'field_name' => 'field_pdf_file',
+    'entity_type' => 'node',
+    'type' => 'file',
+    'settings' => [
+      'uri_scheme' => 'public',
+    ],
+    'cardinality' => 1,
+  ]);
+  $field_storage->save();
+
+  // Create the 'field_pdf_file' field for the 'pdf_content' content type.
+  FieldConfig::create([
+    'field_name' => 'field_pdf_file',
+    'entity_type' => 'node',
+    'bundle' => 'pdf_content',
+    'label' => 'PDF File',
+    'settings' => [
+      'file_extensions' => 'pdf',
+      'file_directory' => 'pdf_files',
+    ],
+  ])->save();
+
+  // Create the 'field_pdf_remote_url' field storage for remote URLs.
+  $field_remote_url_storage = FieldStorageConfig::create([
+    'field_name' => 'field_pdf_remote_url',
+    'entity_type' => 'node',
+    'type' => 'link',
+    'cardinality' => 1,
+    'required' => false,
+  ]);
+  $field_remote_url_storage->save();
+
+  // Create the 'field_pdf_remote_url' field for the 'pdf_content' content type.
+  FieldConfig::create([
+    'field_name' => 'field_pdf_remote_url',
+    'entity_type' => 'node',
+    'bundle' => 'pdf_content',
+    'label' => 'Remote PDF URL',
+    'settings' => [
+	'required' => false,
+],
+  ])->save();
+
+  // Create the 'entity_view_display' for the 'pdf_content' content type.
+  $entity_display = EntityViewDisplay::create([
+    'targetEntityType' => 'node',
+    'bundle' => 'pdf_content',
+    'mode' => 'default',
+    'status' => TRUE,
+  ]);
+  $entity_display->save();
+
+  // Assign the PDF Viewer formatter to the 'field_pdf_file' field.
+  $entity_display
+    ->setComponent('field_pdf_file', [
+      'type' => 'pdf_viewer_formatter',
+      'weight' => 1,
+    ])
+    ->setComponent('field_pdf_remote_url', [
+      'type' => 'link',
+      'weight' => 2,
+    ])
+    ->save();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function pdf_viewer_uninstall() {
+  // Remove the content type.
+  $content_type = 'pdf_content';
+  $pdf_content_type = NodeType::load($content_type);
+  if ($pdf_content_type) {
+    $pdf_content_type->delete();
+  }
+
+  // Remove fields.
+  $fields = ['field_pdf_file', 'field_pdf_remote_url'];
+  foreach ($fields as $field_name) {
+    $field_storage = FieldStorageConfig::loadByName('node', $field_name);
+    if ($field_storage) {
+      $field_storage->delete();
+    }
+  }
+}

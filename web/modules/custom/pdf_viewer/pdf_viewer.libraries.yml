@@ -1,0 +1,21 @@
+pdf_viewer:
+  version: 1.x
+  js:
+    libraries/turnjs/turnjs4/lib/zoom.js: {}
+    libraries/turnjs/turnjs4/lib/turn.js: {}
+    js/pdf_viewer_flipbook.js: {}
+  css:
+    theme:
+      css/pdf_viewer_flipbook.css: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+pdf-js:
+  js:
+    libraries/pdf.js/build/pdf.js: {}
+    libraries/pdf.js/build/pdf.worker.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings

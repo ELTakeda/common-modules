@@ -1,0 +1,7 @@
+name: PDF Viewer
+type: module
+description: 'A custom module to display PDF files using a viewer with next and previous buttons.'
+package: Custom
+core_version_requirement: ^9 || ^10
+dependencies:
+  - drupal:field

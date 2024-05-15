@@ -1,0 +1,249 @@
+#flipbook-container {
+    position: relative;
+    max-width: 26%;
+}
+
+.flipbook-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+#flipbook-container:hover .flipbook-overlay {
+    opacity: 1;
+}
+
+.nav-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.zoom-controls {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.nav-controls button,
+.zoom-controls button {
+    background-color: #fff;
+    border: none;
+    font-size: 14px;
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.page-number {
+    color: #fff;
+    font-size: 16px;
+    margin: 0 10px;
+}
+
+.pdf-viewer-navigation {
+    position: relative;
+    height: 0;
+    z-index: 10;
+}
+
+.page-wrapper {
+    height: 100% !important;
+    width: 50% !important;
+}
+
+canvas {
+    height: 100% !important;
+    width: 100% !important;
+}
+
+.pdf-viewer-container {
+    background-color: #424242;
+    width: 100%;
+    max-width: 900px;
+    height: 600px !important;
+    margin: 0 auto;
+    padding: 20px 35px;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+
+#flipbook {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    height: 100% !important;
+    width: 100% !important;
+}
+
+.pdf-viewer-navigation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    z-index: 10;
+}
+
+.arrow-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: #333;
+    background-color: transparent;
+    border: transparent;
+}
+
+.arrow-button:hover {
+    transform: scale(1.2) translateY(-41%);
+}
+
+.left-arrow {
+    left: 5px;
+    transition: transform 0.5s ease, left 0.1s ease;
+}
+
+.right-arrow {
+    right: 5px;
+    transition: transform 0.5s ease, right 0.1s ease;
+}
+
+.left-arrow:active {
+    left: 0px;
+}
+
+.right-arrow:active {
+    right: 0px;
+}
+
+.left-arrow::before {
+    content: ' ';
+    border-left: 4px solid #ffff;
+    border-bottom: 4px solid #ffff;
+    width: 20px;
+    height: 20px;
+    transform: rotate(45deg);
+    cursor: pointer;
+    display: block;
+}
+
+.right-arrow::before {
+    content: ' ';
+    border-right: 4px solid #ffff;
+    border-top: 4px solid #ffff;
+    width: 20px;
+    height: 20px;
+    transform: rotate(45deg);
+    cursor: pointer;
+    display: block;
+}
+
+.zoom-in,
+.zoom-out {
+    background-color: #333;
+    color: #fff;
+    font-size: 18px;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.zoom-in:hover,
+.zoom-out:hover {
+    background-color: #555;
+}
+
+.lds-ripple {
+    z-index: 1000;
+    top: 42%;
+    left: 44%;
+    position: absolute;
+}
+.lds-ripple div {
+    position: absolute;
+    border: 4px solid #f6a192;
+    opacity: 1;
+    border-radius: 50%;
+    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.lds-ripple div:nth-child(2) {
+    animation-delay: -0.5s;
+}
+@keyframes lds-ripple {
+    0% {
+        top: 36px;
+        left: 36px;
+        width: 0;
+        height: 0;
+        opacity: 0;
+    }
+    4.9% {
+        top: 36px;
+        left: 36px;
+        width: 0;
+        height: 0;
+        opacity: 0;
+    }
+    5% {
+        top: 36px;
+        left: 36px;
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
+    100% {
+        top: 0px;
+        left: 0px;
+        width: 72px;
+        height: 72px;
+        opacity: 0;
+    }
+}
+
+.loader-hidden {
+    display: none;
+}
+
+.pdf-btns {
+    display: flex;
+    margin: 30px 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.pdf-btns__btn {
+    display: block;
+    margin: 0 20px;
+    padding: 10px 30px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: #ff8686;
+    font-family: 'Open Sans Medium';
+    font-size: 16px;
+    color: #424242;
+    backface-visibility: hidden;
+    transition: background-color 0.5s ease, transform 0.5s ease;
+}
+
+.pdf-btns__btn:hover {
+    background-color: #ffc6bc;
+    transform: scale(1.1);
+}
