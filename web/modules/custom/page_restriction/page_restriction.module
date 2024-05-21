@@ -1,0 +1,89 @@
+<?php
+use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+use Drupal\Core\Url;
+
+function page_restriction_form_node_form_alter(&$form, FormStateInterface $form_state)
+{
+    $table = 'page_restriction';
+
+    $node = $form_state->getFormObject()->getEntity();
+    $result = getDatabaseData($table, $node->id());
+    //   dump($result);
+    if ($node) {
+
+        //define microfeedback section
+        $form['page-restriction-menu'] = [
+            '#type' => 'details',
+            '#title' => t('Page Restriction'),
+            '#group' => 'advanced',
+            '#tree' => true,
+            '#weight' => 3,
+        ];
+
+        $form['page-restriction-menu']['page-restriction-enabled'] = [
+            '#type' => 'checkbox',
+            '#title' => t('Unauthorize users access'),
+            '#description' => t('Not logged in users will not be able to visit the page'),
+            '#default_value' => $result['is_page_restriction_active'],
+        ];
+        foreach (array_keys($form['actions']) as $action) {
+            if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+                $form['actions'][$action]['#submit'][] = 'page_restriction_form_submit';
+            }
+        }
+
+        return $form;
+    }
+}
+
+function page_restriction_form_submit(&$form, &$form_state)
+{
+    $connection = \Drupal::database();
+    $table = 'page_restriction';
+    $fields = [];
+    $fields['nid'] = $form_state->getValue('nid');
+    $fields['is_page_restriction_active'] = $form_state->getValue('page-restriction-menu')['page-restriction-enabled'];
+
+    $upsert = $connection->upsert($table)
+        ->fields(array_keys($fields))
+        ->key('nid');
+    $upsert->values($fields);
+    $upsert->execute();
+}
+
+function page_restriction_preprocess(&$variables)
+{
+    $variables['#cache']['max-age'] = 0;
+    $table = 'page_restriction';
+    $node = \Drupal::routeMatch()->getParameter('node');
+
+    if ($node) {
+        $result = getDatabaseData($table, $node->get('nid')->value);
+        $current_user = \Drupal::currentUser();
+        $actual_link = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]";
+	$current_path = \Drupal::service('path.current')->getPath();
+	$alias = \Drupal::service('path_alias.manager')->getAliasByPath($current_path);
+        
+        if (!$current_user->id() && $result['is_page_restriction_active'] == 1) {
+            
+            $url = $actual_link.'/user/ac?destination='.$alias;
+            $response = new RedirectResponse($url);
+            $response->send();
+            return;
+        }
+    }
+
+}
+
+function getDatabaseData($table, $nid)
+{
+    $connection = \Drupal::database();
+    $select = $connection->select($table, 't')
+        ->condition('nid', $nid, '=')
+        ->fields('t', ['nid', 'is_page_restriction_active']);
+    $result = $select->execute();
+    $result = $result->fetchAssoc();
+    return $result;
+}

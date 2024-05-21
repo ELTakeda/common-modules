@@ -1,0 +1,18 @@
+<div class="pdf-viewer-container">
+  <div id="flipbook" class="book" data-pdf-url="{{ pdf_url }}">
+  </div>
+  <div class="pdf-viewer-navigation">
+    <div class="lds-ripple loader-hidden js-loader" style="z-index:1000;position:relative;"><div></div><div></div></div>
+
+    <button class="arrow-button left-arrow"></button>
+    <button class="arrow-button right-arrow"></button>
+  </div>
+
+</div>
+<div class="pdf-btns">
+  <a class="pdf-btns__btn" href="{{ pdf_url }}" target="_blank">{{ text_link }}</a>
+<button class="pdf-btns__btn js-fullscreen">Fullscreen</button>
+</div>
+
+
+

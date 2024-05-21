@@ -1,0 +1,10 @@
+name: 'Takeda DataLayer'
+description: 'Provides support for integrating Takeda ID with Tag Managers / DataLayer. To use this module, enable and configure either the google_tag or matomo Drupal Modules.'
+
+type: module
+package: 'Statistics'
+
+core: 8.x
+core_version_requirement: ^8 || ^9 || ^10
+dependencies:
+  - takeda_id:takeda_id

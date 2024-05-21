@@ -1,0 +1,39 @@
+<?php
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\file\Entity\File;
+
+/**
+ * Implements hook_theme().
+ */
+function pdf_viewer_theme() {
+  return [
+    'pdf_viewer_flipbook' => [
+      'variables' => [
+        'pdf_url' => '',
+	'text_link' => '',
+      ],
+    ],
+  ];
+}
+
+function pdf_viewer_save_external_pdf($url, EntityInterface $entity) {
+// Use cURL to fetch the external file.
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+  $data = curl_exec($ch);
+  curl_close($ch);
+
+  if ($data !== FALSE) {
+    $filename = basename($url);
+    $destination = 'public://pdf_files/' . $filename;
+    $file = \Drupal::service('file.repository')->writeData($data, $destination);
+    if ($file) {
+      $entity->set('field_pdf_remote_url', [['target_id' => $file->id(), 'remote_url' => $url]]);
+    }
+  }
+
+  return $file;
+}
