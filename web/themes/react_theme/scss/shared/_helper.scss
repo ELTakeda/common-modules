@@ -1,0 +1,42 @@
+.tcm-hidden {
+    display: none !important;
+}
+
+.tcm-unscrollable {
+    width: 100% !important;
+    overflow-y: hidden !important;
+    position: fixed;
+
+    .tcm-header {
+        padding-right: 17px;
+    }
+}
+
+.tcm-unscrollable-popup {
+    height: 100vh !important;
+    overflow-y: hidden !important;
+
+    .tcm-header {
+        padding-right: 17px;
+    }
+}
+
+.tcm-main-padding-top{
+    padding-top: 83px;
+}
+
+.height-auto{
+    height: auto;
+    max-height: unset !important;
+}
+
+.tcm-margin-top-0 {
+    margin-top: 0 !important;
+}
+
+
+
+
+
+
+

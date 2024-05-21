@@ -1,0 +1,40 @@
+.tcm-register-cta {
+    width: 100%;
+    max-width: 400px;
+    padding-top: 40px;
+    margin: 40px auto 60px auto;
+    border-top: 2px solid $color-light-gray;
+    color: $color-dark-gray;
+
+    &__title {
+        font-family: $font-open-sans--medium;
+        font-weight: 500;
+        font-size: 16px;
+    }
+
+    &__text {
+        font-family: $font-open-sans--regular;
+        font-weight: 400;
+        font-size: 15px;
+        margin-top: 20px;
+    }
+
+    &__cta-button {
+        margin-top: 20px;
+        border: 1px solid $color-dark-red;
+        background-color: $color-white;
+        font-family: $font-open-sans--medium;
+        font-weight: 500;
+        font-size: 15px;
+        padding: 10px 40px;
+        width: fit-content;
+        color: $color-dark-red;
+        border-radius: 50px;
+        cursor: pointer;
+
+        &:hover {
+            color: $color-white;
+            background-color: $color-azuki-maroon;
+        }
+    }
+}

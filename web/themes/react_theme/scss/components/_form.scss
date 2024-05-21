@@ -1,0 +1,269 @@
+.tcm-page-form-heading {
+    &__title {
+        font-family: $font-open-sans--semi-bold;
+        font-weight: 600;
+        font-size: 26px;
+        color: $color-dark-red;
+    }
+
+    &__subtitle {
+        font-family: $font-open-sans--medium;
+        font-weight: 500;
+        font-size: 16px;
+        color: $color-dark-gray;
+        margin: 20px 0;
+    }
+}
+
+.tcm-page-form {
+    margin-top: 55px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto 50px auto;
+
+    &__input-row-wrapper {
+        margin-top: 30px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        &--buttons {
+            display: flex;
+
+            div {
+                width: 50%;
+            }
+        }
+    }
+
+    &__single-input-container {
+        width: 100%;
+
+        &--half-width {
+            width: 48%;
+            padding-bottom: 22px;
+        }
+
+        &--with-button {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    &__single-input-container--with-button &__input-label {
+        border-bottom: none;
+        width: 20px;
+        margin-right: 10px;
+    }
+
+    &__single-input-container--with-button .st-button {
+        width: 85% !important;
+    }
+
+    &__input-label {
+        width: 100%;
+        position: relative;
+        padding-top: 30px;
+        padding-bottom: 7px;
+        border-bottom: 1px solid $color-medium-gray;
+        display: inline-block;
+
+        &.invalid {
+            border-bottom: 1px solid $color-dark-red;
+        }
+
+        &--checkbox {
+            margin-top: 22px;
+            padding-bottom: 22px;
+        }
+
+        &--concent {
+            border-bottom: none;
+            padding-top: 0;
+        }
+    }
+
+    &__input-label--concent &__input-placeholder {
+        position: relative;
+        display: block;
+        padding-left: 10px;
+    }
+
+    &__input-label.st-invalid-checkbox.invalid {
+        border-bottom: none;
+    }
+
+    &__input-label.st-invalid-checkbox.invalid &__input-placeholder {
+        color: $color-dark-red;
+
+        a {
+            color: $color-dark-red;
+        }
+    }
+
+    &__input {
+        width: 100%;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        font-family: $font-open-sans--regular;
+        font-size: 14px;
+        color: $color-dark-gray;
+        position: relative;
+        z-index: 2;
+
+        &--password {
+            width: 93%;
+        }
+    }
+
+    &__select-input {
+        width: 100%;
+        height: 22px;
+        font-family: $font-open-sans--regular;
+        font-weight: 400;
+        font-size: 14px;
+        color: $color-dark-gray;
+        border: none;
+        outline: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
+        background: transparent;
+        background-image: url("../assets/icons/small/dropdown-arrow-icon.svg");
+        background-repeat: no-repeat;
+        background-position-x: 100%;
+        background-position-y: 0px;
+        padding-right: 10px;
+    }
+
+    &__toggle-password-btn {
+        width: 18px;
+        height: 18px;
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        cursor: pointer;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .eye-open {
+            display: none;
+        }
+
+        &.open .eye-open {
+            display: block;
+        }
+
+        &.open .eye-closed {
+            display: none;
+        }
+    }
+
+    //Custom Checkbox
+    &__input[type="checkbox"] {
+        position: relative;
+        z-index: -1;
+        opacity: 0;
+    }
+
+    &__input[type="checkbox"]~&__input-placeholder {
+        transform: translateX(28px);
+        width: calc(100% - 30px);
+
+        a {
+            display: inline-block;
+            color: $color-dark-red;
+            text-decoration: underline;
+        }
+
+        &::before {
+            border: 1px solid $color-medium-gray;
+            content: "";
+            height: 24px;
+            width: 24px;
+            position: absolute;
+            left: -25px;
+            top: 3px;
+            border-radius: 2px;
+        }
+    }
+
+    &__input[type="checkbox"]:checked~&__input-placeholder::before {
+        background-image: url("../assets/icons/small/check-small-icon.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-color: $color-dark-red;
+    }
+
+    //placeholder position on focus or when value is not null
+    &__input:not([type="checkbox"]):focus+&__input-placeholder,
+    &__input:not([type="checkbox"]).not-empty-value+&__input-placeholder {
+        top: 0;
+    }
+
+    &__input-placeholder {
+        position: absolute;
+        left: 0;
+        transition: all 0.1s ease-in-out;
+        z-index: 1;
+        color: $color-dark-gray;
+        font-family: $font-open-sans--regular;
+        font-weight: 400;
+        font-size: 14px;
+    }
+
+    &__validation-error {
+        background-color: $color-white;
+        color: $color-dark-red;
+        font-family: $font-open-sans--regular;
+        font-weight: 400;
+        font-size: 13px;
+        margin-top: 10px;
+    }
+
+    &__captcha-container {
+        width: 300px;
+        height: 58px;
+        background-color: $color-light-gray;
+        margin-top: 15px;
+    }
+
+    &__submit-button {
+        width: fit-content;
+        height: 45px;
+        margin-top: 20px;
+        padding: 10px 41px;
+        border: none;
+        outline: none;
+        border-radius: 50px;
+        background-color: $color-dark-red;
+        color: $color-white;
+        cursor: pointer;
+        font-family: $font-open-sans--medium;
+        font-weight: 500;
+        font-size: 15px;
+
+        &:hover {
+            background-color: $color-azuki-maroon;
+        }
+    }
+
+    &__forgotten-pass-link{
+        font-family: $font-open-sans--regular;
+        font-weight: 400;
+        font-size: 15px;
+        text-decoration: underline;
+        margin-top: 20px;
+        color: $color-dark-red;
+
+        &:hover{
+            color: $color-azuki-maroon;
+        }
+    }
+}

@@ -1,0 +1,12 @@
+.tcm-brightcove-block {
+    @include content-block-padding;
+
+    &__iframe-container {
+        width: 100%;
+        max-width: 860px;
+        margin: 40px auto 0 auto;
+        height: 480px;
+        background-color: $color-light-gray;
+    }
+}
+

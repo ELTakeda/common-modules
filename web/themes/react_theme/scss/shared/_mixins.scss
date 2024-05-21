@@ -1,0 +1,13 @@
+@mixin content-block-padding {
+    padding: 95px 70px 60px 70px;
+
+    @media screen and (max-width: $breakpoint-tablet--small) {
+        padding: 40px;
+
+    }
+
+    @media screen and (max-width: $breakpoint-phone) {
+        padding: 40px 20px;
+
+    }
+}

@@ -1,0 +1,107 @@
+.tcm-hero-banner {
+    width: 100%;
+    max-width: $max-content-width;
+    height: 520px;
+    margin: 0 auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 90px 70px;
+    font-family: $font-open-sans--regular;
+    font-weight: 400;
+
+    &__content-container {
+        width: 365px;
+    }
+
+    &__top-text {
+        font-size: 18px;
+        font-family: $font-open-sans--medium;
+        font-weight: 500;
+        color: $color-dark-red;
+    }
+
+    &__title {
+        font-family: $font-open-sans--bold;
+        font-weight: 700;
+        font-size: 40px;
+        letter-spacing: -0.8px;
+        line-height: 110%;
+        color: $color-dark-gray;
+    }
+
+    &__text {
+        margin-top: 12px;
+        font-size: 14px;
+        color: $color-dark-gray;
+    }
+
+    &__cta-button {
+        width: fit-content;
+        padding: 10px 40px;
+        margin-top: 30px;
+        background-color: $color-dark-red;
+        color: $color-white;
+        font-family: $font-open-sans--medium;
+        font-weight: 500;
+        font-size: 15px;
+        border-radius: 50px;
+
+        &:hover {
+            background-color: $color-azuki-maroon;
+        }
+    }
+
+    &__footnote {
+        font-size: 12px;
+        color: $color-dark-gray;
+        margin-top: 10px;
+
+        a {
+            font-family: $font-open-sans--bold;
+            font-weight: 700;
+            text-decoration: underline;
+            color: inherit;
+            display: inline;
+        }
+    }
+}
+
+@media screen and (max-width: $breakpoint-tablet--small) {
+    .tcm-hero-banner {
+        background-position: 35%;
+        padding: 50px 40px;
+        height: 425px;
+    }
+}
+
+@media screen and (max-width: $breakpoint-phone) {
+    .tcm-hero-banner {
+        height: 385px;
+        padding: 40px 20px;
+        &__content-container {
+            width: 250px;
+        }
+
+        &__top-text {
+            font-size: 16px;
+        }
+
+        &__title {
+            font-size: 25px;
+        }
+
+        &_text{
+            font-size: 14px;
+        }
+
+        &__cta-button {
+            font-size: 13px;
+            margin-top: 15px;
+        }
+
+        &__footnote {
+            font-size: 10px;
+        }
+    }
+}

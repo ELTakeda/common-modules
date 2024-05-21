@@ -1,0 +1,26 @@
+.tcm-main-content-wrapper {
+    width: 100%;
+    max-width: $max-content-width;
+    margin: 0 auto;
+    box-shadow:  $shadow-primary;
+
+    &--express {
+        box-shadow: none;
+      }
+}
+.tcm-page-form-container{
+    width: 100%;
+    max-width: $max-content-width;
+    margin: 0 auto;
+    padding: 25px 70px;
+
+    @media screen and (max-width: $breakpoint-tablet--small){
+        padding: 20px 40px;
+    }
+
+    @media screen and (max-width: $breakpoint-phone){
+        padding: 20px;
+    }
+
+}
+

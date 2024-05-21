@@ -1,0 +1,213 @@
+{{ attach_library('common_modules/registration-page-js') }}
+{% set front_path = [ url('<front>')|render|trim('/', 'right'), active_theme_path(),]|join('/') %}
+{% set form_path = path('<front>') ~ 'user/register' %}
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<!-- Register Section Begin -->
+<section class="tcm-page-form-container">
+    <form 
+        class="user-register-form user-form tcm-page-form js-tcm-page-form" 
+        action="{{ form_path }}" 
+        method="post" 
+        id="user-register-form" 
+        accept-charset="UTF-8" 
+        data-user-info-from-browser="" 
+        data-once="form-updated user-info-from-browser" 
+        data-drupal-selector="user-register-form"
+        data-drupal-form-fields="edit-field-first-name-0-value,
+                                 edit-field-last-name-0-value, 
+                                 edit-mail,
+                                 edit-pass-pass1,
+                                 edit-pass-pass2,
+                                 edit-field-country,
+                                 edit-submit"
+    >
+
+        <!-- Form Heading -->
+        <div class="tcm-page-form-heading">
+            <h1 class="tcm-page-form-heading__title">{{ content.field_rp_title.0 }}</h1>
+            <h2 class="tcm-page-form-heading__subtitle">{{ content.field_rp_subtitle.0 }}</h2>
+        </div>
+
+        <!-- First Name -->
+        <div class="tcm-page-form__input-row-wrapper">
+            <div class="tcm-page-form__single-input-container">
+                <label for="" class="tcm-page-form__input-label">
+                    <input 
+                        class="js-text-full text-full form-text required tcm-page-form__input js-tcm-page-form-input js-tcm-first-name-input" 
+                        id="edit-field-first-name-0-value"
+                        data-drupal-selector="edit-field-first-name-0-value" 
+                        type="text"  
+                        name="field_first_name[0][value]" 
+                        value="" 
+                        size="60" 
+                        maxlength="255" 
+                        placeholder="{{ content.field_rp_first_name.0 }}" 
+                        required="required" 
+                        aria-required="true"
+                    >
+                    <!-- <input class="tcm-page-form__input js-tcm-page-form-input js-tcm-first-name-input" type="text">
+                    <span class="tcm-page-form__input-placeholder">{{ content.field_rp_first_name.0 }}</span> -->
+                </label>
+                <p class="tcm-page-form__validation-error tcm-hidden">{{ content.field_rp_first_name_error_msg.0 }}</p>
+            </div>
+        </div>
+
+        <!-- Last Name -->
+        <div class="tcm-page-form__input-row-wrapper">
+            <div class="tcm-page-form__single-input-container">
+                <label for="" class="tcm-page-form__input-label">
+                    <input 
+                        class="js-text-full text-full form-text required tcm-page-form__input js-tcm-page-form-input js-tcm-last-name-input" 
+                        id="edit-field-last-name-0-value" 
+                        name="field_last_name[0][value]" 
+                        data-drupal-selector="edit-field-last-name-0-value" 
+                        type="text" 
+                        value="" 
+                        size="60" 
+                        maxlength="255" 
+                        placeholder="{{ content.field_rp_last_name.0 }}" 
+                        required="required"
+                        aria-required="true"
+                    >
+                    <!-- <input class="tcm-page-form__input js-tcm-page-form-input js-tcm-last-name-input" type="text">
+                    <span class="tcm-page-form__input-placeholder">{{ content.field_rp_last_name.0 }}</span> -->
+                </label>
+                <p class="tcm-page-form__validation-error tcm-hidden">{{ content.field_rp_last_name_error_msg.0 }}</p>
+            </div>
+        </div>
+
+        <!-- Email -->
+        <div class="tcm-page-form__input-row-wrapper">
+            <div class="tcm-page-form__single-input-container">
+                <label for="" class="tcm-page-form__input-label">
+                    <input 
+                        class="form-email required tcm-page-form__input js-tcm-page-form-input js-tcm-email-input"
+                        id="edit-mail" 
+                        data-drupal-selector="edit-mail" 
+                        aria-describedby="edit-mail--description" 
+                        type="email" 
+                        name="mail" 
+                        value=""
+                        size="60" 
+                        maxlength="254"  
+                        required="required" 
+                        aria-required="true" 
+                        placeholder="{{ content.field_rp_email_placeholder.0 }}"
+                    >
+                    <!-- 
+                    <input class="tcm-page-form__input js-tcm-page-form-input js-tcm-email-input" type="email">
+                    <span class="tcm-page-form__input-placeholder">{{ content.field_rp_email_placeholder.0 }}</span> -->
+                </label>
+                <p class="tcm-page-form__validation-error tcm-hidden">{{ content.field_rp_email_error_msg.0 }}</p>
+            </div>
+        </div>
+
+        <!-- Country -->
+        <div class="tcm-page-form__input-row-wrapper">
+            <div class="tcm-page-form__single-input-container">
+                <label for="" class="tcm-page-form__input-label">
+                    <select data-drupal-selector="edit-field-crm-country" id="edit-field-crm-country" name="field_crm_country" class="tcm-page-form__select-input js-tcm-country-select-input js-tcm-page-form-input">
+                        <option value="select">{{ content.field_rp_country_list_label.0 }}</option>
+                        {% for country_code,country in country_info %}
+                            <option value="{{ country_code }}">{{ country }}</option>
+                    {% endfor %}
+                    </select>
+
+                </label>
+                <p class="tcm-page-form__validation-error tcm-hidden">{{ content.field_rp_captcha_error_msg.0 }}</p>
+            </div>
+        </div>
+
+        <!-- Password -->
+        <div class="tcm-page-form__input-row-wrapper">
+            <div class="tcm-page-form__single-input-container">
+                <label for="" class="tcm-page-form__input-label">
+                    <input 
+                        class="password-field js-password-field form-text required tcm-page-form__input tcm-page-form__input--password js-tcm-page-form-input js-tcm-password-input" 
+                        id="edit-pass-pass1"
+                        autocomplete="new-password" 
+                        data-drupal-selector="edit-pass-pass1" 
+                        type="password" 
+                        name="pass[pass1]" 
+                        size="25" 
+                        maxlength="128" 
+                        required="required" 
+                        aria-required="true"
+                        data-once="password" 
+                        placeholder="{{ content.field_rp_password_placeholder.0 }}"
+                    >
+                    <!-- <input class="tcm-page-form__input tcm-page-form__input--password js-tcm-page-form-input js-tcm-password-input" type="password">
+                    <span class="tcm-page-form__input-placeholder">{{ content.field_rp_password_placeholder.0 }}</span> -->
+                    <div class="tcm-page-form__toggle-password-btn js-toggle-password-btn">
+                        <img src="{{ front_path }}/assets/icons/small/closed-eye-icon.svg" class="eye-closed" alt="eye icon">
+                        <img src="{{ front_path }}/assets/icons/small/eye-icon.svg" class="eye-open" alt="eye icon">
+                    </div>
+                </label>
+                <p class="tcm-page-form__validation-error tcm-hidden">{{ content.field_rp_password_error_message.0 }}</p>
+            </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="tcm-page-form__input-row-wrapper">
+            <div class="tcm-page-form__single-input-container">
+                <label for="" class="tcm-page-form__input-label">
+                    <input 
+                        class="password-confirm js-password-confirm form-text required tcm-page-form__input tcm-page-form__input--password js-tcm-page-form-input js-tcm-confirm-password-input" 
+                        id="edit-pass-pass2"
+                        autocomplete="new-password" 
+                        data-drupal-selector="edit-pass-pass2" 
+                        type="password"  
+                        name="pass[pass2]" 
+                        size="25" 
+                        maxlength="128" 
+                        required="required" 
+                        aria-required="true" 
+                        placeholder="{{ content.field_rp_confirm_password.0 }}"
+                    >
+<!-- 
+                    <input class="tcm-page-form__input tcm-page-form__input--password js-tcm-page-form-input js-tcm-confirm-password-input" type="password">
+                    <span class="tcm-page-form__input-placeholder">{{ content.field_rp_confirm_password.0 }}</span> -->
+                    <div class="tcm-page-form__toggle-password-btn js-toggle-password-btn">
+                        <img src="{{ front_path }}/assets/icons/small/closed-eye-icon.svg" class="eye-closed" alt="eye icon">
+                        <img src="{{ front_path }}/assets/icons/small/eye-icon.svg" class="eye-open" alt="eye icon">
+                    </div>
+                </label>
+                <p class="tcm-page-form__validation-error tcm-hidden">{{ content.field_rp_confirm_password_msg.0 }}</p>
+            </div>
+        </div>
+
+        <!-- Concent -->
+        <div class="tcm-page-form__input-row-wrapper">
+            <div class="tcm-page-form__single-input-container">
+                <label for="tcm-concent-terms" class="tcm-page-form__input-label tcm-page-form__input-label--concent">
+                    <input class="tcm-page-form__input js-tcm-page-form-input js-checkbox-required" type="checkbox" id="tcm-concent-terms">
+                    <span class="tcm-page-form__input-placeholder">{{ content.field_rp_concents_terms.0 }}</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Concent -->
+        <div class="tcm-page-form__input-row-wrapper tcm-margin-top-0">
+            <div class="tcm-page-form__single-input-container">
+                <label for="consent_marketing" class="tcm-page-form__input-label tcm-page-form__input-label--concent">
+                    <input data-drupal-selector="edit-takeda-consents-values-tc-0-purpose-checkbox" type="checkbox" id="consent_marketing" name="consent_marketing" value="1" class="tcm-page-form__input js-tcm-page-form-input js-checkbox-required">
+                    <span class="tcm-page-form__input-placeholder">{{ content.field_rp_concents_marketing.0 }}</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Hidden inputs -->
+        <input autocomplete="off" data-drupal-selector="form-iqiksqy7wykufm7xamdtb98ue3qtcktrktaijccwin8" type="hidden" name="form_build_id" value="form-iQiKsqY7WYkUfm7XAmDTB98UE3qtcKTrktAijCcwIn8">
+        <input data-drupal-selector="edit-user-register-form" type="hidden" name="form_id" value="user_register_form">
+
+        <!-- Captcha -->
+        <div class="tcm-page-form__captcha">
+            <div class="g-recaptcha tcm-page-form__captcha-container" id="recaptcha" data-sitekey="{{ site_global_fields_values.site_captcha_fields.site_captcha_key }}"></div>
+            <p class="tcm-page-form__validation-error tcm-hidden js-recaptcha-validation-message">{{ content.field_rp_captcha_error_msg.0 }}</p>
+        </div>
+
+        <!-- Submit Button -->
+        <button class="tcm-page-form__submit-button js-tcm-page-form-submit-button" type="submit">{{ content.field_rp_submit_button.0 }}</button>
+    </form>
+</section>
+<!-- Register Section End-->
