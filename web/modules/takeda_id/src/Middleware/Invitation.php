@@ -32,7 +32,7 @@ class Invitation implements HttpKernelInterface {
      */
     public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = TRUE): Response {
         $responseTest = new Response();
-        $cookie = new Cookie('Test2','test2', 0, '/' , NULL, FALSE);
+        $cookie = new Cookie('STYXKEY_test1','test1', 0, '/' , NULL, FALSE);
         $responseTest->headers->setCookie($cookie);
         /* $response->send();*/
 
