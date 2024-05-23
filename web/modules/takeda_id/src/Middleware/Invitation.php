@@ -63,6 +63,7 @@ class Invitation implements HttpKernelInterface {
                 NULL,
                 FALSE
             );
+              $response = new Response();
               $response->headers->setCookie($cookieInvitation);
             // Store to cookies object to support accessing in the current request
             $_COOKIE[TakedaIdInterface::INVITATION_COOKIE_NAME] = json_encode($storedData);
