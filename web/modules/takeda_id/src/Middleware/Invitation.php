@@ -31,10 +31,10 @@ class Invitation implements HttpKernelInterface {
      * {@inheritdoc}
      */
     public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = TRUE): Response {
-       /* $response = new Response();
+        $responseTest = new Response();
         $cookie = new Cookie('Test2','test2', 0, '/' , NULL, FALSE);
-        $response->headers->setCookie($cookie);
-        $response->send();*/
+        $responseTest->headers->setCookie($cookie);
+        /* $response->send();*/
 
         // Capture and process InvitationToken parameter
         $invitationToken = \Drupal::request()->query->get('InvitationToken');
