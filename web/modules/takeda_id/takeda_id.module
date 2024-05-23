@@ -246,10 +246,6 @@ function takeda_id_user_login($account) {
   }
 
   // User will be redirected to post-login via the submit function to handle the redirect
-    if($account->login && !$_COOKIE['last_login'] && !$setLastLog){
-        setcookie('last_login', 'value');
-        $setLastLog = true;
-    }
 }
 
 function takeda_id_user_login_submit(&$form, FormStateInterface $form_state)
