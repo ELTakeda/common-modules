@@ -268,7 +268,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (cookieData) {
                 const jsonData = JSON.parse(decodeURIComponent(cookieData));
-                document.querySelector('.js-tcm-first-name-input').value = 'Israel' || '';
+                document.getElementById('field_first_name[0][value]').value='hola mundo';
+                //document.querySelector('.js-tcm-first-name-input').value = jsonData.QueryStrings.firstName || '';
                 document.querySelector('.js-tcm-last-name-input').value = jsonData.QueryStrings.lastName || '';
                 document.querySelector('.js-tcm-email-input').value = jsonData.QueryStrings.email || '';
             }
