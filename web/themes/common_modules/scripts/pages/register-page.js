@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     // ----- Init Page -----
     initForm();
+    fillFormFromCookieIfTokenPresent();
 
     // ----- Init Functions -----
     function initForm() {
