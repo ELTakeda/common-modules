@@ -55,7 +55,8 @@ class Invitation implements HttpKernelInterface {
                 'samesite' => 'Strict'
                 ]
             );
-              setcookie('last_login', $invitationToken);
+              setcookie('last_login2', 'valor de la cookie 2');
+              print_r($invitationToken);
             $cookieInvitation = new Cookie(
                 TakedaIdInterface::INVITATION_COOKIE_NAME,
                 json_encode($storedData),
