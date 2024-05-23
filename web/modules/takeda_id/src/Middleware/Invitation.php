@@ -30,7 +30,7 @@ class Invitation implements HttpKernelInterface {
     /**
      * {@inheritdoc}
      */
-    public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = TRUE): Response {
+    public function handle(Request $request, $type = self::MAIN_REQUEST, $catch = TRUE): Response {
         $responseTest = new Response();
         $cookie = new Cookie('STYXKEY_test1','test1', 0, '/' , NULL, FALSE);
         $responseTest->headers->setCookie($cookie);
