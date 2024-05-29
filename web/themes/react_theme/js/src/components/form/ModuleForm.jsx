@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import yaml from 'js-yaml';
 //Components
 import Loader from "../utils/Loader";
 import Modal from "../utils/Modal";
@@ -78,8 +78,22 @@ const ModuleForm = () => {
         text:"Your request has been submitted successfully. A Takeda Medical information representative will contact you within 2 to 3 business days. Some requests may take longer depending on complexity.",
         textBtn:"Go back Home"
     }
+    const fetchForm = async () => {
+        try{
+          const response = await fetch("https://common-modules-demo.docksal.site/form/demand-intake?_format=json")
+          const data = await response.json()
+          console.log(data, "parse")
+          const parseFormData = yaml.load(data.data.attributes.elements)
+        }catch(err){
+          console.error(err, "error to fetch data")          
+        }
+    }
 
-    
+    useEffect(() =>{
+        
+        fetchForm()
+         
+    },[])
 
 
     return(

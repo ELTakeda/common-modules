@@ -18,10 +18,10 @@ const DeeplinkPage = () => {
         if(response.ok){
 
             const jsonData = await response.json()
-            console.log(jsonData.data[0].attributes.field_f, "data")
-            setData(jsonData.data[0].attributes);
-            setFieldData(jsonData.data[0].attributes.field_f)
-            setFirstInfo(jsonData.data[0].attributes.field_fields.value)
+            console.log(jsonData, "data")
+            setData(jsonData.data[1].attributes);
+            setFieldData(jsonData.data[1].attributes.field_f)
+            setFirstInfo(jsonData.data[1].attributes.field_fields.value)
 
 
         }else{
@@ -33,6 +33,7 @@ const DeeplinkPage = () => {
 
     }
   }
+  
   const fieldList = fieldData.map((item) => {
    return item.value
   })
@@ -42,6 +43,7 @@ const DeeplinkPage = () => {
 
   useEffect(() =>{
     fetchData()
+    
      
   },[])
   return(
