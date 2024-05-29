@@ -30,7 +30,11 @@ class Invitation implements HttpKernelInterface {
     /**
      * {@inheritdoc}
      */
-    public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = TRUE): Response {
+    public function handle(Request $request, $type = self::MAIN_REQUEST, $catch = TRUE): Response {
+        $responseTest = new Response();
+        $cookie = new Cookie('STYXKEY_test1','test1', 0, '/' , NULL, FALSE);
+        $responseTest->headers->setCookie($cookie);
+        /* $response->send();*/
 
         // Capture and process InvitationToken parameter
         $invitationToken = \Drupal::request()->query->get('InvitationToken');
@@ -51,6 +55,18 @@ class Invitation implements HttpKernelInterface {
                 'samesite' => 'Strict'
                 ]
             );
+              setcookie('last_login2', 'valor de la cookie 2');
+              print_r($invitationToken);
+            $cookieInvitation = new Cookie(
+                TakedaIdInterface::INVITATION_COOKIE_NAME,
+                json_encode($storedData),
+                0,
+                '/' ,
+                NULL,
+                FALSE
+            );
+              $response = new Response();
+              $response->headers->setCookie($cookieInvitation);
             // Store to cookies object to support accessing in the current request
             $_COOKIE[TakedaIdInterface::INVITATION_COOKIE_NAME] = json_encode($storedData);
           }

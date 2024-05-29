@@ -16,8 +16,8 @@ interface TakedaIdInterface {
    * Uses SESS-prefixed cookie structure to meet Pantheon Caching Requirements
    * https://pantheon.io/docs/caching-advanced-topics#using-your-own-session-style-cookies
    */
-  const INVITATION_COOKIE_NAME = 'SESStakedaiduserinvitationinfo';
-  const INVITATION_FORM_TYPE_COOKIE_NAME = 'SESStakedaidformtype';
+  const INVITATION_COOKIE_NAME = 'STYXKEY_takedaiduserinvitationinfo';
+  const INVITATION_FORM_TYPE_COOKIE_NAME = 'STYXKEY_takedaidformtype';
 
   /**
    * Supported Countries for Takeda ID
