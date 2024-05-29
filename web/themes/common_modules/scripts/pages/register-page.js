@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     // ----- Init Page -----
     initForm();
+    fillFormFromCookieIfTokenPresent();
 
     // ----- Init Functions -----
     function initForm() {
@@ -253,6 +254,26 @@ document.addEventListener("DOMContentLoaded", function () {
                 inputEl.addEventListener("change", formValidation);
                 inputEl.addEventListener("keyup", formValidation);
             });
+        }
+    }
+    function fillFormFromCookieIfTokenPresent() {
+        // Check if the URL contains the InvitationToken parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('InvitationToken')) {
+            function getCookie(name) {
+                const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+                if (match) return match[2];
+            }
+
+            const cookieData = getCookie('STYXKEY_takedaiduserinvitationinfo');
+
+            if (cookieData) {
+                const jsonData = JSON.parse(decodeURIComponent(cookieData));
+                //document.getElementsByClassName('js-tcm-first-name-input').value = 'hola mundo';
+                document.querySelector('.js-tcm-first-name-input').value = jsonData.QueryStrings.firstName || '';
+                document.querySelector('.js-tcm-last-name-input').value = jsonData.QueryStrings.lastName || '';
+                document.querySelector('.js-tcm-email-input').value = jsonData.QueryStrings.email || '';
+            }
         }
     }
 });
