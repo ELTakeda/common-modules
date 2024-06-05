@@ -4,13 +4,18 @@ import ReactDOM from 'react-dom/client'
 
 /* Import Components */
 
-//import ModuleForm from './components/form/ModuleForm';
+
 import DeeplinkPage from './pages/DeeplinkPage';
+import AlchemerPage from './pages/AlchemerPage';
+import MatomoPage from './pages/MatomoPage';
+import CookiePage from './pages/CookiePage';
+import BrightcovePage from './pages/Brightcove';
 
 const Main = () => (
   <>
     {
-      <DeeplinkPage />
+      
+      <CookiePage />
     }
    
   </>

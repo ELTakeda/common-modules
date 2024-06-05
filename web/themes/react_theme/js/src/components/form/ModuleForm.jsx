@@ -6,7 +6,7 @@ import Modal from "../utils/Modal";
 //styles
 import "../../../../scss/components/_module-form.scss"
 
-const ModuleForm = () => {
+const ModuleForm = (props) => {
     const [formData, setFormData] = useState({
         fullName: "",
         email: "",
@@ -24,13 +24,33 @@ const ModuleForm = () => {
     const [showForm, setShowForm] = useState(false);
     const [errors, setErrors] = useState();
     const [loading, setLoader] = useState(false);
+    const [formFields, setFormFields ] = useState([])
     
+    const TextField = ({name, title, required, handleChange}) =>(
+        <>
+            <label> {title}{required}</label>
+            <input type="text" name={name} required={required} onChange={handleChange}></input>
+        </>
+    )
+    const EmailField = ({name, title, required, handleChange}) =>(
+        <>
+            <label> {title}{required}</label>
+            <input type="email" name={name} required={required} onChange={handleChange}></input>
+        </>
+    )
+    const TextAreaField = ({name, title, required, handleChange}) =>(
+        <>
+            <label> {title}{required}</label>
+            <textarea name={name} required={required} onChange={handleChange}></textarea>
+        </>
+    )
 
 
     const handleChange = (e) => {
         const {name, value} = e.target;
         setFormData((prevFormData) => ({...prevFormData, [name]:value}))
     }
+
     const isValidEmail = (email) => {
         const emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
         return emailRegex.test(email)
@@ -73,6 +93,19 @@ const ModuleForm = () => {
             console.log("error");
         }
     }
+    const renderField = (field) => {
+        switch(field.type){
+            case "textfield":
+                return <TextField key={field.name} {...field} handleChange={handleChange} />;
+            case "email":
+                return <EmailField key={field.name} {...field} handleChange={handleChange} />;
+            case "textarea":
+                return <TextAreaField key={field.name} {...field} handleChange={handleChange} />
+            default:
+                return null;
+
+        }
+    }
     const modalText = {
         title: "Thank you!",
         text:"Your request has been submitted successfully. A Takeda Medical information representative will contact you within 2 to 3 business days. Some requests may take longer depending on complexity.",
@@ -80,10 +113,21 @@ const ModuleForm = () => {
     }
     const fetchForm = async () => {
         try{
-          const response = await fetch("https://common-modules-demo.docksal.site/form/demand-intake?_format=json")
+          const response = await fetch("http://common-modules-demo.docksal.site/webform/demand_intake?_format=json")
           const data = await response.json()
-          console.log(data, "parse")
-          const parseFormData = yaml.load(data.data.attributes.elements)
+          const parseFormData = yaml.load(data.elements)
+          const parsedFields = Object.keys(parseFormData).map(key => {
+            const field = parseFormData[key]
+            return {
+                name: key,
+                type: field['#type'],
+                title: field['#title'],
+                required: field['#required']
+            }
+          })
+          console.log(parsedFields, "parsed");
+          setFormFields(parsedFields);
+
         }catch(err){
           console.error(err, "error to fetch data")          
         }
@@ -109,17 +153,17 @@ const ModuleForm = () => {
                             name="fullName"
                             value={formData.fullName}
                             placeholder="Enter your full name"
-                            onChange={() => handleChange}
+                            onChange={ handleChange}
                         />
                     </div>
                     <div>
                         <label>Takeda email<span>*</span>:</label>
                         <input 
-                            type="text" 
+                            type="email" 
                             name="email"
                             value={formData.email}
                             placeholder="Enter your email"
-                            onChange={() => handleChange}
+                            onChange={handleChange}
                         />
                     </div>
                     
@@ -130,7 +174,7 @@ const ModuleForm = () => {
                     name="demandRequest"
                     value={formData.demandRequest}
                     placeholder="Enter your answer"
-                    onChange={() => handleChange}
+                    onChange={handleChange}
                 />
                 <label>Please describe your demand requirements (provide as many as possible details)<span>*</span>:</label>
                 <input 
@@ -138,7 +182,7 @@ const ModuleForm = () => {
                     name="requirements"
                     value={formData.requirements}
                     placeholder="Enter your answer"
-                    onChange={() => handleChange}
+                    onChange={handleChange}
                 />
                 <label>Please Provide Acceptance criteria<span>*</span>:</label>
                 <input 
@@ -146,7 +190,7 @@ const ModuleForm = () => {
                     name="acceptanceCriteria"
                     value={formData.acceptanceCriteria}
                     placeholder="Enter your answer"
-                    onChange={() => handleChange}
+                    onChange={handleChange}
                 />
                 <label>Business Value (describe the value this request is enabling for the LOC, BU, Region,etc)<span>*</span>:</label>
                 <input 
@@ -154,7 +198,7 @@ const ModuleForm = () => {
                     name="businessValue"
                     value={formData.businessValue}
                     placeholder="Enter your answer"
-                    onChange={() => handleChange}
+                    onChange={handleChange}
                 />
                 <label>Business Value (describe the value this request is enabling for the LOC, BU, Region,etc)<span>*</span>:</label>
                 <input 
@@ -162,7 +206,7 @@ const ModuleForm = () => {
                     name="businessValue"
                     value={formData.businessValue}
                     placeholder="Enter your answer"
-                    onChange={() => handleChange}
+                    onChange={handleChange}
                 />
                 <label>Consequence of not doing the request<span>*</span>:</label>
                 <input 
@@ -170,7 +214,7 @@ const ModuleForm = () => {
                     name="consequence"
                     value={formData.consequence}
                     placeholder="Enter your answer"
-                    onChange={() => handleChange}
+                    onChange={handleChange}
                 />
                 <label>Please enter desired demand delivery date<span>*</span>:</label>
                 <input 
@@ -178,7 +222,7 @@ const ModuleForm = () => {
                     name="date"
                     value={formData.date}
                     placeholder="Enter delivery date"
-                    onChange={() => handleChange}
+                    onChange={handleChange}
                 />
                 <label>Please specify any dependencies to other Initiatives, Campaigns and Product Launches etc. driving the Desired GO LIVE DATE for this demand<span>*</span>:</label>
                 <input 
@@ -186,7 +230,7 @@ const ModuleForm = () => {
                     name="dependencies"
                     value={formData.dependencies}
                     placeholder="Enter your answer"
-                    onChange={() => handleChange}
+                    onChange={handleChange}
                 />
                 <label>Please enter the Business Requestor/Demand Requestor (who will be supporting the Product Owner if needed in product backlog refinement sessions)<span>*</span>:</label>
                 <input 
@@ -194,14 +238,14 @@ const ModuleForm = () => {
                     name="businessRequestor"
                     value={formData.businessRequestor}
                     placeholder="Enter your answer"
-                    onChange={() => handleChange}
+                    onChange={handleChange}
                 />
                 <label>Please upload any documents ( solution design, product roadmap, flow diagram etc)<span>*</span>:</label>
                 <input 
                     type="file" 
                     name="file"
                     value={formData.file}
-                    onChange={() => handleChange}
+                    onChange={handleChange}
                     className="module-form__input-file"
 
                 />
@@ -212,7 +256,7 @@ const ModuleForm = () => {
                         Request module
                     </button>
                     <button
-        
+                        onClick={(e) => props.closeForm(e)}
                         className="module-form__back"
                     >
                         Back to configuration 

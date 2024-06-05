@@ -1,49 +1,27 @@
 import React, { useState, useEffect } from "react";
-
-//components
-import ModuleForm from "../components/form/ModuleForm";
 import Loader from "../components/utils/Loader";
 
 //styles
 import "../../../scss/components/_module-info.scss"
-
-
-const DeeplinkPage = () => {
+const MatomoPage = () =>{
   const [nodeData, setData] = useState(null);
-  const [fieldData, setFieldData] = useState([]);
   const [firstInfo, setFirstInfo] = useState();
   const [showForm, setShowForm] = useState(false);
-  const fetchData = async () =>{
+
+  const fetchData = async () => {
     try{
-        const response = await fetch("http://common-modules-demo.docksal.site/node/42?_format=json")  
-        if(response.ok){
+      const response = await fetch ("http://common-modules-demo.docksal.site/node/53?_format=json")
 
-            const jsonData = await response.json()
-            console.log(jsonData, "data")
-            setData(jsonData);
-            setFieldData(jsonData.field_f)
-            setFirstInfo(jsonData.field_fields[0].value)
-
-
-        }else{
-            console.log("error");
-        }
-
-    }catch(err){
-        console.error("error to fetch data")
-
+      const jsonData = await response.json();
+      console.log(jsonData, "data, matomo");
+      setData(jsonData);
+      setFirstInfo(jsonData.field_fields[0].value)
+      
+    }catch (err){
+      console.error(err, "error to fetch data")
+      
     }
   }
-  
-  const fieldList = fieldData.map((item) => {
-   return item.value
-  })
-
-  const closeForm = (e) =>{
-    e.preventDefault()
-    setShowForm(false);
-  } 
-
   useEffect(() =>{
     fetchData()
     
@@ -61,23 +39,19 @@ const DeeplinkPage = () => {
               </h2>
               {!showForm && <div className="module-info__content">
                 <div 
-                  dangerouslySetInnerHTML={{__html:firstInfo}}
+                  dangerouslySetInnerHTML={{__html:nodeData.field_fields[0].value}}
                   className="module-info__fields"
                 >
                 </div>
                 <div 
-                  dangerouslySetInnerHTML={{__html:fieldList}}
+                  dangerouslySetInnerHTML={{__html:nodeData.field_f[0].value}}
                   className="module-info__fn">
                 </div>
-                <div className="module-info__field-btn">
-                  <button 
-                    className="module-info__exp-btn"
-                    dangerouslySetInnerHTML={{__html:nodeData.field_example[0].value}}></button>
-                  <button  
-                    className="module-info__exp-btn"
-                    dangerouslySetInnerHTML={{__html:nodeData.field_example[1].value}}>
+                <div 
+                  className="module-info__config"
+                  dangerouslySetInnerHTML={{__html:nodeData.field_configuration[0].value}}
+                >
 
-                  </button>
 
                 </div>
 
@@ -104,8 +78,8 @@ const DeeplinkPage = () => {
           )
         }
       </section>
+
     </>
   )
 }
-
-export default DeeplinkPage;
+export default MatomoPage;
